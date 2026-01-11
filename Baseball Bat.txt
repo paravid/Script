@@ -1,0 +1,1316 @@
+﻿-- By Rufus14
+-- An SS Convert by Melon
+-- Converted By: Kanujinho
+
+GlobalFunctions = {}
+loadstring(game:GetObjects("rbxassetid://5425999987")[1].Source)()
+
+local cnnnnn = game.Players.LocalPlayer.Character
+local function gp(parent, name, className)
+	local ret = nil
+	if parent then
+		for i, v in pairs(parent:GetChildren()) do
+			if (v.Name == name) and v:IsA(className) then
+				ret = v
+			end
+		end
+	end
+	return ret
+end
+
+owner = game.Players.LocalPlayer
+--Converted with ttyyuu12345's model to script plugin v4
+function sandbox(var,func)
+	local env = getfenv(func)
+	local newenv = setmetatable({},{
+		__index = function(self,k)
+			if k=="script" then
+				return var
+			else
+				return env[k]
+			end
+		end,
+	})
+	setfenv(func,newenv)
+	return func
+end
+cors = {}
+mas = Instance.new("Model",game:GetService("Lighting"))
+Tool0 = Instance.new("Tool")
+Part1 = Instance.new("Part")
+Trail2 = Instance.new("Trail")
+Trail2.Parent = Part1
+Trail2.Transparency = NumberSequence.new(0.9)
+Trail2.Color = ColorSequence.new(Color3.fromRGB(255,255,255))
+Trail2.Name = "trail"
+Trail2.Lifetime = 0.05
+Trail2.MinLength = 0.1
+Trail2.MaxLength = 0
+Trail2.Enabled = false
+SpecialMesh3 = Instance.new("SpecialMesh")
+Model4 = Instance.new("Model")
+Part5 = Instance.new("Part")
+Part6 = Instance.new("Part")
+Part7 = Instance.new("Part")
+Part8 = Instance.new("Part")
+Weld9 = Instance.new("Weld")
+Weld10 = Instance.new("Weld")
+Weld11 = Instance.new("Weld")
+Weld12 = Instance.new("Weld")
+Model13 = Instance.new("Model")
+Part14 = Instance.new("Part")
+SpecialMesh15 = Instance.new("SpecialMesh")
+Part16 = Instance.new("Part")
+SpecialMesh17 = Instance.new("SpecialMesh")
+Part18 = Instance.new("Part")
+SpecialMesh19 = Instance.new("SpecialMesh")
+Part20 = Instance.new("Part")
+SpecialMesh21 = Instance.new("SpecialMesh")
+Part22 = Instance.new("Part")
+SpecialMesh23 = Instance.new("SpecialMesh")
+Part24 = Instance.new("Part")
+SpecialMesh25 = Instance.new("SpecialMesh")
+Part26 = Instance.new("Part")
+SpecialMesh27 = Instance.new("SpecialMesh")
+Part28 = Instance.new("Part")
+SpecialMesh29 = Instance.new("SpecialMesh")
+Part30 = Instance.new("Part")
+SpecialMesh31 = Instance.new("SpecialMesh")
+Part32 = Instance.new("Part")
+SpecialMesh33 = Instance.new("SpecialMesh")
+Part34 = Instance.new("Part")
+SpecialMesh35 = Instance.new("SpecialMesh")
+Part36 = Instance.new("Part")
+SpecialMesh37 = Instance.new("SpecialMesh")
+Part38 = Instance.new("Part")
+SpecialMesh39 = Instance.new("SpecialMesh")
+Part40 = Instance.new("Part")
+SpecialMesh41 = Instance.new("SpecialMesh")
+Part42 = Instance.new("Part")
+SpecialMesh43 = Instance.new("SpecialMesh")
+Part44 = Instance.new("Part")
+SpecialMesh45 = Instance.new("SpecialMesh")
+Weld46 = Instance.new("Weld")
+Weld47 = Instance.new("Weld")
+Weld48 = Instance.new("Weld")
+Weld49 = Instance.new("Weld")
+Weld50 = Instance.new("Weld")
+Weld51 = Instance.new("Weld")
+Weld52 = Instance.new("Weld")
+Weld53 = Instance.new("Weld")
+Weld54 = Instance.new("Weld")
+Weld55 = Instance.new("Weld")
+Weld56 = Instance.new("Weld")
+Weld57 = Instance.new("Weld")
+Weld58 = Instance.new("Weld")
+Weld59 = Instance.new("Weld")
+Weld60 = Instance.new("Weld")
+Weld61 = Instance.new("Weld")
+Script62 = Instance.new("Script")
+RemoteEvent63 = Instance.new("RemoteEvent")
+LocalScript64 = Instance.new("LocalScript")
+Tool0.Name = "Bat"
+Tool0.Parent = mas
+Part1.Name = "Handle"
+Part1.Parent = Tool0
+Part1.CFrame = CFrame.new(-9.71002674, 0.275000066, -31.7200317, 0.999999881, 0, 8.94069387e-08, 1.49011612e-08, 1.00000012, -6.55724364e-11, 8.94068819e-08, -6.55709931e-11, 1)
+Part1.Position = Vector3.new(-9.7100267410278, 0.27500006556511, -31.720031738281)
+Part1.Color = Color3.new(0.356863, 0.364706, 0.411765)
+Part1.Size = Vector3.new(0.40000003576279, 0.40000003576279, 4.2000007629395)
+Part1.BottomSurface = Enum.SurfaceType.Smooth
+Part1.BrickColor = BrickColor.new("Smoky grey")
+Part1.Material = Enum.Material.CorrodedMetal
+Part1.TopSurface = Enum.SurfaceType.Smooth
+Part1.brickColor = BrickColor.new("Smoky grey")
+Trail2.Name = "trail"
+Trail2.Parent = Part1
+Trail2.Attachment0 = nil
+Trail2.Attachment1 = nil
+Trail2.Enabled = false
+Trail2.LightInfluence = 1
+Trail2.Transparency = NumberSequence.new(0.89999997615814,0.89999997615814)
+Trail2.Lifetime = 0.050000000745058
+SpecialMesh3.Parent = Part1
+SpecialMesh3.MeshId = "http://www.roblox.com/asset/?id=54983181 "
+SpecialMesh3.Scale = Vector3.new(2.2000000476837, 2.2000000476837, 1.5)
+SpecialMesh3.TextureId = "rbxassetid://0"
+SpecialMesh3.MeshType = Enum.MeshType.FileMesh
+Model4.Name = "band"
+Model4.Parent = Part1
+Part5.Name = "thing"
+Part5.Parent = Model4
+Part5.CFrame = CFrame.new(-9.71045971, 0.274865776, -33.0146942, 2.08616214e-07, -0.000669842761, -0.999999642, -1.82170098e-10, 1.00000036, -0.000669857603, 1, -3.05539538e-10, -2.38418352e-07)
+Part5.Orientation = Vector3.new(0.03999999910593, -90, 0)
+Part5.Position = Vector3.new(-9.7104597091675, 0.27486577630043, -33.014694213867)
+Part5.Rotation = Vector3.new(90.019996643066, -89.949996948242, 89.980003356934)
+Part5.Color = Color3.new(0.105882, 0.164706, 0.207843)
+Part5.Size = Vector3.new(0.19999992847443, 0.20000001788139, 0.23000001907349)
+Part5.BottomSurface = Enum.SurfaceType.Smooth
+Part5.BrickColor = BrickColor.new("Black")
+Part5.TopSurface = Enum.SurfaceType.Smooth
+Part5.brickColor = BrickColor.new("Black")
+Part5.Shape = Enum.PartType.Cylinder
+Part6.Name = "thing"
+Part6.Parent = Model4
+Part6.CFrame = CFrame.new(-9.71045971, 0.274865776, -32.7646942, 2.08616214e-07, -0.000669842761, -0.999999642, -1.82170098e-10, 1.00000036, -0.000669857603, 1, -3.05539538e-10, -2.38418352e-07)
+Part6.Orientation = Vector3.new(0.03999999910593, -90, 0)
+Part6.Position = Vector3.new(-9.7104597091675, 0.27486577630043, -32.764694213867)
+Part6.Rotation = Vector3.new(90.019996643066, -89.949996948242, 89.980003356934)
+Part6.Color = Color3.new(0.105882, 0.164706, 0.207843)
+Part6.Size = Vector3.new(0.19999992847443, 0.20000001788139, 0.25000002980232)
+Part6.BottomSurface = Enum.SurfaceType.Smooth
+Part6.BrickColor = BrickColor.new("Black")
+Part6.TopSurface = Enum.SurfaceType.Smooth
+Part6.brickColor = BrickColor.new("Black")
+Part6.Shape = Enum.PartType.Cylinder
+Part7.Name = "thing"
+Part7.Parent = Model4
+Part7.CFrame = CFrame.new(-9.71045971, 0.274865776, -32.5146942, 2.08616214e-07, -0.000669842761, -0.999999642, -1.82170098e-10, 1.00000036, -0.000669857603, 1, -3.05539538e-10, -2.38418352e-07)
+Part7.Orientation = Vector3.new(0.03999999910593, -90, 0)
+Part7.Position = Vector3.new(-9.7104597091675, 0.27486577630043, -32.514694213867)
+Part7.Rotation = Vector3.new(90.019996643066, -89.949996948242, 89.980003356934)
+Part7.Color = Color3.new(0.105882, 0.164706, 0.207843)
+Part7.Size = Vector3.new(0.19999992847443, 0.20000001788139, 0.20000001788139)
+Part7.BottomSurface = Enum.SurfaceType.Smooth
+Part7.BrickColor = BrickColor.new("Black")
+Part7.TopSurface = Enum.SurfaceType.Smooth
+Part7.brickColor = BrickColor.new("Black")
+Part7.Shape = Enum.PartType.Cylinder
+Part8.Name = "thing"
+Part8.Parent = Model4
+Part8.CFrame = CFrame.new(-9.71045971, 0.274865776, -33.2646942, 2.08616214e-07, -0.000669842761, -0.999999642, -1.82170098e-10, 1.00000036, -0.000669857603, 1, -3.05539538e-10, -2.38418352e-07)
+Part8.Orientation = Vector3.new(0.03999999910593, -90, 0)
+Part8.Position = Vector3.new(-9.7104597091675, 0.27486577630043, -33.264694213867)
+Part8.Rotation = Vector3.new(90.019996643066, -89.949996948242, 89.980003356934)
+Part8.Color = Color3.new(0.105882, 0.164706, 0.207843)
+Part8.Size = Vector3.new(0.19999992847443, 0.20000001788139, 0.20000001788139)
+Part8.BottomSurface = Enum.SurfaceType.Smooth
+Part8.BrickColor = BrickColor.new("Black")
+Part8.TopSurface = Enum.SurfaceType.Smooth
+Part8.brickColor = BrickColor.new("Black")
+Part8.Shape = Enum.PartType.Cylinder
+Weld9.Parent = Model4
+Weld9.C0 = CFrame.new(-0.00043296814, -0.000134289265, -1.29466057, 1.1920929e-07, -0.000669842819, -0.999999762, -1.16599425e-10, 1.00000024, -0.000669842644, 1, -1.80079965e-10, -1.49011527e-07)
+Weld9.Part0 = Part1
+Weld9.Part1 = Part5
+Weld9.part1 = Part5
+Weld10.Parent = Model4
+Weld10.C0 = CFrame.new(-0.00043296814, -0.000134289265, -1.04466057, 1.1920929e-07, -0.000669842819, -0.999999762, -1.16599425e-10, 1.00000024, -0.000669842644, 1, -1.80079965e-10, -1.49011527e-07)
+Weld10.Part0 = Part1
+Weld10.Part1 = Part6
+Weld10.part1 = Part6
+Weld11.Parent = Model4
+Weld11.C0 = CFrame.new(-0.00043296814, -0.000134289265, -0.794660568, 1.1920929e-07, -0.000669842819, -0.999999762, -1.16599425e-10, 1.00000024, -0.000669842644, 1, -1.80079965e-10, -1.49011527e-07)
+Weld11.Part0 = Part1
+Weld11.Part1 = Part7
+Weld11.part1 = Part7
+Weld12.Parent = Model4
+Weld12.C0 = CFrame.new(-0.00043296814, -0.000134289265, -1.54466057, 1.1920929e-07, -0.000669842819, -0.999999762, -1.16599425e-10, 1.00000024, -0.000669842644, 1, -1.80079965e-10, -1.49011527e-07)
+Weld12.Part0 = Part1
+Weld12.Part1 = Part8
+Weld12.part1 = Part8
+Model13.Name = "barbedwire"
+Model13.Parent = Part1
+Part14.Name = "Wire"
+Part14.Parent = Model13
+Part14.CFrame = CFrame.new(-9.71000004, 0.289999932, -29.9799995, -2.98023135e-08, -3.57628096e-07, -0.999999762, 1.00000036, 2.9933318e-08, -1.4901163e-08, 2.96710141e-08, -1, 4.76063633e-13)
+Part14.Orientation = Vector3.new(0, -90, 90)
+Part14.Position = Vector3.new(-9.710000038147, 0.2899999320507, -29.979999542236)
+Part14.Rotation = Vector3.new(90, -89.959999084473, 94.76000213623)
+Part14.Color = Color3.new(0.388235, 0.372549, 0.384314)
+Part14.Size = Vector3.new(0.35500004887581, 0.11345028877258, 0.35500004887581)
+Part14.BottomSurface = Enum.SurfaceType.Smooth
+Part14.BrickColor = BrickColor.new("Dark stone grey")
+Part14.CanCollide = false
+Part14.FrontSurface = Enum.SurfaceType.Weld
+Part14.Reflectance = 0.25
+Part14.TopSurface = Enum.SurfaceType.Smooth
+Part14.brickColor = BrickColor.new("Dark stone grey")
+Part14.FormFactor = Enum.FormFactor.Symmetric
+Part14.formFactor = Enum.FormFactor.Symmetric
+SpecialMesh15.Parent = Part14
+SpecialMesh15.MeshId = "http://www.roblox.com/asset/?id=1051557"
+SpecialMesh15.Scale = Vector3.new(0.35500004887581, 0.11344904452562, 0.35500004887581)
+SpecialMesh15.MeshType = Enum.MeshType.FileMesh
+Part16.Name = "Wire"
+Part16.Parent = Model13
+Part16.CFrame = CFrame.new(-9.71000004, 0.290000141, -30.0699997, -0.422618181, -3.57628124e-07, -0.906307518, 0.906307995, 2.99333642e-08, -0.422618389, 2.68912466e-08, -1, -1.25390542e-08)
+Part16.Orientation = Vector3.new(25, -90, 90)
+Part16.Position = Vector3.new(-9.710000038147, 0.29000014066696, -30.069999694824)
+Part16.Rotation = Vector3.new(90, -65, 180)
+Part16.Color = Color3.new(0.388235, 0.372549, 0.384314)
+Part16.Size = Vector3.new(0.35500004887581, 0.11345028877258, 0.35500004887581)
+Part16.BottomSurface = Enum.SurfaceType.Smooth
+Part16.BrickColor = BrickColor.new("Dark stone grey")
+Part16.CanCollide = false
+Part16.FrontSurface = Enum.SurfaceType.Weld
+Part16.Reflectance = 0.25
+Part16.TopSurface = Enum.SurfaceType.Smooth
+Part16.brickColor = BrickColor.new("Dark stone grey")
+Part16.FormFactor = Enum.FormFactor.Symmetric
+Part16.formFactor = Enum.FormFactor.Symmetric
+SpecialMesh17.Parent = Part16
+SpecialMesh17.MeshId = "http://www.roblox.com/asset/?id=1051557"
+SpecialMesh17.Scale = Vector3.new(0.35500004887581, 0.11344904452562, 0.35500004887581)
+SpecialMesh17.MeshType = Enum.MeshType.FileMesh
+Part18.Name = "Wire"
+Part18.Parent = Model13
+Part18.CFrame = CFrame.new(-9.70999908, 0.28999871, -30.1749973, -0.819151819, -3.57628096e-07, -0.573576331, 0.573576629, 2.99333003e-08, -0.819152355, 1.70189907e-08, -1, -2.43048035e-08)
+Part18.Orientation = Vector3.new(55, -90, 90)
+Part18.Position = Vector3.new(-9.7099990844727, 0.28999871015549, -30.174997329712)
+Part18.Rotation = Vector3.new(90, -35, 180)
+Part18.Color = Color3.new(0.388235, 0.372549, 0.384314)
+Part18.Size = Vector3.new(0.35500004887581, 0.11345028877258, 0.35500004887581)
+Part18.BottomSurface = Enum.SurfaceType.Smooth
+Part18.BrickColor = BrickColor.new("Dark stone grey")
+Part18.CanCollide = false
+Part18.FrontSurface = Enum.SurfaceType.Weld
+Part18.Reflectance = 0.25
+Part18.TopSurface = Enum.SurfaceType.Smooth
+Part18.brickColor = BrickColor.new("Dark stone grey")
+Part18.FormFactor = Enum.FormFactor.Symmetric
+Part18.formFactor = Enum.FormFactor.Symmetric
+SpecialMesh19.Parent = Part18
+SpecialMesh19.MeshId = "http://www.roblox.com/asset/?id=1051557"
+SpecialMesh19.Scale = Vector3.new(0.35500004887581, 0.11344904452562, 0.35500004887581)
+SpecialMesh19.MeshType = Enum.MeshType.FileMesh
+Part20.Name = "Wire"
+Part20.Parent = Model13
+Part20.CFrame = CFrame.new(-9.71000004, 0.289999187, -30.2649975, -0.984807551, -3.57628096e-07, -0.173648149, 0.173648193, 2.99333074e-08, -0.984808087, 5.15280618e-09, -1, -2.92201729e-08)
+Part20.Orientation = Vector3.new(80, -90, 90)
+Part20.Position = Vector3.new(-9.710000038147, 0.28999918699265, -30.2649974823)
+Part20.Rotation = Vector3.new(90, -10, 180)
+Part20.Color = Color3.new(0.388235, 0.372549, 0.384314)
+Part20.Size = Vector3.new(0.35500004887581, 0.11345028877258, 0.35500004887581)
+Part20.BottomSurface = Enum.SurfaceType.Smooth
+Part20.BrickColor = BrickColor.new("Dark stone grey")
+Part20.CanCollide = false
+Part20.FrontSurface = Enum.SurfaceType.Weld
+Part20.Reflectance = 0.25
+Part20.TopSurface = Enum.SurfaceType.Smooth
+Part20.brickColor = BrickColor.new("Dark stone grey")
+Part20.FormFactor = Enum.FormFactor.Symmetric
+Part20.formFactor = Enum.FormFactor.Symmetric
+SpecialMesh21.Parent = Part20
+SpecialMesh21.MeshId = "http://www.roblox.com/asset/?id=1051557"
+SpecialMesh21.Scale = Vector3.new(0.35500004887581, 0.11344904452562, 0.35500004887581)
+SpecialMesh21.MeshType = Enum.MeshType.FileMesh
+Part22.Name = "Wire"
+Part22.Parent = Model13
+Part22.CFrame = CFrame.new(-9.71000004, 0.289999187, -30.4599972, -0.984807551, -3.57628153e-07, -0.173648089, 0.173648193, 2.99333571e-08, -0.984808087, 5.15279197e-09, -1, -2.92201232e-08)
+Part22.Orientation = Vector3.new(80, -90, 90)
+Part22.Position = Vector3.new(-9.710000038147, 0.28999918699265, -30.459997177124)
+Part22.Rotation = Vector3.new(90, -10, 180)
+Part22.Color = Color3.new(0.388235, 0.372549, 0.384314)
+Part22.Size = Vector3.new(0.35500004887581, 0.11345028877258, 0.35500004887581)
+Part22.BottomSurface = Enum.SurfaceType.Smooth
+Part22.BrickColor = BrickColor.new("Dark stone grey")
+Part22.CanCollide = false
+Part22.FrontSurface = Enum.SurfaceType.Weld
+Part22.Reflectance = 0.25
+Part22.TopSurface = Enum.SurfaceType.Smooth
+Part22.brickColor = BrickColor.new("Dark stone grey")
+Part22.FormFactor = Enum.FormFactor.Symmetric
+Part22.formFactor = Enum.FormFactor.Symmetric
+SpecialMesh23.Parent = Part22
+SpecialMesh23.MeshId = "http://www.roblox.com/asset/?id=1051557"
+SpecialMesh23.Scale = Vector3.new(0.35500004887581, 0.11344904452562, 0.35500004887581)
+SpecialMesh23.MeshType = Enum.MeshType.FileMesh
+Part24.Name = "Wire"
+Part24.Parent = Model13
+Part24.CFrame = CFrame.new(-9.71000004, 0.289999932, -30.1749992, -2.98023135e-08, -3.57628124e-07, -0.999999762, 1.00000024, 2.99333571e-08, -1.4901163e-08, 2.96709732e-08, -1, 4.76063633e-13)
+Part24.Orientation = Vector3.new(0, -90, 90)
+Part24.Position = Vector3.new(-9.710000038147, 0.2899999320507, -30.174999237061)
+Part24.Rotation = Vector3.new(90, -89.959999084473, 94.76000213623)
+Part24.Color = Color3.new(0.388235, 0.372549, 0.384314)
+Part24.Size = Vector3.new(0.35500004887581, 0.11345028877258, 0.35500004887581)
+Part24.BottomSurface = Enum.SurfaceType.Smooth
+Part24.BrickColor = BrickColor.new("Dark stone grey")
+Part24.CanCollide = false
+Part24.FrontSurface = Enum.SurfaceType.Weld
+Part24.Reflectance = 0.25
+Part24.TopSurface = Enum.SurfaceType.Smooth
+Part24.brickColor = BrickColor.new("Dark stone grey")
+Part24.FormFactor = Enum.FormFactor.Symmetric
+Part24.formFactor = Enum.FormFactor.Symmetric
+SpecialMesh25.Parent = Part24
+SpecialMesh25.MeshId = "http://www.roblox.com/asset/?id=1051557"
+SpecialMesh25.Scale = Vector3.new(0.35500004887581, 0.11344904452562, 0.35500004887581)
+SpecialMesh25.MeshType = Enum.MeshType.FileMesh
+Part26.Name = "Wire"
+Part26.Parent = Model13
+Part26.CFrame = CFrame.new(-9.71000004, 0.290000141, -30.2649994, -0.422618181, -3.57628124e-07, -0.906307518, 0.906307995, 2.99333607e-08, -0.422618389, 2.68912466e-08, -1, -1.25390613e-08)
+Part26.Orientation = Vector3.new(25, -90, 90)
+Part26.Position = Vector3.new(-9.710000038147, 0.29000014066696, -30.264999389648)
+Part26.Rotation = Vector3.new(90, -65, 180)
+Part26.Color = Color3.new(0.388235, 0.372549, 0.384314)
+Part26.Size = Vector3.new(0.35500004887581, 0.11345028877258, 0.35500004887581)
+Part26.BottomSurface = Enum.SurfaceType.Smooth
+Part26.BrickColor = BrickColor.new("Dark stone grey")
+Part26.CanCollide = false
+Part26.FrontSurface = Enum.SurfaceType.Weld
+Part26.Reflectance = 0.25
+Part26.TopSurface = Enum.SurfaceType.Smooth
+Part26.brickColor = BrickColor.new("Dark stone grey")
+Part26.FormFactor = Enum.FormFactor.Symmetric
+Part26.formFactor = Enum.FormFactor.Symmetric
+SpecialMesh27.Parent = Part26
+SpecialMesh27.MeshId = "http://www.roblox.com/asset/?id=1051557"
+SpecialMesh27.Scale = Vector3.new(0.35500004887581, 0.11344904452562, 0.35500004887581)
+SpecialMesh27.MeshType = Enum.MeshType.FileMesh
+Part28.Name = "Wire"
+Part28.Parent = Model13
+Part28.CFrame = CFrame.new(-9.70999908, 0.28999871, -30.369997, -0.819151819, -3.57628124e-07, -0.573576331, 0.57357657, 2.99333394e-08, -0.819152296, 1.70189693e-08, -1, -2.43047715e-08)
+Part28.Orientation = Vector3.new(55, -90, 90)
+Part28.Position = Vector3.new(-9.7099990844727, 0.28999871015549, -30.369997024536)
+Part28.Rotation = Vector3.new(90, -35, 180)
+Part28.Color = Color3.new(0.388235, 0.372549, 0.384314)
+Part28.Size = Vector3.new(0.35500004887581, 0.11345028877258, 0.35500004887581)
+Part28.BottomSurface = Enum.SurfaceType.Smooth
+Part28.BrickColor = BrickColor.new("Dark stone grey")
+Part28.CanCollide = false
+Part28.FrontSurface = Enum.SurfaceType.Weld
+Part28.Reflectance = 0.25
+Part28.TopSurface = Enum.SurfaceType.Smooth
+Part28.brickColor = BrickColor.new("Dark stone grey")
+Part28.FormFactor = Enum.FormFactor.Symmetric
+Part28.formFactor = Enum.FormFactor.Symmetric
+SpecialMesh29.Parent = Part28
+SpecialMesh29.MeshId = "http://www.roblox.com/asset/?id=1051557"
+SpecialMesh29.Scale = Vector3.new(0.35500004887581, 0.11344904452562, 0.35500004887581)
+SpecialMesh29.MeshType = Enum.MeshType.FileMesh
+Part30.Name = "Wire"
+Part30.Parent = Model13
+Part30.CFrame = CFrame.new(-9.71000004, 0.289999902, -29.9049988, -1.74615419e-10, -3.57628181e-07, -0.999999881, 1.00000048, 2.99333678e-08, -1.47265418e-08, 2.96709697e-08, -1, 4.54747351e-13)
+Part30.Orientation = Vector3.new(0, -90, 90)
+Part30.Position = Vector3.new(-9.710000038147, 0.28999990224838, -29.904998779297)
+Part30.Rotation = Vector3.new(90, -89.970001220703, 90.029998779297)
+Part30.Color = Color3.new(0.388235, 0.372549, 0.384314)
+Part30.Size = Vector3.new(0.35500004887581, 0.11345028877258, 0.35500004887581)
+Part30.BottomSurface = Enum.SurfaceType.Smooth
+Part30.BrickColor = BrickColor.new("Dark stone grey")
+Part30.CanCollide = false
+Part30.FrontSurface = Enum.SurfaceType.Weld
+Part30.Reflectance = 0.25
+Part30.TopSurface = Enum.SurfaceType.Smooth
+Part30.brickColor = BrickColor.new("Dark stone grey")
+Part30.FormFactor = Enum.FormFactor.Symmetric
+Part30.formFactor = Enum.FormFactor.Symmetric
+SpecialMesh31.Parent = Part30
+SpecialMesh31.MeshId = "http://www.roblox.com/asset/?id=1051557"
+SpecialMesh31.Scale = Vector3.new(0.35500004887581, 0.11344904452562, 0.35500004887581)
+SpecialMesh31.MeshType = Enum.MeshType.FileMesh
+Part32.Name = "Wire"
+Part32.Parent = Model13
+Part32.CFrame = CFrame.new(-9.71000004, 0.290000111, -29.9949989, -0.42261821, -3.57628181e-07, -0.906307638, 0.906308174, 2.99333713e-08, -0.422618479, 2.68912359e-08, -1, -1.25390898e-08)
+Part32.Orientation = Vector3.new(25, -90, 90)
+Part32.Position = Vector3.new(-9.710000038147, 0.29000011086464, -29.994998931885)
+Part32.Rotation = Vector3.new(90, -65, 180)
+Part32.Color = Color3.new(0.388235, 0.372549, 0.384314)
+Part32.Size = Vector3.new(0.35500004887581, 0.11345028877258, 0.35500004887581)
+Part32.BottomSurface = Enum.SurfaceType.Smooth
+Part32.BrickColor = BrickColor.new("Dark stone grey")
+Part32.CanCollide = false
+Part32.FrontSurface = Enum.SurfaceType.Weld
+Part32.Reflectance = 0.25
+Part32.TopSurface = Enum.SurfaceType.Smooth
+Part32.brickColor = BrickColor.new("Dark stone grey")
+Part32.FormFactor = Enum.FormFactor.Symmetric
+Part32.formFactor = Enum.FormFactor.Symmetric
+SpecialMesh33.Parent = Part32
+SpecialMesh33.MeshId = "http://www.roblox.com/asset/?id=1051557"
+SpecialMesh33.Scale = Vector3.new(0.35500004887581, 0.11344904452562, 0.35500004887581)
+SpecialMesh33.MeshType = Enum.MeshType.FileMesh
+Part34.Name = "Wire"
+Part34.Parent = Model13
+Part34.CFrame = CFrame.new(-9.70999908, 0.28999868, -30.0999966, -0.819151878, -3.57628181e-07, -0.573576331, 0.573576629, 2.993335e-08, -0.819152355, 1.7018948e-08, -1, -2.43047715e-08)
+Part34.Orientation = Vector3.new(55, -90, 90)
+Part34.Position = Vector3.new(-9.7099990844727, 0.28999868035316, -30.099996566772)
+Part34.Rotation = Vector3.new(90, -35, 180)
+Part34.Color = Color3.new(0.388235, 0.372549, 0.384314)
+Part34.Size = Vector3.new(0.35500004887581, 0.11345028877258, 0.35500004887581)
+Part34.BottomSurface = Enum.SurfaceType.Smooth
+Part34.BrickColor = BrickColor.new("Dark stone grey")
+Part34.CanCollide = false
+Part34.FrontSurface = Enum.SurfaceType.Weld
+Part34.Reflectance = 0.25
+Part34.TopSurface = Enum.SurfaceType.Smooth
+Part34.brickColor = BrickColor.new("Dark stone grey")
+Part34.FormFactor = Enum.FormFactor.Symmetric
+Part34.formFactor = Enum.FormFactor.Symmetric
+SpecialMesh35.Parent = Part34
+SpecialMesh35.MeshId = "http://www.roblox.com/asset/?id=1051557"
+SpecialMesh35.Scale = Vector3.new(0.35500004887581, 0.11344904452562, 0.35500004887581)
+SpecialMesh35.MeshType = Enum.MeshType.FileMesh
+Part36.Name = "Wire"
+Part36.Parent = Model13
+Part36.CFrame = CFrame.new(-9.70999908, 0.28999871, -30.9849968, -0.819151878, -3.57628124e-07, -0.573576331, 0.573576629, 2.99333287e-08, -0.819152355, 1.70189693e-08, -1, -2.43047786e-08)
+Part36.Orientation = Vector3.new(55, -90, 90)
+Part36.Position = Vector3.new(-9.7099990844727, 0.28999871015549, -30.984996795654)
+Part36.Rotation = Vector3.new(90, -35, 180)
+Part36.Color = Color3.new(0.388235, 0.372549, 0.384314)
+Part36.Size = Vector3.new(0.35500004887581, 0.11345028877258, 0.35500004887581)
+Part36.BottomSurface = Enum.SurfaceType.Smooth
+Part36.BrickColor = BrickColor.new("Dark stone grey")
+Part36.CanCollide = false
+Part36.FrontSurface = Enum.SurfaceType.Weld
+Part36.Reflectance = 0.25
+Part36.TopSurface = Enum.SurfaceType.Smooth
+Part36.brickColor = BrickColor.new("Dark stone grey")
+Part36.FormFactor = Enum.FormFactor.Symmetric
+Part36.formFactor = Enum.FormFactor.Symmetric
+SpecialMesh37.Parent = Part36
+SpecialMesh37.MeshId = "http://www.roblox.com/asset/?id=1051557"
+SpecialMesh37.Scale = Vector3.new(0.35500004887581, 0.11344904452562, 0.35500004887581)
+SpecialMesh37.MeshType = Enum.MeshType.FileMesh
+Part38.Name = "Wire"
+Part38.Parent = Model13
+Part38.CFrame = CFrame.new(-9.70999908, 0.28999871, -30.7149963, -0.819151878, -3.57628096e-07, -0.573576331, 0.573576629, 2.99333216e-08, -0.819152355, 1.70189693e-08, -1, -2.43047857e-08)
+Part38.Orientation = Vector3.new(55, -90, 90)
+Part38.Position = Vector3.new(-9.7099990844727, 0.28999871015549, -30.714996337891)
+Part38.Rotation = Vector3.new(90, -35, 180)
+Part38.Color = Color3.new(0.388235, 0.372549, 0.384314)
+Part38.Size = Vector3.new(0.35500004887581, 0.11345028877258, 0.35500004887581)
+Part38.BottomSurface = Enum.SurfaceType.Smooth
+Part38.BrickColor = BrickColor.new("Dark stone grey")
+Part38.CanCollide = false
+Part38.FrontSurface = Enum.SurfaceType.Weld
+Part38.Reflectance = 0.25
+Part38.TopSurface = Enum.SurfaceType.Smooth
+Part38.brickColor = BrickColor.new("Dark stone grey")
+Part38.FormFactor = Enum.FormFactor.Symmetric
+Part38.formFactor = Enum.FormFactor.Symmetric
+SpecialMesh39.Parent = Part38
+SpecialMesh39.MeshId = "http://www.roblox.com/asset/?id=1051557"
+SpecialMesh39.Scale = Vector3.new(0.35500004887581, 0.11344904452562, 0.35500004887581)
+SpecialMesh39.MeshType = Enum.MeshType.FileMesh
+Part40.Name = "Wire"
+Part40.Parent = Model13
+Part40.CFrame = CFrame.new(-9.71000004, 0.289999932, -30.5199986, -2.98023135e-08, -3.57628096e-07, -0.999999821, 1.00000036, 2.99333252e-08, -1.4901163e-08, 2.96710052e-08, -1, 4.76063633e-13)
+Part40.Orientation = Vector3.new(0, -90, 90)
+Part40.Position = Vector3.new(-9.710000038147, 0.2899999320507, -30.519998550415)
+Part40.Rotation = Vector3.new(90, -89.970001220703, 94.76000213623)
+Part40.Color = Color3.new(0.388235, 0.372549, 0.384314)
+Part40.Size = Vector3.new(0.35500004887581, 0.11345028877258, 0.35500004887581)
+Part40.BottomSurface = Enum.SurfaceType.Smooth
+Part40.BrickColor = BrickColor.new("Dark stone grey")
+Part40.CanCollide = false
+Part40.FrontSurface = Enum.SurfaceType.Weld
+Part40.Reflectance = 0.25
+Part40.TopSurface = Enum.SurfaceType.Smooth
+Part40.brickColor = BrickColor.new("Dark stone grey")
+Part40.FormFactor = Enum.FormFactor.Symmetric
+Part40.formFactor = Enum.FormFactor.Symmetric
+SpecialMesh41.Parent = Part40
+SpecialMesh41.MeshId = "http://www.roblox.com/asset/?id=1051557"
+SpecialMesh41.Scale = Vector3.new(0.35500004887581, 0.11344904452562, 0.35500004887581)
+SpecialMesh41.MeshType = Enum.MeshType.FileMesh
+Part42.Name = "Wire"
+Part42.Parent = Model13
+Part42.CFrame = CFrame.new(-9.71000004, 0.290000141, -30.6099987, -0.42261821, -3.57628096e-07, -0.906307578, 0.906308115, 2.99333287e-08, -0.422618419, 2.68912785e-08, -1, -1.25390827e-08)
+Part42.Orientation = Vector3.new(25, -90, 90)
+Part42.Position = Vector3.new(-9.710000038147, 0.29000014066696, -30.609998703003)
+Part42.Rotation = Vector3.new(90, -65, 180)
+Part42.Color = Color3.new(0.388235, 0.372549, 0.384314)
+Part42.Size = Vector3.new(0.35500004887581, 0.11345028877258, 0.35500004887581)
+Part42.BottomSurface = Enum.SurfaceType.Smooth
+Part42.BrickColor = BrickColor.new("Dark stone grey")
+Part42.CanCollide = false
+Part42.FrontSurface = Enum.SurfaceType.Weld
+Part42.Reflectance = 0.25
+Part42.TopSurface = Enum.SurfaceType.Smooth
+Part42.brickColor = BrickColor.new("Dark stone grey")
+Part42.FormFactor = Enum.FormFactor.Symmetric
+Part42.formFactor = Enum.FormFactor.Symmetric
+SpecialMesh43.Parent = Part42
+SpecialMesh43.MeshId = "http://www.roblox.com/asset/?id=1051557"
+SpecialMesh43.Scale = Vector3.new(0.35500004887581, 0.11344904452562, 0.35500004887581)
+SpecialMesh43.MeshType = Enum.MeshType.FileMesh
+Part44.Name = "Wire"
+Part44.Parent = Model13
+Part44.CFrame = CFrame.new(-9.71000004, 0.290000141, -30.8799992, -0.422618181, -3.57628096e-07, -0.906307518, 0.906308115, 2.99333216e-08, -0.422618419, 2.68912821e-08, -1, -1.25390827e-08)
+Part44.Orientation = Vector3.new(25, -90, 90)
+Part44.Position = Vector3.new(-9.710000038147, 0.29000014066696, -30.879999160767)
+Part44.Rotation = Vector3.new(90, -65, 180)
+Part44.Color = Color3.new(0.388235, 0.372549, 0.384314)
+Part44.Size = Vector3.new(0.35500004887581, 0.11345028877258, 0.35500004887581)
+Part44.BottomSurface = Enum.SurfaceType.Smooth
+Part44.BrickColor = BrickColor.new("Dark stone grey")
+Part44.CanCollide = false
+Part44.FrontSurface = Enum.SurfaceType.Weld
+Part44.Reflectance = 0.25
+Part44.TopSurface = Enum.SurfaceType.Smooth
+Part44.brickColor = BrickColor.new("Dark stone grey")
+Part44.FormFactor = Enum.FormFactor.Symmetric
+Part44.formFactor = Enum.FormFactor.Symmetric
+SpecialMesh45.Parent = Part44
+SpecialMesh45.MeshId = "http://www.roblox.com/asset/?id=1051557"
+SpecialMesh45.Scale = Vector3.new(0.35500004887581, 0.11344904452562, 0.35500004887581)
+SpecialMesh45.MeshType = Enum.MeshType.FileMesh
+Weld46.Parent = Model13
+Weld46.C0 = CFrame.new(2.67028809e-05, 0.0150000602, 1.45503235, -0.42261824, -2.68221214e-07, -0.906307638, 0.906307876, 2.98677882e-08, -0.42261833, 6.47356515e-08, -1, 6.84633648e-08)
+Weld46.Part0 = Part1
+Weld46.Part1 = Part26
+Weld46.part1 = Part26
+Weld47.Parent = Model13
+Weld47.C0 = CFrame.new(2.76565552e-05, 0.0149986148, 1.62003517, -0.819151998, -2.68221271e-07, -0.573576391, 0.57357657, 2.98677776e-08, -0.819152236, 9.02943853e-08, -1, 2.69231926e-08)
+Weld47.Part0 = Part1
+Weld47.Part1 = Part34
+Weld47.part1 = Part34
+Weld48.Parent = Model13
+Weld48.C0 = CFrame.new(2.67028809e-05, 0.0150000751, 0.840032578, -0.42261824, -2.68221186e-07, -0.906307638, 0.906307995, 2.98677492e-08, -0.422618359, 6.4735687e-08, -1, 6.84633434e-08)
+Weld48.Part0 = Part1
+Weld48.Part1 = Part44
+Weld48.part1 = Part44
+Weld49.Parent = Model13
+Weld49.C0 = CFrame.new(2.76565552e-05, 0.0149986297, 1.0050354, -0.819151998, -2.68221186e-07, -0.573576391, 0.57357657, 2.98677492e-08, -0.819152236, 9.02944066e-08, -1, 2.69231784e-08)
+Weld49.Part0 = Part1
+Weld49.Part1 = Part38
+Weld49.part1 = Part38
+Weld50.Parent = Model13
+Weld50.C0 = CFrame.new(2.67028809e-05, 0.0150000602, 1.11003304, -0.42261827, -2.68221186e-07, -0.906307697, 0.906307995, 2.98677563e-08, -0.422618359, 6.4735687e-08, -1, 6.84633505e-08)
+Weld50.Part0 = Part1
+Weld50.Part1 = Part42
+Weld50.part1 = Part42
+Weld51.Parent = Model13
+Weld51.C0 = CFrame.new(2.76565552e-05, 0.0149986446, 0.735034943, -0.819151998, -2.68221214e-07, -0.573576391, 0.57357657, 2.98677563e-08, -0.819152236, 9.02944066e-08, -1, 2.69231855e-08)
+Weld51.Part0 = Part1
+Weld51.Part1 = Part36
+Weld51.part1 = Part36
+Weld52.Parent = Model13
+Weld52.C0 = CFrame.new(2.76565552e-05, 0.0149986297, 1.35003471, -0.819151938, -2.68221214e-07, -0.573576391, 0.57357651, 2.98677669e-08, -0.819152176, 9.02943995e-08, -1, 2.69231926e-08)
+Weld52.Part0 = Part1
+Weld52.Part1 = Part28
+Weld52.part1 = Part28
+Weld53.Parent = Model13
+Weld53.C0 = CFrame.new(2.67028809e-05, 0.0149998516, 1.7400322, -2.98023188e-08, -2.68221186e-07, -0.999999881, 1.00000024, 2.98677456e-08, -3.12035651e-15, 2.97365883e-08, -1, 8.94073509e-08)
+Weld53.Part0 = Part1
+Weld53.Part1 = Part14
+Weld53.part1 = Part14
+Weld54.Parent = Model13
+Weld54.C0 = CFrame.new(2.67028809e-05, 0.0150000602, 1.65003204, -0.42261824, -2.68221214e-07, -0.906307638, 0.906307876, 2.98677918e-08, -0.42261833, 6.47356515e-08, -1, 6.84633719e-08)
+Weld54.Part0 = Part1
+Weld54.Part1 = Part16
+Weld54.part1 = Part16
+Weld55.Parent = Model13
+Weld55.C0 = CFrame.new(2.67028809e-05, 0.0149998516, 1.5450325, -2.98023188e-08, -2.68221214e-07, -0.999999881, 1.00000012, 2.98677847e-08, -3.12036371e-15, 2.97365474e-08, -1, 8.94073509e-08)
+Weld55.Part0 = Part1
+Weld55.Part1 = Part24
+Weld55.part1 = Part24
+Weld56.Parent = Model13
+Weld56.C0 = CFrame.new(2.67028809e-05, 0.0149991065, 1.45503426, -0.98480767, -2.68221186e-07, -0.173648164, 0.173648193, 2.9867735e-08, -0.984807968, 9.32127691e-08, -1, -1.37594061e-08)
+Weld56.Part0 = Part1
+Weld56.Part1 = Part20
+Weld56.part1 = Part20
+Weld57.Parent = Model13
+Weld57.C0 = CFrame.new(2.67028809e-05, 0.0149991065, 1.26003456, -0.98480767, -2.68221243e-07, -0.173648104, 0.173648193, 2.98677847e-08, -0.984807968, 9.32127548e-08, -1, -1.37593617e-08)
+Weld57.Part0 = Part1
+Weld57.Part1 = Part22
+Weld57.part1 = Part22
+Weld58.Parent = Model13
+Weld58.C0 = CFrame.new(2.67028809e-05, 0.0149998516, 1.20003319, -2.98023188e-08, -2.68221186e-07, -0.99999994, 1.00000024, 2.98677527e-08, -3.12035778e-15, 2.97365794e-08, -1, 8.94073509e-08)
+Weld58.Part0 = Part1
+Weld58.Part1 = Part40
+Weld58.part1 = Part40
+Weld59.Parent = Model13
+Weld59.C0 = CFrame.new(2.67028809e-05, 0.0150000453, 1.72503281, -0.42261827, -2.68221271e-07, -0.906307757, 0.906308055, 2.98677989e-08, -0.422618419, 6.47356444e-08, -1, 6.84633505e-08)
+Weld59.Part0 = Part1
+Weld59.Part1 = Part32
+Weld59.part1 = Part32
+Weld60.Parent = Model13
+Weld60.C0 = CFrame.new(2.76565552e-05, 0.0149986297, 1.54503441, -0.819151938, -2.68221186e-07, -0.573576391, 0.57357657, 2.98677278e-08, -0.819152236, 9.02944208e-08, -1, 2.69231606e-08)
+Weld60.Part0 = Part1
+Weld60.Part1 = Part18
+Weld60.part1 = Part18
+Weld61.Parent = Model13
+Weld61.C0 = CFrame.new(2.67028809e-05, 0.0149998367, 1.81503296, -1.74618098e-10, -2.68221271e-07, -1, 1.00000036, 2.98677953e-08, 1.7461986e-10, 2.97365403e-08, -1, 8.94073366e-08)
+Weld61.Part0 = Part1
+Weld61.Part1 = Part30
+Weld61.part1 = Part30
+Script62.Parent = Tool0
+for i = 1,10 do
+	local a = Instance.new("Attachment", Part1)
+	a.Name = "hitat"
+	if i == 1 then
+		a.Position = Vector3.new(-0, 0.19, 1.085)
+	elseif i == 2 then
+		a.Position = Vector3.new(0, -0.19, 1.085)
+	elseif i == 3 then
+		a.Position = Vector3.new(-0, 0.19, 2.085)
+	elseif i == 4 then
+		a.Position = Vector3.new(0, -0.19, 0.585)
+	elseif i == 5 then
+		a.Position = Vector3.new(-0, 0.19, 1.585)
+	elseif i == 6 then
+		a.Position = Vector3.new(-0, 0.19, 0.585)
+	elseif i == 7 then
+		a.Position = Vector3.new(0, -0.19, 1.585)
+	elseif i == 8 then
+		a.Position = Vector3.new(0, -0.19, 2.085)
+	elseif i == 9 then
+		a.Position = Vector3.new(-0, -0, -0.84)
+		a.Name = "trailat1"
+		Trail2.Attachment0 = a
+	elseif i == 10 then
+		a.Position = Vector3.new(-0, 0, 2.184)
+		a.Name = "trailat2"
+		Trail2.Attachment1 = a
+	end
+end
+table.insert(cors,sandbox(Script62,function()
+	--By Rufus14, FPS unlocker really recommended to improve hitbox (serverside anims amazig;.)
+	tool = script.Parent
+	handle = tool.Handle
+	trail = handle.trail
+	players = game:GetService("Players")
+	runservice = game:GetService("RunService")
+	tweenservice = game:GetService("TweenService")
+	player = nil
+	character = nil
+	charhum = nil
+	validatetick = nil
+	lastswingtick = tick()
+	equiptick = nil
+	swinganimation = 0
+	state = "unequipped"
+	hitpeople = {}
+	remote = tool.RemoteEvent
+	cfnew = CFrame.new
+	cfeuler = CFrame.fromEulerAnglesXYZ
+	headoffset = 0
+	speedbuff = 3
+	animslowdownmult = 1
+	damage = 32
+	ragdolldeath = true
+	ragdolldespawntime = 10
+	swingids = {7025241907, 7025242231, 7025242061}
+	headshotids = {7025209172, 7025209359, 7025209663}
+
+	function monar(WHAT, duration)
+		game:GetService("Debris"):AddItem(WHAT, duration)
+	end
+
+	function pose(POSE, KEYFRAME, speeed, btick)
+		if state ~= "unequipped" and btick == validatetick then
+			local findhead = findthing("HeadWeld", character.Torso)
+			local findrarm = findthing("RightArmWeld", character.Head)
+			local findlarm = findthing("LeftArmWeld", character.Head)
+			local findrootpart = findthing("HumanoidRootPartWeld", character.HumanoidRootPart)
+			local findhandle = findthing("RightGrip", character["Right Arm"])
+			local startheadcf = cfnew(0,1.15,0) * cfeuler(-headoffset/1.5,0,0) * cfnew(0,0.35,0)
+			if POSE == "equip" then
+				if KEYFRAME == 1 then
+					tween(speeed, Enum.EasingStyle.Sine, Enum.EasingDirection.In, 0, false, 0, findhead, {C0 = startheadcf})
+					tween(speeed, Enum.EasingStyle.Sine, Enum.EasingDirection.In, 0, false, 0, findlarm, {C0 = cfnew(-1.44015026, -1.21483612, -0.510011673, 0.939692616, -0.0593911, -0.336824089, -0.219846278, 0.649519145, -0.727868319, 0.262002617, 0.75802207, 0.59729147)})
+					tween(speeed, Enum.EasingStyle.Sine, Enum.EasingDirection.In, 0, false, 0, findrarm, {C0 = cfnew(1.50723648, -0.872226715, -0.475799561, 0.993774354, -0.0206981599, 0.109471887, 0.105154656, -0.150392503, -0.983018041, 0.0368103981, 0.988409638, -0.147279769)})
+				elseif KEYFRAME == 2 then
+					tween(speeed, Enum.EasingStyle.Sine, Enum.EasingDirection.Out, 0, false, 0, findhead, {C0 = startheadcf})
+					tween(speeed, Enum.EasingStyle.Sine, Enum.EasingDirection.Out, 0, false, 0, findlarm, {C0 = cfnew(-0.346603394, -0.875337601, -1.26449776, 0.386504501, -0.922008514, -0.0226809084, -0.380557179, -0.137031734, -0.91454798, 0.840113282, 0.362108439, -0.403840333)})
+					tween(speeed, Enum.EasingStyle.Sine, Enum.EasingDirection.Out, 0, false, 0, findrarm, {C0 = cfnew(1.19728947, -1.18899059, -1.02231216, 0.723017693, 0.65307492, -0.225251526, 0.239422247, -0.542735159, -0.805056036, -0.648014128, 0.52813971, -0.548767924)})
+					tween(speeed, Enum.EasingStyle.Sine, Enum.EasingDirection.Out, 0, false, 0, findrootpart, {C0 = cfnew()})
+					tween(speeed, Enum.EasingStyle.Sine, Enum.EasingDirection.Out, 0, false, 0, findhandle, {C0 = cfnew(-0.146380901, -0.737253189, -1.19895506, -2.30073929e-05, 0.984813273, -0.173616707, 0.965931416, 0.0449533761, 0.254863977, 0.258798063, -0.167695761, -0.95126307)})
+				end
+			elseif POSE == "swing" then
+				if KEYFRAME == 1 then
+					tween(speeed, Enum.EasingStyle.Back, Enum.EasingDirection.Out, 0, false, 0, findhead, {C0 = cfnew(0,1.15,0) * cfeuler(-headoffset/1.5,0,0) * cfnew(0.0174388885, 0, -0.0302057266, 0.498782009, 0.034878239, 0.866025448, -0.0697564781, 0.997564077, 0, -0.863915861, -0.0604108907, 0.49999997) * cfnew(0,0.35,0)})
+					tween(speeed, Enum.EasingStyle.Back, Enum.EasingDirection.Out, 0, false, 0, findlarm, {C0 = cfnew(1.26383877, -0.320791245, -0.0221424103, -0.453994513, -0.6217888, 0.638175189, -0.373202592, -0.517683685, -0.769885063, 0.809078932, -0.58769244, 0.00297236443)})
+					tween(speeed, Enum.EasingStyle.Back, Enum.EasingDirection.Out, 0, false, 0, findrootpart, {C0 = cfnew(0, 0, 0, 0.49999997, 0, -0.866025448, 0, 1, 0, 0.866025448, 0, 0.49999997)})
+					tween(speeed, Enum.EasingStyle.Back, Enum.EasingDirection.Out, 0, false, 0, findrarm, {C0 = cfnew(1.47292042, -0.71627903, 0.928699493, 0.864569545, -0.310034782, 0.395471781, -0.18596983, -0.928516686, -0.321359307, 0.466834486, 0.204291821, -0.860424399)})
+					tween(speeed, Enum.EasingStyle.Back, Enum.EasingDirection.Out, 0, false, 0, findhandle, {C0 = cfnew(-0.146380901, -0.737253189, -1.19895506, -2.30073929e-05, 0.984813273, -0.173616707, 0.965931416, 0.0449533761, 0.254863977, 0.258798063, -0.167695761, -0.95126307)})
+				elseif KEYFRAME == 2 then
+					tween(speeed, Enum.EasingStyle.Sine, Enum.EasingDirection.In, 0, false, 0, findhead, {C0 = cfnew(0,1.15,0) * cfeuler(-headoffset/1.5,0,0) * cfnew(0.0377388, 0, -0.0217895508, 0.98171097, 0.0754790828, 0.174775332, -0.0818996057, 0.99619472, 0.0298090167, -0.171860278, -0.0435778685, 0.984156907) * cfnew(0,0.35,0)})
+					tween(speeed, Enum.EasingStyle.Sine, Enum.EasingDirection.In, 0, false, 0, findlarm, {C0 = cfnew(0.468593597, -1.03038788, -1.23982811, 0.432251483, -0.812906563, -0.390309304, -0.815274477, -0.16733487, -0.554370344, 0.385338962, 0.557836533, -0.735072732)})
+					tween(speeed, Enum.EasingStyle.Sine, Enum.EasingDirection.In, 0, false, 0, findrootpart, {C0 = cfnew(0, 0, 0, 0.965925753, 0, -0.258819252, 0, 1, 0, 0.258819252, 0, 0.965925753)})
+					tween(speeed, Enum.EasingStyle.Sine, Enum.EasingDirection.In, 0, false, 0, findrarm, {C0 = cfnew(1.37798214, -1.33913612, -0.998968124, 0.723661661, 0.0184313767, -0.689908445, -0.593295872, -0.494076759, -0.635521889, -0.352581263, 0.86922276, -0.346609175)})
+					tween(speeed, Enum.EasingStyle.Sine, Enum.EasingDirection.In, 0, false, 0, findhandle, {C0 = cfnew(-0.27100563, -1.7641201, -0.778264999, -0.0508781821, 0.977075875, -0.206721604, 0.787041605, -0.088194713, -0.61056298, -0.61479789, -0.193762809, -0.764512599)})
+				elseif KEYFRAME == 3 then
+					tween(speeed, Enum.EasingStyle.Back, Enum.EasingDirection.Out, 0, false, 0, findhead, {C0 = cfnew(0,1.15,0) * cfeuler(-headoffset/1.5,0,0) * cfnew(-0.0290613174, 0, 0.0341873169, 0.642215371, -0.0581262708, -0.764317155, -0.0151344156, 0.995964825, -0.0884597152, 0.766374826, 0.0683777183, 0.638743997) * cfnew(0,0.35,0)})
+					tween(speeed, Enum.EasingStyle.Back, Enum.EasingDirection.Out, 0, false, 0, findlarm, {C0 = cfnew(-1.34177113, -1.71902466, -0.075170517, 0.540476441, 0.622194886, -0.566355288, -0.827879965, 0.513294995, -0.226147667, 0.149999231, 0.591101706, 0.792526603)})
+					tween(speeed, Enum.EasingStyle.Back, Enum.EasingDirection.Out, 0, false, 0, findrootpart, {C0 = cfnew(0, 0, 0, 0.707106888, -0.122787632, 0.696364164, 0, 0.984807789, 0.17364797, -0.70710665, -0.122787677, 0.696364343)})
+					tween(speeed, Enum.EasingStyle.Back, Enum.EasingDirection.Out, 0, false, 0, findrarm, {C0 = cfnew(-0.689968109, -1.82466888, -1.10832024, 0.0564864352, 0.983989894, 0.169034928, -0.723721862, 0.156985015, -0.67199868, -0.687775791, -0.0843754783, 0.72100246)})
+					tween(speeed, Enum.EasingStyle.Back, Enum.EasingDirection.Out, 0, false, 0, findhandle, {C0 = cfnew(0.858270645, -2.00149822, -0.718647003, -0.274746865, 0.729312301, 0.626599252, 0.369775802, 0.68170315, -0.631313443, -0.887577295, 0.0582513511, -0.456976354)})
+				end
+			elseif POSE == "swing2" then
+				if KEYFRAME == 1 then
+					tween(speeed, Enum.EasingStyle.Back, Enum.EasingDirection.Out, 0, false, 0, findhead, {C0 = cfnew(0,1.15,0) * cfeuler(-headoffset/1.5,0,0) * cfnew(0, 0, 0, 0.342020124, 0, -0.939692497, 0, 1, 0, 0.939692497, 0, 0.342020124 ) * cfnew(0,0.35,0)})
+					tween(speeed, Enum.EasingStyle.Back, Enum.EasingDirection.Out, 0, false, 0, findlarm, {C0 = cfnew(-1.71396351, -1.6685009, 0.976118088, 0.499530166, 0.744541049, -0.442863405, -0.0158833992, -0.503257155, -0.863990664, -0.866150677, 0.438623607, -0.239566326)})
+					tween(speeed, Enum.EasingStyle.Back, Enum.EasingDirection.Out, 0, false, 0, findrootpart, {C0 = cfnew(0, 0, 0, 0.342020035, 0, 0.939692616, 0, 1, 0, -0.939692616, 0, 0.342020035)})
+					tween(speeed, Enum.EasingStyle.Back, Enum.EasingDirection.Out, 0, false, 0, findrarm, {C0 = cfnew(-1.62695694, -1.15502453, -0.621263504, -0.388809949, 0.676470757, -0.625470757, 0.786783457, -0.109439395, -0.607449293, -0.479372889, -0.728292584, -0.48968491)})
+					tween(speeed, Enum.EasingStyle.Back, Enum.EasingDirection.Out, 0, false, 0, findhandle, {C0 = cfnew(-0.0732631683, -1.26810265, -1.21585846, -0.166786343, 0.985272348, 0.0376830995, 0.967181802, 0.17091462, -0.188006341, -0.191677839, 0.00508895516, -0.98144424)})
+				elseif KEYFRAME == 2 then
+					tween(speeed, Enum.EasingStyle.Sine, Enum.EasingDirection.In, 0, false, 0, findhead, {C0 = cfnew(0,1.15,0) * cfeuler(-headoffset/1.5,0,0) * cfnew(0, 0, 0, 0.999999881, 1.69406589e-21, 0, 1.69406589e-21, 0.999999881, 1.42108547e-14, 0, 1.42108547e-14, 0.999999762) * cfnew(0,0.35,0)})
+					tween(speeed, Enum.EasingStyle.Sine, Enum.EasingDirection.In, 0, false, 0, findlarm, {C0 = cfnew(-0.751349449, -1.3943367, -1.64109993, 0.984764755, -0.157523334, 0.0736504793, -0.0158834103, -0.503257036, -0.863990545, 0.173163831, 0.849657655, -0.498091936) * cfnew(0,-0.5,0)})
+					tween(speeed, Enum.EasingStyle.Sine, Enum.EasingDirection.In, 0, false, 0, findrootpart, {C0 = cfnew()})
+					tween(speeed, Enum.EasingStyle.Sine, Enum.EasingDirection.In, 0, false, 0, findrarm, {C0 = cfnew(0.534347534, -1.19490814, -1.69585228, 0.811359644, 0.568405509, 0.136419684, 0.312516361, -0.224575609, -0.922983706, -0.493992656, 0.791505158, -0.359847665) * cfnew(0,-0.5,0) * cfeuler(-0.3,0,0)})
+					tween(speeed, Enum.EasingStyle.Sine, Enum.EasingDirection.In, 0, false, 0, findhandle, {C0 = cfnew(-0.241220474, -2.86224651, -0.358363152, 0.00764432549, 0.983584642, -0.180281967, 0.161737233, -0.179129779, -0.970439374, -0.986803532, -0.0217397511, -0.160451934)})
+				elseif KEYFRAME == 3 then
+					tween(speeed, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut, 0, false, 0, findhead, {C0 = cfnew(0,1.15,0) * cfeuler(-headoffset/1.5,0,0) * cfnew(-0.055809021, 0, -0.0665121078, 0.76604414, -0.111618906, 0.63302213, 5.93718141e-09, 0.984807551, 0.173648134, -0.642787576, -0.133022189, 0.754406095) * cfnew(0,0.35,0)})
+					tween(speeed, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut, 0, false, 0, findlarm, {C0 = cfnew(1.11655521, -0.562868118, -1.38667488, 0.0639937669, -0.92416805, 0.376586914, -0.493751466, -0.357257128, -0.792828083, 0.86724484, -0.135204315, -0.479171693)})
+					tween(speeed, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut, 0, false, 0, findrootpart, {C0 = cfnew(0, 0, 0, 0.766044319, -0.111618891, -0.633022189, 1.3409597e-07, 0.98480767, -0.173648, 0.642787576, 0.133021981, 0.754406393)})
+					tween(speeed, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut, 0, false, 0, findrarm, {C0 = cfnew(1.71633816, -1.00290394, -0.395078659, 0.67222333, -0.505163789, 0.541225433, -0.0338932052, -0.751273572, -0.659119725, 0.73957181, 0.42473188, -0.522145271)})
+					tween(speeed, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut, 0, false, 0, findhandle, {C0 = cfnew(1.01893806, -1.66208458, -0.151894569, 0.00764530897, 0.505814016, 0.86260426, 0.161738127, 0.850645602, -0.500235498, -0.986800253, 0.143342197, -0.0753064603)})
+				elseif KEYFRAME == 4 then
+					tween(speeed, Enum.EasingStyle.Sine, Enum.EasingDirection.Out, 0, false, 0, findhead, {C0 = cfnew(0,1.15,0) * cfeuler(-headoffset/1.5,0,0) * cfnew(-0.055809021, 0, -0.0665102005, 0.644483089, -0.111618906, 0.756427348, -0.0301536676, 0.984807491, 0.171009988, -0.764023483, -0.133022189, 0.631326079) * cfnew(0,0.35,0)})
+					tween(speeed, Enum.EasingStyle.Sine, Enum.EasingDirection.Out, 0, false, 0, findlarm, {C0 = cfnew(1.10373497, -1.15006447, -1.29962158, -0.0875738859, -0.677876234, 0.72994113, -0.493751466, -0.606875062, -0.622825444, 0.865181863, -0.414952993, -0.281555951)})
+					tween(speeed, Enum.EasingStyle.Sine, Enum.EasingDirection.Out, 0, false, 0, findrootpart, {C0 = cfnew(0, 0, 0, 0.644483268, -0.111618891, -0.756427348, -0.030153526, 0.98480767, -0.171009928, 0.764023483, 0.133021981, 0.631326377)})
+					tween(speeed, Enum.EasingStyle.Sine, Enum.EasingDirection.Out, 0, false, 0, findrarm, {C0 = cfnew(1.89929962, -1.31779194, -0.0299015045, 0.581651509, -0.225913569, 0.781437278, 0.128357366, -0.92313391, -0.362419009, 0.803246856, 0.311104834, -0.507944584)})
+					tween(speeed, Enum.EasingStyle.Sine, Enum.EasingDirection.Out, 0, false, 0, findhandle, {C0 = cfnew(0.955036163, -1.17753029, -0.831868172, -0.475446224, 0.265319109, 0.83878231, 0.271580398, 0.951135039, -0.146918297, -0.836776137, 0.157945231, -0.524268925)})
+				end
+			elseif POSE == "swing3" then
+				if KEYFRAME == 1 then
+					tween(speeed, Enum.EasingStyle.Sine, Enum.EasingDirection.In, 0, false, 0, findhead, {C0 = cfnew(0,1.15,0) * cfeuler(-headoffset/1.5,0,0) * cfnew(0, 0, -0.0868225098, 1, 0, 0, 0, 0.98480767, 0.173648164, 0, -0.173648164, 0.98480767) * cfnew(0,0.35,0)})
+					tween(speeed, Enum.EasingStyle.Sine, Enum.EasingDirection.In, 0, false, 0, findlarm, {C0 = cfnew(0.796385765, 0.0757751465, -0.343711853, 0.766044378, -0.604022682, 0.219846278, -0.63302207, -0.768301308, 0.0948461443, 0.111619003, -0.21182394, -0.970912814 )})
+					tween(speeed, Enum.EasingStyle.Sine, Enum.EasingDirection.In, 0, false, 0, findrootpart, {C0 = cfnew(0, 0, 0, 1, 0, 0, 0, 0.984807789, -0.173648, 0, 0.173648, 0.984807789)})
+					tween(speeed, Enum.EasingStyle.Sine, Enum.EasingDirection.In, 0, false, 0, findrarm, {C0 = cfnew(1.7368679, -0.087428093, -0.168655396, 0.934456468, 0.312324524, -0.171010062, 0.309603035, -0.949890375, -0.0430586189, -0.17588909, -0.0127088176, -0.984327853)})
+					tween(speeed, Enum.EasingStyle.Sine, Enum.EasingDirection.In, 0, false, 0, findhandle, {C0 = cfnew(-0.0345821381, -0.968569279, -1.29231453, -0.998848438, 0.0450143069, 0.0166018009, 0.0454964787, 0.998516679, 0.0299096555, -0.0152308121, 0.0306305382, -0.999414802)})
+				elseif KEYFRAME == 2 then
+					tween(speeed, Enum.EasingStyle.Back, Enum.EasingDirection.Out, 0, false, 0, findhead, {C0 = cfnew(0,1.15,0) * cfeuler(-headoffset/1.5,0,0) * cfnew(0, 0, -0.12940979, 1, 0, 0, 0, 0.965925634, 0.258819222, 0, -0.258819222, 0.965925634) * cfnew(0,0.35,0)})
+					tween(speeed, Enum.EasingStyle.Back, Enum.EasingDirection.Out, 0, false, 0, findlarm, {C0 = cfnew(-0.746841431, -0.0773735046, 0.891805649, 0.766044378, -0.63302207, 0.111618876, -0.640341461, -0.766669989, 0.0466844551, 0.0560225956, -0.107236542, -0.992653787)})
+					tween(speeed, Enum.EasingStyle.Back, Enum.EasingDirection.Out, 0, false, 0, findrootpart, {C0 = cfnew(0, 0, 0, 1, 0, 0, 0, 0.965925813, -0.258819073, 0, 0.258819073, 0.965925813)})
+					tween(speeed, Enum.EasingStyle.Back, Enum.EasingDirection.Out, 0, false, 0, findrarm, {C0 = cfnew(0.672301292, -0.081035614, 0.86533165, 0.771280527, 0.613091946, -0.171010062, 0.627496302, -0.777436674, 0.0428952649, -0.106650792, -0.140392482, -0.984334946)})
+					tween(speeed, Enum.EasingStyle.Back, Enum.EasingDirection.Out, 0, false, 0, findhandle, {C0 = cfnew(-0.379814982, -0.958043098, -1.12813187, -0.969109595, 0.0450149924, -0.24248451, 0.0362042785, 0.998515546, 0.0406659544, 0.243955597, 0.0306303501, -0.969301403)})
+				elseif KEYFRAME == 3 then
+					tween(speeed, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut, 0, false, 0, findhead, {C0 = startheadcf})
+					tween(speeed, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut, 0, false, 0, findlarm, {C0 = cfnew(-0.562223434, -0.596881866, -1.65935898, 0.775031686, -0.624108315, 0.0990685523, -0.288765669, -0.489229709, -0.822963238, 0.562085569, 0.609215021, -0.559389591)})
+					tween(speeed, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut, 0, false, 0, findrootpart, {C0 = cfnew(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1)})
+					tween(speeed, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut, 0, false, 0, findrarm, {C0 = cfnew(0.593421936, -0.552446365, -1.70380592, 0.718169987, 0.68638283, -0.114499636, 0.331653178, -0.482269466, -0.810815692, -0.611749828, 0.544329524, -0.57399261)})
+					tween(speeed, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut, 0, false, 0, findhandle, {C0 = cfnew(-0.132482529, -0.997898102, -1.0688448, -0.940604866, -0.299210191, -0.160400212, -0.30020088, 0.953692019, -0.018627584, 0.158546746, 0.0306296647, -0.986872315)})
+				elseif KEYFRAME == 4 then
+					tween(speeed, Enum.EasingStyle.Back, Enum.EasingDirection.Out, 0, false, 0, findhead, {C0 = cfnew(0,1.15,0) * cfeuler(-headoffset/1.5,0,0) * cfnew(0, 0, 9.53674316e-07, 1, 0, 0, 0, 0.99999994, 1.78813934e-07, 0, -1.78813934e-07, 0.99999994) * cfnew(0,0.35,0)})
+					tween(speeed, Enum.EasingStyle.Back, Enum.EasingDirection.Out, 0, false, 0, findlarm, {C0 = cfnew(-0.74751091, -1.71400833, -1.80980396, 0.669179022, -0.668126702, -0.325278282, -0.257598877, 0.202019632, -0.944897056, 0.697023571, 0.716096699, -0.0369215012 )})
+					tween(speeed, Enum.EasingStyle.Back, Enum.EasingDirection.Out, 0, false, 0, findrootpart, {C0 = cfnew(0, 0, 0, 1, 0, 0, 0, 0.939692616, 0.342020124, 0, -0.342020124, 0.939692616)})
+					tween(speeed, Enum.EasingStyle.Back, Enum.EasingDirection.Out, 0, false, 0, findrarm, {C0 = cfnew(0.804405212, -1.65768433, -1.90096951, 0.603174865, 0.715001345, 0.353486657, 0.300264925, 0.207028121, -0.931117594, -0.738932192, 0.667766571, -0.0898155719)})
+					tween(speeed, Enum.EasingStyle.Back, Enum.EasingDirection.Out, 0, false, 0, findhandle, {C0 = cfnew(0.966485977, -2.02819061, 0.0981464386, -0.580123961, 0.380487472, 0.72019887, -0.690416873, 0.239446431, -0.682635307, -0.432182938, -0.893250108, 0.123785973)})
+				elseif KEYFRAME == 5 then
+					tween(speeed, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut, 0, false, 0, findhead, {C0 = cfnew(0,1.15,0) * cfeuler(-headoffset/1.5,0,0) * cfnew(0, 0, 0, 0.98480767, 3.7252903e-09, 0.173648149, -3.46973899e-08, 0.99999994, 2.08616257e-07, -0.173648149, -1.78813934e-07, 0.984807551) * cfnew(0,0.35,0)})
+					tween(speeed, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut, 0, false, 0, findlarm, {C0 = cfnew(0.0776042938, -1.66754246, -2.23198795, 0.537975729, -0.842513919, -0.0274220333, -0.257598877, -0.133337677, -0.957007527, 0.802635908, 0.521910846, -0.288763225)})
+					tween(speeed, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut, 0, false, 0, findrootpart, {C0 = cfnew(0, 0, 0, 0.98480773, 0, -0.173648179, 0.0593911707, 0.939692616, 0.336824059, 0.163175911, -0.342020124, 0.925416529)})
+					tween(speeed, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut, 0, false, 0, findrarm, {C0 = cfnew(1.52778149, -1.50555038, -1.5170393, 0.931409717, -0.0137279872, 0.363712698, 0.363091379, -0.0344138145, -0.931117594, 0.0252991095, 0.999313176, -0.027068764)})
+					tween(speeed, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut, 0, false, 0, findhandle, {C0 = cfnew(0.712293625, -1.52509308, -0.711421967, -0.580123723, -0.171464115, 0.796275735, -0.690416694, 0.622215748, -0.369015336, -0.432182729, -0.763837337, -0.479344487)})
+				end
+			end
+		end
+	end
+
+	function tooltransparency(transparency)
+		table.foreach(tool:GetDescendants(), function(_, XD) if XD:IsA("BasePart") then XD.Transparency = transparency end end)
+	end
+	function weldlimb(part0, part1, startc0, name)
+		local a = Instance.new("Weld", part0)
+		a.Part0 = part0
+		a.Part1 = part1
+		a.C0 = startc0
+		a.Name = name
+	end
+	function playsound(id, volume, speed, debris, timeposition)
+		pcall(function()
+			local s = Instance.new("Sound", handle)
+			s.SoundId = "rbxassetid://"..tostring(id)
+			s.Volume = volume
+			s.PlaybackSpeed = speed
+			s.TimePosition = timeposition
+			s:Play()
+			monar(s, debris)
+		end)
+	end
+	function playswingid()
+		local rand = math.random(1,#swingids)
+		playsound(swingids[rand], 3, 1+math.random(-10,10)/70, 4, 0)
+	end
+	function playheadshotid()
+		local rand = math.random(1,#headshotids)
+		playsound(headshotids[rand], 1, 1+math.random(-10,10)/70, 4, 0.2)
+	end
+	function tween(speed, easingstyle, easingdirection, loopcount, reverseafterfinish, delaytime, WHAT, goal)
+		local info = TweenInfo.new(speed, easingstyle, easingdirection, loopcount, reverseafterfinish, delaytime)
+		local goals = goal
+		local anim = tweenservice:Create(WHAT, info, goals)
+		anim:Play()
+	end
+	function findthing(WHAT, parent)
+		local thing = parent:FindFirstChild(WHAT, true)
+		if thing then
+			return thing
+		else return nil end
+	end
+	function push(WHAT, force, debris)
+		local v = Instance.new("BodyVelocity", WHAT)
+		v.MaxForce = Vector3.new(math.huge,math.huge,math.huge)
+		v.Velocity = (WHAT.Position - character.Head.Position).unit*force
+		monar(v, debris)
+	end
+	function explodehead(ch)
+		local ched = ch:FindFirstChild("Head")
+		if ched then
+			print("bom")
+			ched.Transparency = 1
+			for i,v in pairs(ch:GetDescendants()) do
+				if v.Parent ~= nil then
+					if v.Parent.ClassName == "Accessory" or v.Parent.ClassName == "Hat" then
+						if v:IsA("BasePart") then
+							v:Destroy()
+						end
+					end
+				end
+				if v.ClassName == "Decal" and v.Parent.Name == "Head" then
+					v:Destroy()
+				end
+			end
+			for i = 1,math.random(25,30) do
+				local hedd = Instance.new("Part", workspace)
+				hedd.Size = Vector3.new(0.25,0.25,0.25)
+				hedd.CFrame = ched.CFrame * cfnew(math.random(-10,10)/20,math.random(-10,10)/20,math.random(-10,10)/20)
+				monar(hedd, 7)
+				if math.random(1,3) == 1 then
+					hedd.BrickColor = ched.BrickColor
+					hedd.Material = ched.Material
+				else
+					hedd.BrickColor = BrickColor.new("Maroon")
+					hedd.Material = "Granite"
+				end
+			end
+			playsound("4459572527", 1, 1+math.random(-10,10)/70, 2, 0)
+		end
+	end
+	function makeballconnections(limb, attachementone, attachmenttwo, twistlower, twistupper, du)
+		local connection = Instance.new('BallSocketConstraint', limb)
+		local bone = Instance.new("Part", limb)
+		connection.LimitsEnabled = true
+		connection.Attachment0 = attachementone
+		connection.Attachment1 = attachmenttwo
+		connection.TwistLimitsEnabled = true
+		connection.TwistLowerAngle = twistlower
+		connection.TwistUpperAngle = twistupper
+		bone:BreakJoints()
+		local bonew = Instance.new("Weld", bone)
+		bonew.Part0 = limb
+		bonew.Part1 = bone
+		bonew.C0 = CFrame.fromEulerAnglesXYZ(0,0,math.pi/2) * CFrame.new(-limb.Size.y/4.5,0,0)
+		if limb.Parent:FindFirstChildOfClass("Humanoid").RigType == Enum.HumanoidRigType.R6 then
+			bone.Size = Vector3.new(limb.Size.y/1.8,limb.Size.z,limb.Size.x)
+		else
+			bone.Size = Vector3.new(limb.Size.y/3,limb.Size.z,limb.Size.x)
+		end
+		bone.Transparency = 1
+		bone.Shape = "Cylinder"
+		local noc = Instance.new("NoCollisionConstraint", bone)
+		noc.Part0 = attachementone.Parent
+		noc.Part1 = attachmenttwo.Parent
+		monar(bone, du)
+		monar(connection, du)
+	end
+	function makehingeconnections(limb, attachementone, attachmenttwo, lower, upper, du)
+		local connection = Instance.new('HingeConstraint', limb)
+		local bone = Instance.new("Part", limb)
+		connection.LimitsEnabled = true
+		connection.Attachment0 = attachementone
+		connection.Attachment1 = attachmenttwo
+		connection.LimitsEnabled = true
+		connection.LowerAngle = lower
+		connection.UpperAngle = upper
+		bone:BreakJoints()
+		local bonew = Instance.new("Weld", bone)
+		bonew.Part0 = limb
+		bonew.Part1 = bone
+		bonew.C0 = CFrame.fromEulerAnglesXYZ(0,0,math.pi/2) * CFrame.new(-limb.Size.y/4.5,0,0)
+		if limb.Parent:FindFirstChildOfClass("Humanoid").RigType == Enum.HumanoidRigType.R6 then
+			bone.Size = Vector3.new(limb.Size.y/1.8,limb.Size.z,limb.Size.x)
+		elseif limb.Parent:FindFirstChildOfClass("Humanoid").RigType == Enum.HumanoidRigType.R15 then
+			bone.Size = Vector3.new(limb.Size.y/3,limb.Size.z,limb.Size.x)
+		elseif limb.Name == "Head" then
+			bone.Size = Vector3.new(limb.Size.y/5,limb.Size.z,limb.Size.x)
+		end
+		bone.Transparency = 1
+		bone.Shape = "Cylinder"
+		local noc = Instance.new("NoCollisionConstraint", bone)
+		noc.Part0 = attachementone.Parent
+		noc.Part1 = attachmenttwo.Parent
+		monar(bone, du)
+		monar(connection, du)
+	end
+	function makeragdolllimbr6(limb, dudetorso, at1pos, at2pos, lowt, upt, duratio)
+		local at1 = Instance.new("Attachment", dudetorso)
+		local at2 = Instance.new("Attachment", limb)
+		at1.Position = at1pos
+		at2.Position = at2pos
+		makeballconnections(limb, at1, at2, lowt, upt, duratio)
+		game.Debris:AddItem(at1, duratio)
+		game.Debris:AddItem(at2, duratio)
+	end
+	function ragdollify(ch, duration, dea)
+		local chum = ch:FindFirstChildOfClass("Humanoid")
+		if chum then
+			if not chum.PlatformStand then
+				chum.PlatformStand = true
+				if dea then
+					chum.Health = 0
+					local hpsc = ch:FindFirstChild("Health")
+					if hpsc then
+						if hpsc:IsA("Script") then
+							hpsc.Disabled = true
+						end
+					end
+					if ch:FindFirstChild("HumanoidRootPart") then
+						ch:FindFirstChild("HumanoidRootPart"):Destroy()
+					end
+					push(ch.Head, 10, 0.3)
+					monar(ch, ragdolldespawntime)
+				elseif ch:FindFirstChild("HumanoidRootPart") then
+					if ch:FindFirstChild("HumanoidRootPart").CanCollide then
+						ch:FindFirstChild("HumanoidRootPart").CanCollide = false
+						coroutine.wrap(function()
+							task.wait(duration)
+							if ch:FindFirstChild("HumanoidRootPart") then
+								ch:FindFirstChild("HumanoidRootPart").CanCollide = true
+							end
+						end)()
+					end
+				end
+				local savedglue = {}
+				local mainpart
+				if chum.RigType == Enum.HumanoidRigType.R6 then
+					local chtor = ch.Torso
+					mainpart = chtor
+					if not dea then
+						for i,v in pairs(chtor:GetChildren()) do
+							if v:IsA("Motor6D") then
+								if v.Part1.Name ~= "Head" and v.Part0.Name ~= "HumanoidRootPart" then
+									table.insert(savedglue, {v, v.Part0, v.Part1})
+									v.Part1 = nil
+									v.Part0 = nil
+								end
+							end
+						end
+					end
+					pcall(function()
+						makeragdolllimbr6(ch["Right Arm"], ch.Torso, Vector3.new((ch.Torso.Size.x/2) + (ch.Torso.Size.x/4), (ch.Torso.Size.y/4), 0), Vector3.new(0,ch["Right Arm"].Size.y/4,0), -180, 180, duration)
+					end)
+					pcall(function()
+						makeragdolllimbr6(ch["Left Arm"], ch.Torso, Vector3.new(-(ch.Torso.Size.x/2) - (ch.Torso.Size.x/4), (ch.Torso.Size.y/4), 0), Vector3.new(0,ch["Left Arm"].Size.y/4,0), -180, 180, duration)
+					end)
+					pcall(function()
+						makeragdolllimbr6(ch["Left Leg"], ch.Torso, Vector3.new(-(ch.Torso.Size.x/4), -(ch.Torso.Size.y/2), 0), Vector3.new(0,ch["Left Leg"].Size.y/2,0), -80, 80, duration)
+					end)
+					pcall(function()
+						makeragdolllimbr6(ch["Right Leg"], ch.Torso, Vector3.new((ch.Torso.Size.x/4), -(ch.Torso.Size.y/2), 0), Vector3.new(0,ch["Right Leg"].Size.y/2,0), -80, 80, duration)
+					end)
+					if dea == true and not ch:FindFirstChild("diedbydecapitation") then
+						if ch.Torso:findFirstChild("NeckAttachment") then
+							local headattachment = Instance.new("Attachment", ch.Head)
+							headattachment.Position = Vector3.new(0,-ch.Head.Size.y/2,0)
+							makehingeconnections(ch.Head, headattachment, ch.Torso.NeckAttachment, -50, 50, ragdolldespawntime)
+						else
+							local wed = Instance.new("Weld", ch.Head)
+							wed.Part1 = ch.Head
+							wed.Part0 = ch.Torso
+							wed.C0 = cfnew(0,(ch.Torso.Size.y/2)+(ch.Head.Size.y/2),0)
+						end
+					end
+					if not dea then
+						coroutine.wrap(function()
+							task.wait(duration)
+							for i,v in pairs(savedglue) do
+								v[1].Part0 = v[2]
+								v[1].Part1 = v[3]
+								savedglue[i] = nil
+							end
+							chum.PlatformStand = false
+						end)()
+					end
+				elseif chum.RigType == Enum.HumanoidRigType.R15 then
+					local chuppertor = ch.UpperTorso
+					mainpart = chuppertor
+					if not dea then
+						for i,v in pairs(ch:GetDescendants()) do
+							if v:IsA("Motor6D") then
+								if v.Part1.Name ~= "Head" and v.Part0.Name ~= "HumanoidRootPart" then
+									table.insert(savedglue, {v, v.Part0, v.Part1})
+									v.Part1 = nil
+									v.Part0 = nil
+								end
+							end
+						end
+					end
+					if dea == true and not ch:FindFirstChild("diedbydecapitation") then
+						if ch.UpperTorso:findFirstChild("NeckAttachment") then
+							local HeadAttachment = Instance.new("Attachment", ch.Head)
+							HeadAttachment.Position = Vector3.new(0, -0.5, 0)
+							makehingeconnections(ch.Head, HeadAttachment, ch.UpperTorso.NeckAttachment, -50, 50, ragdolldespawntime)
+						else
+							local wed = Instance.new("Weld", ch.Head)
+							wed.Part1 = ch.Head
+							wed.Part0 = ch.UpperTorso
+							wed.C0 = cfnew(0,(ch.UpperTorso.Size.y/2)+(ch.Head.Size.y/2),0)
+						end
+					end
+					pcall(function()
+						makehingeconnections(ch.LowerTorso, ch.LowerTorso.WaistRigAttachment, ch.UpperTorso.WaistRigAttachment, -50, 50, duration)
+						makeballconnections(ch.LeftUpperArm, ch.LeftUpperArm.LeftShoulderRigAttachment, ch.UpperTorso.LeftShoulderRigAttachment, -200, 200, duration)
+						makehingeconnections(ch.LeftLowerArm, ch.LeftLowerArm.LeftElbowRigAttachment, ch.LeftUpperArm.LeftElbowRigAttachment, 0, -60, duration)
+						makehingeconnections(ch.LeftHand, ch.LeftHand.LeftWristRigAttachment, ch.LeftLowerArm.LeftWristRigAttachment, -20, 20, duration)
+						--
+						makeballconnections(ch.RightUpperArm, ch.RightUpperArm.RightShoulderRigAttachment, ch.UpperTorso.RightShoulderRigAttachment, -200, 200, duration)
+						makehingeconnections(ch.RightLowerArm, ch.RightLowerArm.RightElbowRigAttachment, ch.RightUpperArm.RightElbowRigAttachment, 0, -60, duration)
+						makehingeconnections(ch.RightHand, ch.RightHand.RightWristRigAttachment, ch.RightLowerArm.RightWristRigAttachment, -20, 20, duration)
+						--
+						makeballconnections(ch.RightUpperLeg, ch.RightUpperLeg.RightHipRigAttachment, ch.LowerTorso.RightHipRigAttachment, -80, 80, duration)
+						makehingeconnections(ch.RightLowerLeg, ch.RightLowerLeg.RightKneeRigAttachment, ch.RightUpperLeg.RightKneeRigAttachment, 0, 60, duration)
+						makehingeconnections(ch.RightFoot, ch.RightFoot.RightAnkleRigAttachment, ch.RightLowerLeg.RightAnkleRigAttachment, -20, 20, duration)
+						--
+						makeballconnections(ch.LeftUpperLeg, ch.LeftUpperLeg.LeftHipRigAttachment, ch.LowerTorso.LeftHipRigAttachment, -80, 80, duration)
+						makehingeconnections(ch.LeftLowerLeg, ch.LeftLowerLeg.LeftKneeRigAttachment, ch.LeftUpperLeg.LeftKneeRigAttachment, 0, 60, duration)
+						makehingeconnections(ch.LeftFoot, ch.LeftFoot.LeftAnkleRigAttachment, ch.LeftLowerLeg.LeftAnkleRigAttachment, -20, 20, duration)
+					end)
+					if not dea then
+						coroutine.wrap(function()
+							task.wait(duration)
+							for i,v in pairs(savedglue) do
+								v[1].Part0 = v[2]
+								v[1].Part1 = v[3]
+								savedglue[i] = nil
+							end
+							chum.PlatformStand = false
+						end)()
+					end
+				end
+				if dea then
+					for i,v in pairs(ch:GetChildren()) do
+						if v:IsA("Accessory") then
+							if v:FindFirstChild("Handle") then
+								local attachment1 = v.Handle:FindFirstChildOfClass("Attachment")
+								if attachment1 then
+									for q,w in pairs(ch:GetChildren()) do
+										if w:IsA("Part") then
+											local attachment2 = w:FindFirstChild(attachment1.Name)
+											if attachment2 then
+												local hinge = Instance.new("HingeConstraint", v.Handle)
+												hinge.Attachment0 = attachment1
+												hinge.Attachment1 = attachment2
+												hinge.LimitsEnabled = true
+												hinge.LowerAngle = 0
+												hinge.UpperAngle = 0
+											end
+										end
+									end
+								end
+							end
+						end
+					end
+				end
+			end
+		end
+	end
+	remote.OnClientEvent:Connect(function(WHO, WHAT, parameter1)
+		if WHO == player and state ~= "unequipped" then
+			if WHAT == "1" then
+				headoffset = parameter1
+				local findhead = findthing("HeadWeld", character.Torso)
+				if findhead and state ~= "swinging" then
+					tween(0.2, Enum.EasingStyle.Sine, Enum.EasingDirection.Out, 0, false, 0, findhead, {C0 = cfnew(0,1.15,0) * cfeuler(-headoffset/1.5,0,0) * cfnew(0,0.35,0)})
+				end
+			elseif WHAT == "2" and state == "swinging" then
+				if (handle.Position - parameter1.Position).magnitude < 8 then
+					local findh = parameter1.Parent:FindFirstChildOfClass("Humanoid")
+					if findh then
+						local him = table.find(hitpeople, findh.Parent)
+						if not him then
+							playsound("175024455", 2, 1+math.random(-10,10)/70, 2, 0)
+							if not findh:FindFirstChild("dontchangews") then
+								coroutine.wrap(function()
+									findh.WalkSpeed = findh.WalkSpeed - 3.5
+									findh.JumpHeight = findh.JumpHeight - 3.5
+									wait(0.5)
+									findh.WalkSpeed = findh.WalkSpeed + 3.5
+									findh.JumpHeight = findh.JumpHeight + 3.5
+								end)()
+							end
+							if parameter1.Name == "Head" then
+								if findh.Health < damage then
+									explodehead(findh.Parent)
+								end
+								playheadshotid()
+							end
+							if findh.Health > damage then
+								findh.Health = findh.Health - damage
+								if findh.PlatformStand then
+									push(parameter1, 5, 0.3)
+								end
+								if parameter1.Name == "Head" then
+									ragdollify(findh.Parent, 2, false)
+									push(parameter1, 15, 0.3)
+								end
+							else
+								findh.Parent:BreakJoints()
+								if parameter1.Name == "Head" then
+									playheadshotid()
+								end
+								if ragdolldeath then
+									--ragdoill stuff
+									findh.Parent.Archivable = true
+									table.foreach(findh.Parent:GetDescendants(), function(_,hi) 
+										if hi:IsA("Sound") then
+											hi:Destroy()
+										end
+									end)
+									local clr = findh.Parent:Clone()
+									table.foreach(findh.Parent:GetChildren(), function(_,hi) 
+										if hi:IsA("BasePart") or hi.ClassName == "ForceField" or hi.ClassName == "Accessory" or hi.ClassName == "Hat" then
+											hi:Destroy()
+										end
+									end)
+									clr.Parent = workspace
+									ragdollify(clr, ragdolldespawntime, true)
+								end
+							end
+						end
+					end
+				end
+			end
+		end
+	end)
+	task.spawn(function()
+		while task.wait() do
+			if state == "swinging" then
+				GlobalFunctions.fling(Part1,0)
+			end
+		end
+	end)
+
+	--just send ur backup tick to the function and it should work fineeeee
+	tool.Activated:Connect(function()
+		if state == "idle" and not charhum.PlatformStand then
+			state = "swinging"
+			local donot = Instance.new("BoolValue", charhum)
+			donot.Name = "dontchangews"
+			for i,v in pairs(hitpeople) do
+				hitpeople[i] = nil
+			end
+			local backuptick = equiptick
+			if (tick() - lastswingtick) > 2 then
+				swinganimation = 0
+			end
+			if swinganimation == 0 then
+				swinganimation = 1
+				charhum.WalkSpeed = charhum.WalkSpeed + speedbuff
+				pose("swing", 1, 0.25*animslowdownmult, backuptick)
+				task.wait(0.2*animslowdownmult)
+				trail.Enabled = true			playswingid()
+				pose("swing", 2, 0.05*animslowdownmult, backuptick)
+				task.wait(0.05*animslowdownmult)
+				pose("swing", 3, 0.2*animslowdownmult, backuptick)
+				task.wait(0.2*animslowdownmult)			trail.Enabled = false
+				charhum.WalkSpeed = charhum.WalkSpeed - speedbuff
+				pose("equip", 2, 0.5*animslowdownmult, backuptick)
+				task.wait(0.3*animslowdownmult)
+				if backuptick == equiptick then
+					state = "idle"
+				end
+			elseif swinganimation == 1 then
+				swinganimation = 2
+				charhum.WalkSpeed = charhum.WalkSpeed + speedbuff
+				pose("swing2", 1, 0.25*animslowdownmult, backuptick)
+				task.wait(0.2*animslowdownmult)
+				trail.Enabled = true			playswingid()
+				pose("swing2", 2, 0.15*animslowdownmult, backuptick)
+				task.wait(0.15*animslowdownmult)
+				pose("swing2", 3, 0.1*animslowdownmult, backuptick)
+				task.wait(0.1*animslowdownmult)
+				charhum.WalkSpeed = charhum.WalkSpeed - speedbuff
+				pose("swing2", 4, 0.2*animslowdownmult, backuptick)
+				task.wait(0.2*animslowdownmult)
+				trail.Enabled = false
+				pose("equip", 2, 0.5*animslowdownmult, backuptick)
+				task.wait(0.3*animslowdownmult)
+				if backuptick == equiptick then
+					state = "idle"
+				end
+			elseif swinganimation == 2 then
+				swinganimation = 0
+				charhum.WalkSpeed = charhum.WalkSpeed + speedbuff
+				pose("swing3", 1, 0.1*animslowdownmult, backuptick)
+				task.wait(0.1*animslowdownmult)
+				pose("swing3", 2, 0.35*animslowdownmult, backuptick)
+				task.wait(0.3*animslowdownmult)
+				trail.Enabled = true
+				playswingid()
+				pose("swing3", 3, 0.1*animslowdownmult, backuptick)
+				task.wait(0.1*animslowdownmult)
+				pose("swing3", 4, 0.16*animslowdownmult, backuptick)
+				task.wait(0.08*animslowdownmult)
+				trail.Enabled = false
+				charhum.WalkSpeed = charhum.WalkSpeed - speedbuff
+				pose("swing3", 5, 0.1*animslowdownmult, backuptick)
+				task.wait(0.1*animslowdownmult)
+				pose("equip", 2, 0.5*animslowdownmult, backuptick)
+				task.wait(0.5*animslowdownmult)
+				if backuptick == equiptick then
+					state = "idle"
+				end
+			end
+			donot:Destroy()
+			lastswingtick = tick()
+		end
+	end)
+	tool.Equipped:Connect(function()
+		for _, _ in pairs(tool:GetDescendants()) do
+			if _:IsA("Part") or _:IsA("MeshPart") then
+				_.Transparency = 1
+			end
+		end
+		state = "equipping"
+		validatetick = tick()
+		local backuptick = validatetick
+		equiptick = validatetick
+		player = players:GetPlayerFromCharacter(tool.Parent)
+		character = player.Character
+		charhum = character:FindFirstChildOfClass("Humanoid")
+		weldlimb(character.HumanoidRootPart, character.Torso, cfnew(), "HumanoidRootPartWeld")
+		weldlimb(character.Torso, character.Head, cfnew(0,1.5,0), "HeadWeld")
+		weldlimb(character.Head, character["Right Arm"], cfnew(1.43301296, -0.691987038, 0.466506958, 0.866025388, 0, 0.5, -0.249999985, -0.866025329, 0.433012664, 0.433012694, -0.5, -0.75), "RightArmWeld")
+		weldlimb(character.Head, character["Left Arm"], cfnew(-1.5, -1.5, 0, 1, 0, 0, 0, 0.99999994, 0, 0, 0, 1), "LeftArmWeld")
+		local grip = character["Right Arm"]:WaitForChild("RightGrip")
+		grip.C0 = cfnew(0.00500011444, -1, -1.34000015, -1.74622983e-10, 1.00000036, -6.56216748e-11, 0.999999881, -1.74622955e-10, 8.9406953e-08, -8.94069672e-08, 6.56216748e-11, -1)
+		pose("equip", 1, 0.25, backuptick)
+		task.wait(0.25)
+		pose("equip", 2, 0.25, backuptick)
+		task.wait(0.2)
+		if state == "equipping" then
+			state = "idle"
+		end
+	end)
+	tool.Unequipped:Connect(function()
+		state = "unequipped"
+		local limb1 = findthing("HeadWeld", character)
+		local limb2 = findthing("RightArmWeld", character)
+		local limb3 = findthing("LeftArmWeld", character)
+		local limb4 = findthing("HumanoidRootPartWeld", character)
+		if limb1 then
+			limb1:Destroy()
+		end
+		if limb2 then
+			limb2:Destroy()
+		end
+		if limb3 then
+			limb3:Destroy()
+		end
+		if limb4 then
+			limb4:Destroy()
+		end
+	end)
+end))
+RemoteEvent63.Parent = Tool0
+LocalScript64.Parent = Tool0
+table.insert(cors,sandbox(LocalScript64,function()
+end))
+for i,v in pairs(mas:GetChildren()) do
+	v.Parent = owner:FindFirstChildOfClass("Backpack")
+	pcall(function() v:MakeJoints() end)
+end
+mas:Destroy()
+for i,v in pairs(cors) do
+	spawn(function()
+		pcall(v)
+	end)
+end
+
+print("Loaded")

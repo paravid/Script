@@ -1,0 +1,130 @@
+local Players = game:GetService("Players")
+local UIS = game:GetService("UserInputService")
+local RunService = game:GetService("RunService")
+local StarterGui = game:GetService("StarterGui")
+
+local player = Players.LocalPlayer
+
+StarterGui:SetCore("SendNotification", {
+	Title = "Realist Actived",
+	Text = "Made By: Kanujinho",
+	Duration = 10
+})
+
+local char, torso
+local arms = {}
+local shoulders = {}
+local welds = {}
+local currentMode = nil
+
+local function getChar()
+	char = player.Character or player.CharacterAdded:Wait()
+	torso = char:WaitForChild("Torso")
+
+	arms.Left = char:WaitForChild("Left Arm")
+	arms.Right = char:WaitForChild("Right Arm")
+
+	shoulders.Left = torso:WaitForChild("Left Shoulder")
+	shoulders.Right = torso:WaitForChild("Right Shoulder")
+end
+
+local function clearPose()
+	for _, w in pairs(welds) do
+		if w then w:Destroy() end
+	end
+	welds = {}
+
+	if shoulders.Left then shoulders.Left.Part1 = arms.Left end
+	if shoulders.Right then shoulders.Right.Part1 = arms.Right end
+
+	currentMode = nil
+end
+
+local function salute()
+	if currentMode == "Salute" then
+		clearPose()
+		return
+	end
+
+	clearPose()
+	getChar()
+	currentMode = "Salute"
+
+	shoulders.Right.Part1 = nil
+
+	local weld = Instance.new("Weld")
+	weld.Part0 = torso
+	weld.Part1 = arms.Right
+	weld.C1 = CFrame.new(-1.5, 0.75, -0.5) * CFrame.fromEulerAnglesXYZ(math.rad(180), 0, math.rad(-20))
+	weld.Parent = torso
+
+	welds[1] = weld
+end
+
+local function atEase()
+	if currentMode == "AtEase" then
+		clearPose()
+		return
+	end
+
+	clearPose()
+	getChar()
+	currentMode = "AtEase"
+
+	shoulders.Left.Part1 = nil
+	shoulders.Right.Part1 = nil
+
+	local weld1 = Instance.new("Weld")
+	weld1.Part0 = torso
+	weld1.Part1 = arms.Left
+	weld1.C1 = CFrame.new(0.6, -0.4, -0.4) * CFrame.fromEulerAnglesXYZ(math.rad(20), 0, math.rad(-45))
+	weld1.Parent = torso
+
+	local weld2 = Instance.new("Weld")
+	weld2.Part0 = torso
+	weld2.Part1 = arms.Right
+	weld2.C1 = CFrame.new(-0.6, -0.4, -0.4) * CFrame.fromEulerAnglesXYZ(math.rad(20), 0, math.rad(45))
+	weld2.Parent = torso
+
+	welds[1] = weld1
+	welds[2] = weld2
+end
+
+UIS.InputBegan:Connect(function(input, gp)
+	if gp then return end
+
+	if input.KeyCode == Enum.KeyCode.Z then
+		salute()
+	elseif input.KeyCode == Enum.KeyCode.X then
+		atEase()
+	end
+end)
+
+local Camera = workspace.CurrentCamera
+local Character = player.Character or player.CharacterAdded:Wait()
+local Root = Character:WaitForChild("HumanoidRootPart")
+local Neck = Character:FindFirstChild("Neck", true)
+local YOffset = Neck and Neck.C0.Y or 0
+
+local CFNew = CFrame.new
+local CFAng = CFrame.Angles
+local asin = math.asin
+
+RunService.RenderStepped:Connect(function()
+	if not Neck or not Character:FindFirstChild("Humanoid") then return end
+
+	local CameraDirection = Root.CFrame:ToObjectSpace(Camera.CFrame).LookVector
+
+	if Character.Humanoid.RigType == Enum.HumanoidRigType.R15 then
+		Neck.C0 =
+			CFNew(0, YOffset, 0)
+			* CFAng(0, -asin(CameraDirection.X), 0)
+			* CFAng(asin(CameraDirection.Y), 0, 0)
+	else
+		Neck.C0 =
+			CFNew(0, YOffset, 0)
+			* CFAng(3 * math.pi / 2, 0, math.pi)
+			* CFAng(0, 0, -asin(CameraDirection.X))
+			* CFAng(-asin(CameraDirection.Y), 0, 0)
+	end
+end)

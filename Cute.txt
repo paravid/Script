@@ -1,0 +1,718 @@
+local debrs = game:GetService("Debris")
+
+local ins = Instance.new
+local v3 = Vector3.new
+local cf = CFrame.new
+local angles = CFrame.Angles
+local rad = math.rad
+local huge = math.huge
+local cos = math.cos
+local sin = math.sin
+local tan = math.tan
+local ray = Ray.new
+local random = math.random
+local ud = UDim.new
+local ud2 = UDim2.new
+local c3 = Color3.new
+local rgb = Color3.fromRGB
+local bc = BrickColor.new
+
+--Variables
+local plr = game:GetService("Players").LocalPlayer
+local plrg = plr.PlayerGui
+local char = plr.Character
+local h = char.Head
+local t = char.Torso
+local ra = char["Right Arm"]
+local la = char["Left Arm"]
+local rl = char["Right Leg"]
+local ll = char["Left Leg"]
+local rut = char.HumanoidRootPart
+local hum = char:FindFirstChildOfClass("Humanoid")
+local necno = t.Neck
+local rutjno = rut.RootJoint
+local rsno = t["Right Shoulder"]
+local lsno = t["Left Shoulder"]
+local rhno = t["Right Hip"]
+local lhno = t["Left Hip"]
+local rem = char:WaitForChild("SprintEvent")
+local mouse = plr:GetMouse()
+mouse.KeyDown:Connect(function(key)
+	if key == "z" then
+		rem:FireServer("sit")
+	end
+	if key == "x" then
+		rem:FireServer("lie")
+	end
+	if key == "f" then
+		rem:FireServer("jumpHug")
+	end
+	if key == "t" then
+		rem:FireServer("owo")
+	end
+	if key == "p" then
+		rem:FireServer("jump")
+	end
+	if key == "p" then
+		rem:FireServer("aww")
+	end
+end)
+local v3 = Vector3.new
+local cf = CFrame.new
+
+local RS = game:GetService("RunService").RenderStepped
+
+while true do
+	hum.CameraOffset = hum.CameraOffset:Lerp((rut.CFrame*CFrame.new(0,1.5,0)):PointToObjectSpace(h.Position),.1)
+	RS:Wait()
+end
+
+--
+local change = 1
+local sine = 0
+local animspeed = .1
+local walkanimspeed = .2
+local idledevider = 15
+local walkDivider = 7.5
+local num = 1
+local hugTime = 4
+local using = false
+local takingAStep = false
+local sitting = false
+local lying = false
+local canHug = false
+local hugging = false
+local owowhat = false
+local canOwo = false
+local holdingItem = nil
+local anim = "idle"
+local asset = "rbxassetid://"
+--
+local stepsounds = {
+Grass = asset.."1201103066",
+Sand = asset.."1436385526",
+Plastic = asset.."1569994049",
+Stone = asset.."1201103555",
+Wood = asset.."1201103959",
+Pebble = asset.."1201103211",
+Ice = asset.."265653271",
+Glass = asset.."145180170",
+Metal = asset.."379482691"
+}
+--
+necc0,necc1=necno.C0,necno.C1
+rutjc0,rutjc1=rutjno.C0,rutjno.C1
+rsc0,rsc1=rsno.C0,rsno.C1
+lsc0,lsc1=lsno.C0,lsno.C1
+rhc0,rhc1=rhno.C0,rhno.C1
+lhc0,lhc1=lhno.C0,lhno.C1
+
+
+if char:FindFirstChild("Animate") then
+char.Animate:Destroy()
+end
+if hum:FindFirstChildOfClass("Animator") then
+char.Humanoid.Animator:Destroy()
+end
+
+--Creating new joints
+h.Size = v3(1,1,1)
+local nec = ins("Motor6D",t) nec.Name = "Neck" nec.Part0 = t nec.Part1 = h
+local rutj = ins("Motor6D",rut) rutj.Name = "RootJoint" rutj.Part0 = t rutj.Part1 = rut
+local rs = ins("Motor6D",t) rs.Name = "Right Shoulder" rs.Part0 = t rs.Part1 = ra
+local ls = ins("Motor6D",t) ls.Name = "Left Shoulder" ls.Part0 = t ls.Part1 = la
+local rh = ins("Motor6D",t) rh.Name = "Right Hip" rh.Part0 = t rh.Part1 = rl
+local lh = ins("Motor6D",t) lh.Name = "Left Hip" lh.Part0 = t lh.Part1 = ll
+
+--Removing old joints
+necno.Parent = nil
+rutjno.Parent = nil
+rsno.Parent = nil
+lsno.Parent = nil
+rhno.Parent = nil
+lhno.Parent = nil
+
+--Setting CFrames
+nec.C1 = necc1
+nec.C0 = necc0
+rs.C1 = rsc1
+rs.C0 = rsc0
+ls.C1 = lsc1
+ls.C0 = lsc0
+rh.C1 = rhc1
+rh.C0 = rhc0
+lh.C1 = lhc1
+lh.C0 = lhc0
+rutj.C1 = rutjc1
+rutj.C0 = rutjc0
+
+--Some creates
+--Models
+--Parts
+--Welds
+--Sounds
+local footstepsound = ins("Sound",t)
+footstepsound.Volume = 1
+footstepsound.SoundId = stepsounds.Grass
+
+--Connecting sprint
+local rem = ins("RemoteEvent",char) rem.Name = "SprintEvent"
+local bRem = ins("BindableEvent",char) bRem.Name = "-w-"
+local huggingDeb = ins("BoolValue",bRem) huggingDeb.Name = "Deb"
+
+local client = script:WaitForChild("Client",5)
+client.Disabled = false
+
+bRem.Event:Connect(function(character)
+	hug(character)
+end)
+
+function remove(instance,time)
+	time = time or 0
+    debrs:AddItem(instance,time)
+end
+
+function createWeld(p1,p2,c0,c1)
+	local weld = ins("Motor6D",p1)
+	weld.Part0 = p1
+	weld.Part1 = p2
+	weld.C0 = c0
+	weld.C1 = c1
+	return weld
+end
+
+function createBVel(part,direction,force,timeBeforeRemove)
+	local vel = ins("BodyVelocity",part)
+	vel.MaxForce = v3(huge,huge,huge)
+	vel.Velocity = direction * force
+	remove(vel,timeBeforeRemove)
+end
+
+function hug(whomst)
+	if whomst then
+		local tors = whomst:FindFirstChild("Torso") or whomst:FindFirstChild("UpperTorso")
+		if tors then
+			local hRem = whomst:FindFirstChild("-w-")
+			if hRem and not hRem:FindFirstChild("Deb").Value then
+				hRem:Fire(char)
+			end
+			huggingDeb.Value = true
+			anim = "idle"
+			canHug = false
+			hugging = true
+			local tWeld = createWeld(t,tors,cf(0,0,-tors.Size.z) * angles(rad(0),rad(180),rad(0)),cf(0,0,0))
+			whomst:FindFirstChildOfClass("Humanoid").PlatformStand = true
+			hum.PlatformStand = true
+			createBVel(t,rut.CFrame.LookVector + v3(0,.65,0),40,.025)
+			remove(tWeld,hugTime+.25)
+			coroutine.wrap(function()
+				wait(hugTime+.25)
+				whomst:FindFirstChildOfClass("Humanoid").PlatformStand = false
+				hum.PlatformStand = false
+				rut.CFrame = cf(rut.CFrame.p,v3(nil,rut.CFrame.y,rut.CFrame.z)) * cf(0,2,0)
+				huggingDeb.Value = false
+				hugging = false
+			end)()
+			coroutine.wrap(function()
+				for i = 0,1,.075 do
+					rutj.C0 = rutj.C0:Lerp(rutjc0 * cf(0,0,0) * angles(rad(0),rad(0),rad(0)),walkanimspeed)
+					nec.C0 = nec.C0:Lerp(necc0 * cf(0,0,0) * angles(rad(20),rad(0),rad(50)),walkanimspeed)
+					rs.C0 = rs.C0:Lerp(rsc0 * cf(.65,0,-.2) * angles(rad(2.5),rad(79),rad(96)),walkanimspeed)
+					ls.C0 = ls.C0:Lerp(lsc0 * cf(-.65,0,-.2) * angles(rad(-2.5),rad(-76),rad(-86)),walkanimspeed)
+					rh.C0 = rh.C0:Lerp(rhc0 * cf(0,0,0) * angles(rad(0),rad(-5),rad(-5)),walkanimspeed)
+					lh.C0 = lh.C0:Lerp(lhc0 * cf(0,0,0) * angles(rad(0),rad(5),rad(5)),walkanimspeed)
+					rutj.C1 = rutj.C1:Lerp(rutjc1,animspeed)
+					nec.C1 = nec.C1:Lerp(necc1,animspeed)
+					rs.C1 = rs.C1:Lerp(rsc1,animspeed)
+					ls.C1 = ls.C1:Lerp(lsc1,animspeed)
+					rh.C1 = rh.C1:Lerp(rhc1,animspeed)
+					lh.C1 = lh.C1:Lerp(lhc1,animspeed)
+					swait()
+				end
+			end)()
+		end
+	end
+end
+
+function grabowo(who)
+	if who then
+		local tors = who:FindFirstChild("Torso") or who:FindFirstChild("UpperTorso")
+		local huma = who:FindFirstChildOfClass("Humanoid")
+		if tors and huma then
+			local hit,pos,nid = rayc(tors.Position,v3(0,-1000000,0),{char,who},5)
+			local oldcf = tors.CFrame * cf(0,0,-9999999)
+			local oldRot = tors.Orientation
+			if hit then
+				anim = "idle"
+				using = true
+				owowhat = true
+				tors.Anchored = true
+				hum.PlatformStand = true
+				huma.PlatformStand = true
+				local gyro = ins("BodyGyro",tors)
+				local ccf = cf(pos) * cf(0,.5,0) * angles(rad(90),rad(0),rad(oldRot.Y))
+				tors.CFrame = ccf
+				gyro.MaxTorque = v3(0,math.huge,0)
+				gyro.CFrame = ccf
+				local we = createWeld(tors,rut,cf(0,0,-1.5) * angles(rad(0),rad(180),rad(0)),cf(0,0,0))
+				for i = 0,1,.075 do
+					huma.PlatformStand = true
+					hum.PlatformStand = true
+					tors.Anchored = true
+					rutj.C0 = rutj.C0:Lerp(rutjc0 * cf(0,0,0) * angles(rad(20),rad(0),rad(0)),walkanimspeed)
+					nec.C0 = nec.C0:Lerp(necc0 * cf(0,0,0) * angles(rad(30),rad(0),rad(0)),walkanimspeed)
+					rs.C0 = rs.C0:Lerp(rsc0 * cf(0,.1,0) * angles(rad(0),rad(0),rad(75)),walkanimspeed)
+					ls.C0 = ls.C0:Lerp(lsc0 * cf(0,.1,0) * angles(rad(0),rad(0),rad(-70)),walkanimspeed)
+					rh.C0 = rh.C0:Lerp(rhc0 * cf(.25,0,0) * angles(rad(0),rad(-5),rad(-17.5)),walkanimspeed)
+					lh.C0 = lh.C0:Lerp(lhc0 * cf(-.25,0,0) * angles(rad(0),rad(5),rad(15)),walkanimspeed)
+					rutj.C1 = rutj.C1:Lerp(rutjc1,animspeed)
+					nec.C1 = nec.C1:Lerp(necc1,animspeed)
+					rs.C1 = rs.C1:Lerp(rsc1,animspeed)
+					ls.C1 = ls.C1:Lerp(lsc1,animspeed)
+					rh.C1 = rh.C1:Lerp(rhc1,animspeed)
+					lh.C1 = lh.C1:Lerp(lhc1,animspeed)
+					swait()
+				end
+				wait(.35)
+				for i = 0,1,.035 do
+					huma.PlatformStand = true
+					hum.PlatformStand = true
+					tors.Anchored = true
+					rutj.C0 = rutj.C0:Lerp(rutjc0 * cf(0,.25,2.5) * angles(rad(15),rad(0),rad(0)),animspeed)
+					nec.C0 = nec.C0:Lerp(necc0 * cf(0,.15,0) * angles(rad(-5),rad(0),rad(0)),animspeed)
+					rs.C0 = rs.C0:Lerp(rsc0 * cf(0,.1,0) * angles(rad(0),rad(0),rad(145)),animspeed)
+					ls.C0 = ls.C0:Lerp(lsc0 * cf(0,.1,0) * angles(rad(0),rad(0),rad(-150)),animspeed)
+					rh.C0 = rh.C0:Lerp(rhc0 * cf(.35,0,0) * angles(rad(0),rad(-5),rad(-10)),animspeed)
+					lh.C0 = lh.C0:Lerp(lhc0 * cf(-.35,0,0) * angles(rad(0),rad(5),rad(7.5)),animspeed)
+					rutj.C1 = rutj.C1:Lerp(rutjc1,animspeed)
+					nec.C1 = nec.C1:Lerp(necc1,animspeed)
+					rs.C1 = rs.C1:Lerp(rsc1,animspeed)
+					ls.C1 = ls.C1:Lerp(lsc1,animspeed)
+					rh.C1 = rh.C1:Lerp(rhc1,animspeed)
+					lh.C1 = lh.C1:Lerp(lhc1,animspeed)
+					swait()
+				end
+				for i = 0,1,.05 do
+					huma.PlatformStand = true
+					hum.PlatformStand = true
+					tors.Anchored = true
+					rutj.C0 = rutj.C0:Lerp(rutjc0 * cf(0,0,2.35) * angles(rad(20),rad(0),rad(0)),animspeed)
+					nec.C0 = nec.C0:Lerp(necc0 * cf(0,.15,0) * angles(rad(30),rad(0),rad(0)),animspeed)
+					rs.C0 = rs.C0:Lerp(rsc0 * cf(.45,-.25,-.1) * angles(rad(-30),rad(0),rad(165)),animspeed)
+					ls.C0 = ls.C0:Lerp(lsc0 * cf(-.45,-.25,-.1) * angles(rad(-30),rad(0),rad(-170)),animspeed)
+					rh.C0 = rh.C0:Lerp(rhc0 * cf(.35,0,0) * angles(rad(0),rad(-5),rad(-15)),animspeed)
+					lh.C0 = lh.C0:Lerp(lhc0 * cf(-.35,0,0) * angles(rad(0),rad(5),rad(12.5)),animspeed)
+					rutj.C1 = rutj.C1:Lerp(rutjc1,animspeed)
+					nec.C1 = nec.C1:Lerp(necc1,animspeed)
+					rs.C1 = rs.C1:Lerp(rsc1,animspeed)
+					ls.C1 = ls.C1:Lerp(lsc1,animspeed)
+					rh.C1 = rh.C1:Lerp(rhc1,animspeed)
+					lh.C1 = lh.C1:Lerp(lhc1,animspeed)
+					swait()
+				end
+				local val = 0
+				local s = 0
+				local c = 2
+				local ended = false
+				repeat
+					rut.Velocity = v3(0,0,0)
+					tors.Velocity = v3(0,0,0)
+					val = val + 2
+					if val > 6500 then
+						owowhat = false
+						ended = true
+					end
+					s = s + c
+					rutj.C1 = rutj.C1:Lerp(rutjc1 * cf(0,sin(s/20)/35,0) * angles(sin(s/20) * rad(.5),rad(0),rad(0)),animspeed)
+					nec.C1 = nec.C1:Lerp(necc1 * cf(0,-sin(s/20)/9,0) * angles(cos(s/20) * rad(2.5),rad(0),rad(0)),animspeed)
+					rs.C1 = rs.C1:Lerp(rsc1 * cf(0,sin(s/20)/35,0) * angles(rad(0),rad(0),sin(s/20) * rad(.5)),animspeed)
+					ls.C1 = ls.C1:Lerp(lsc1 * cf(0,sin(s/20)/35,0) * angles(rad(0),rad(0),-sin(s/20) * rad(.5)),animspeed)
+					rh.C1 = rh.C1:Lerp(rhc1 * cf(0,sin(s/20)/35,0) * angles(rad(0),rad(0),-sin(s/20) * rad(1.5)),animspeed)
+					lh.C1 = lh.C1:Lerp(lhc1 * cf(0,sin(s/20)/35,0) * angles(rad(0),rad(0),sin(s/20) * rad(1.5)),animspeed)
+					swait()
+				until not owowhat or not who.Parent
+				if ended then
+					for i = 0,1,.005 do
+						using = true
+						huma.PlatformStand = true
+						hum.PlatformStand = true
+						tors.Anchored = true
+						rutj.C0 = rutj.C0:Lerp(rutjc0 * cf(0,0,2.5) * angles(rad(20),rad(0),rad(0)),animspeed)
+						nec.C0 = nec.C0:Lerp(necc0 * cf(0,.15,0) * angles(rad(25),rad(0),rad(0)),animspeed)
+						rs.C0 = rs.C0:Lerp(rsc0 * cf(.45,-.25,-.1) * angles(rad(-30),rad(0),rad(165)),animspeed)
+						ls.C0 = ls.C0:Lerp(lsc0 * cf(-.45,-.25,-.1) * angles(rad(-30),rad(0),rad(-170)),animspeed)
+						rh.C0 = rh.C0:Lerp(rhc0 * cf(.35,0,0) * angles(rad(0),rad(-5),rad(-15)),animspeed)
+						lh.C0 = lh.C0:Lerp(lhc0 * cf(-.35,0,0) * angles(rad(0),rad(5),rad(12.5)),animspeed)
+						swait()
+					end
+					for i = 0,1,.075 do
+						using = true
+						huma.PlatformStand = true
+						hum.PlatformStand = true
+						tors.Anchored = true
+						rutj.C0 = rutj.C0:Lerp(rutjc0 * cf(0,-.15,2.5) * angles(rad(30),rad(0),rad(0)),walkanimspeed)
+						nec.C0 = nec.C0:Lerp(necc0 * cf(0,0,0) * angles(rad(10),rad(0),rad(0)),walkanimspeed)
+						rs.C0 = rs.C0:Lerp(rsc0 * cf(0,.1,0) * angles(rad(0),rad(0),rad(125)),walkanimspeed)
+						ls.C0 = ls.C0:Lerp(lsc0 * cf(0,.1,0) * angles(rad(0),rad(0),rad(-130)),walkanimspeed)
+						rh.C0 = rh.C0:Lerp(rhc0 * cf(.15,0,0) * angles(rad(0),rad(-5),rad(-30)),walkanimspeed)
+						lh.C0 = lh.C0:Lerp(lhc0 * cf(-.15,0,0) * angles(rad(0),rad(5),rad(32.5)),walkanimspeed)
+						swait()
+					end
+				end
+				remove(we)
+				remove(gyro)
+				rut.CFrame = rut.CFrame * cf(0,0,2)
+				hum.PlatformStand = false
+				rut.Anchored = false
+				coroutine.wrap(function()
+					wait(.25)
+					using = false
+					rut.Anchored = false
+					wait(.25)
+					tors.Anchored = false
+					huma.PlatformStand = false
+				end)()
+			end
+		end
+	end
+end
+
+function sit()
+	using = true
+	sitting = true
+	lying = false
+	anim = "idle"
+	for i = 0,1,.025 do
+		rutj.C0 = rutj.C0:Lerp(rutjc0 * cf(0,2,.9) * angles(rad(-30),rad(0),rad(0)) * cf(0,-.2,-.1),animspeed)
+		nec.C0 = nec.C0:Lerp(necc0 * cf(0,0,0) * angles(rad(-10),rad(0),rad(0)),animspeed)
+		rs.C0 = rs.C0:Lerp(rsc0 * cf(.35,-.25,-.45) * angles(rad(10),rad(25),rad(36)),animspeed)
+		ls.C0 = ls.C0:Lerp(lsc0 * cf(-.35,-.25,-.45) * angles(rad(10),rad(-25),rad(-33)),animspeed)
+		rh.C0 = rh.C0:Lerp(rhc0 * cf(0,-.1,0) * angles(rad(25),rad(-10),rad(120)),animspeed)
+		lh.C0 = lh.C0:Lerp(lhc0 * cf(0,-.1,0) * angles(rad(25),rad(10),rad(-120)),animspeed)
+		swait()
+	end
+	sitting = true
+	using = false
+end
+function lieDown()
+	using = true
+	lying = true
+	sitting = false
+	anim = "idle"
+	for i = 0,1,.025 do
+		rutj.C0 = rutj.C0:Lerp(rutjc0 * cf(0,2.45,0) * angles(rad(-90),rad(0),rad(0)),animspeed)
+		nec.C0 = nec.C0:Lerp(necc0 * cf(0,0,0) * angles(rad(-35),rad(0),rad(55)),animspeed)
+		rs.C0 = rs.C0:Lerp(rsc0 * cf(0,.35,-.35) * angles(rad(-25),rad(15),rad(176)),animspeed)
+		ls.C0 = ls.C0:Lerp(lsc0 * cf(0,.35,-.35) * angles(rad(-25),rad(-15),rad(-178)),animspeed)
+		rh.C0 = rh.C0:Lerp(rhc0 * cf(0,0,0) * angles(rad(-5),rad(-5),rad(0)),animspeed)
+		lh.C0 = lh.C0:Lerp(lhc0 * cf(0,0,0) * angles(rad(-5),rad(5),rad(0)),animspeed)
+		swait()
+	end
+	using = false
+end
+
+function jumpHugAnim()
+	using = true
+	createBVel(t,rut.CFrame.LookVector + v3(0,.4,0),60,.1)
+	canHug = true
+	for i = 0,1,.075 do
+		if not canHug then
+			break
+		end
+		rutj.C0 = rutj.C0:Lerp(rutjc0 * cf(0,2,0) * angles(rad(-70),rad(0),rad(0)),walkanimspeed)
+		nec.C0 = nec.C0:Lerp(necc0 * cf(0,0,0) * angles(rad(-70),rad(0),rad(0)),walkanimspeed)
+		rs.C0 = rs.C0:Lerp(rsc0 * cf(0,.15,0) * angles(rad(0),rad(0),rad(171)),walkanimspeed)
+		ls.C0 = ls.C0:Lerp(lsc0 * cf(0,.15,0) * angles(rad(0),rad(0),rad(-169)),walkanimspeed)
+		rh.C0 = rh.C0:Lerp(rhc0 * cf(0,0,0) * angles(rad(0),rad(-5),rad(-5)),walkanimspeed)
+		lh.C0 = lh.C0:Lerp(lhc0 * cf(0,0,0) * angles(rad(0),rad(5),rad(5)),walkanimspeed)
+		rutj.C1 = rutj.C1:Lerp(rutjc1,animspeed)
+		nec.C1 = nec.C1:Lerp(necc1,animspeed)
+		rs.C1 = rs.C1:Lerp(rsc1,animspeed)
+		ls.C1 = ls.C1:Lerp(lsc1,animspeed)
+		rh.C1 = rh.C1:Lerp(rhc1,animspeed)
+		lh.C1 = lh.C1:Lerp(lhc1,animspeed)
+		swait()
+	end
+	if canHug then
+		wait(.25)
+		using = false
+	else
+		wait(hugTime)
+		using = false
+	end
+	canHug = false
+end
+
+function jumpowo()
+	using = true
+	createBVel(t,rut.CFrame.LookVector + v3(0,.4,0),60,.1)
+	canOwo = true
+	for i = 0,1,.075 do
+		if not canOwo or owowhat then
+			break
+		end
+		rutj.C0 = rutj.C0:Lerp(rutjc0 * cf(0,2,0) * angles(rad(-70),rad(0),rad(0)),walkanimspeed)
+		nec.C0 = nec.C0:Lerp(necc0 * cf(0,0,0) * angles(rad(-70),rad(0),rad(0)),walkanimspeed)
+		rs.C0 = rs.C0:Lerp(rsc0 * cf(0,.15,0) * angles(rad(0),rad(0),rad(171)),walkanimspeed)
+		ls.C0 = ls.C0:Lerp(lsc0 * cf(0,.15,0) * angles(rad(0),rad(0),rad(-169)),walkanimspeed)
+		rh.C0 = rh.C0:Lerp(rhc0 * cf(0,0,0) * angles(rad(0),rad(-5),rad(-5)),walkanimspeed)
+		lh.C0 = lh.C0:Lerp(lhc0 * cf(0,0,0) * angles(rad(0),rad(5),rad(5)),walkanimspeed)
+		rutj.C1 = rutj.C1:Lerp(rutjc1,animspeed)
+		nec.C1 = nec.C1:Lerp(necc1,animspeed)
+		rs.C1 = rs.C1:Lerp(rsc1,animspeed)
+		ls.C1 = ls.C1:Lerp(lsc1,animspeed)
+		rh.C1 = rh.C1:Lerp(rhc1,animspeed)
+		lh.C1 = lh.C1:Lerp(lhc1,animspeed)
+		swait()
+	end
+	if canOwo then
+		wait(.25)
+		using = false
+	end
+	canOwo = false
+end
+
+function unsit()
+	anim = "idle"
+	sitting = false
+	using = false
+end
+function unlie()
+	anim = "idle"
+	lying = false
+	using = false
+end
+
+function owo()
+	local uwu = sound(2820730608,1,1,h,5)
+	remove(uwu,.75)
+end
+
+function grabThing()
+	for i = 0,1,.025 do
+		rutj.C0 = rutj.C0:Lerp(rutjc0 * cf(0,2,0) * angles(rad(-70),rad(0),rad(0)),animspeed)
+		nec.C0 = nec.C0:Lerp(necc0 * cf(0,0,0) * angles(rad(-60),rad(0),rad(0)),animspeed)
+		rs.C0 = rs.C0:Lerp(rsc0 * cf(-.05,.1,-.2) * angles(rad(2.5),rad(-5),rad(71)),animspeed)
+		ls.C0 = ls.C0:Lerp(lsc0 * cf(.05,.1,-.2) * angles(rad(2.5),rad(5),rad(-68)),animspeed)
+		rh.C0 = rh.C0:Lerp(rhc0 * cf(.35,.45,0) * angles(rad(-3),rad(-5),rad(-15)),animspeed)
+		lh.C0 = lh.C0:Lerp(lhc0 * cf(-.5,.5,0) * angles(rad(-3),rad(5),rad(21)),animspeed)
+		swait()
+	end
+end
+
+rem.OnServerEvent:Connect(function(plr,type,value)
+	if not using and not hugging and not owowhat then
+		if type == "sit" and not sitting then
+			sit()
+		elseif type == "sit" and sitting then
+			unsit()
+		end
+		if type == "lie" and not lying then
+			lieDown()
+		elseif type == "lie" and lying then
+			unlie()
+		end
+		if type == "jumpHug" and not sitting and not lying then
+			jumpHugAnim()
+		end
+		if type == "owo" then
+			owo()
+		end
+		if type == "jump" then
+			local iwanttodie = false
+			for i,v in pairs(whitl) do
+				if plr.Name == v then
+					iwanttodie = true
+				end
+			end
+			if iwanttodie then
+				jumpowo()
+			end
+		end
+	end
+	if type == "aww" and owowhat then
+		owowhat = false
+	end
+end)
+h.Touched:Connect(function(hit)
+	if canHug then
+		if hit.Parent:FindFirstChildOfClass("Humanoid") then
+			hug(hit.Parent)
+		end
+	elseif canOwo then
+		if hit.Parent:FindFirstChildOfClass("Humanoid") then
+			grabowo(hit.Parent)
+		end
+	end
+end)
+
+function sound(id,vol,pitch,parent,maxdist)
+	local newsound
+	local mdist = 30 or maxdist
+	newsound = Instance.new("Sound",parent)
+	newsound.EmitterSize = mdist
+	newsound.Volume = vol
+	newsound.SoundId = "rbxassetid://"..id
+	newsound.Pitch = pitch
+	newsound:Play()
+	coroutine.resume(coroutine.create(function()
+		wait(.1)
+		remove(newsound,newsound.TimeLength/newsound.Pitch)
+	end))
+	return newsound
+end
+
+function swait()
+	game:GetService("RunService").Stepped:Wait()
+end
+
+function rayc(spos,direc,ignore,dist)
+    local rai = ray(spos,direc.Unit * dist)
+    local rhit,rpos,rrot = workspace:FindPartOnRayWithIgnoreList(rai,ignore,false,false)
+    return rhit,rpos,rrot
+end
+
+function changesound(hit)
+if hit then
+	if hit.Material == Enum.Material.Sand then
+		footstepsound.SoundId = stepsounds.Sand
+		footstepsound.Volume = .5
+	elseif hit.Material == Enum.Material.Grass or hit.Material == Enum.Material.Fabric then
+		footstepsound.SoundId = stepsounds.Grass
+		footstepsound.Volume = 1.5
+	elseif hit.Material == Enum.Material.Granite or hit.Material == Enum.Material.Slate or hit.Material == Enum.Material.Concrete or hit.Material == Enum.Material.Marble or hit.Material == Enum.Material.Brick or hit.Material == Enum.Material.Cobblestone then
+		footstepsound.SoundId = stepsounds.Stone
+		footstepsound.Volume = .5
+	elseif hit.Material == Enum.Material.Plastic or hit.Material == Enum.Material.SmoothPlastic or hit.Material == Enum.Material.Neon then
+		footstepsound.SoundId = stepsounds.Plastic
+		footstepsound.Volume = 1
+	elseif hit.Material == Enum.Material.Wood or hit.Material == Enum.Material.WoodPlanks then
+		footstepsound.SoundId = stepsounds.Wood
+		footstepsound.Volume = .5
+	elseif hit.Material == Enum.Material.Ice then
+		footstepsound.SoundId = stepsounds.Ice
+		footstepsound.Volume = 2
+	elseif hit.Material == Enum.Material.Pebble then
+		footstepsound.SoundId = stepsounds.Pebble
+		footstepsound.Volume = .5
+	elseif hit.Material == Enum.Material.Glass then
+		footstepsound.SoundId = stepsounds.Glass
+		footstepsound.Volume = .5
+	elseif hit.Material == Enum.Material.Metal or hit.Material == Enum.Material.DiamondPlate or  hit.Material == Enum.Material.CorrodedMetal then
+		footstepsound.SoundId = stepsounds.Metal
+		footstepsound.Volume = .5
+	end
+	end
+end
+
+coroutine.wrap(function()
+	while true do
+		if not footstepsound or not footstepsound.Parent then
+			footstepsound = ins("Sound",t)
+			footstepsound.Volume = 1
+			footstepsound.SoundId = stepsounds.Grass
+		end
+		local hit,pos,fromNormalId = rayc(rut.Position - v3(0,2,0),v3(rut.Position.x,-10000,rut.Position.z),{char},1.85)
+		if hit then
+			changesound(hit)
+		end
+		local rutHorVel = (rut.Velocity * v3(1,0,1)).Magnitude
+		local rutVerVel = rut.Velocity.y
+		if not takingAStep then
+			sine = sine + change
+		end
+		if not sitting and not lying then
+			hum.WalkSpeed = 8
+			hum.JumpPower = 35
+		else
+			hum.WalkSpeed = 0
+			hum.JumpPower = 0
+		end
+		local Ccf=rut.CFrame
+		local Walktest1 = hum.MoveDirection*Ccf.LookVector
+		local Walktest2 = hum.MoveDirection*Ccf.RightVector
+		local rotfb = Walktest1.X+Walktest1.Z
+		local rotrl = Walktest2.X+Walktest2.Z
+		if hugging then
+			nec.C1 = nec.C1:Lerp(necc1 * angles(rad(0),rad(0),cos(sine/12.5)/1.5 * rad(15)),animspeed)
+		end
+		if not hugging then
+			if anim == "idle" and hit then
+				rutj.C1 = rutj.C1:Lerp(rutjc1 * cf(0,0,sin(sine/idledevider)/20) * angles(sin(sine/idledevider)/20 * rad(15),0,rad(0)),animspeed)
+				nec.C1 = nec.C1:Lerp(necc1 * cf(0,0,0) * angles(-sin(sine/idledevider)/20 * rad(15),rad(0),sin(sine/(idledevider*2))/20 * rad(25)),animspeed)
+				rs.C1 = rs.C1:Lerp(rsc1 * cf(0,sin(sine/idledevider)/20,0) * angles(sin(sine/idledevider)/20 * rad(15),rad(0),rad(0)),animspeed)
+				ls.C1 = ls.C1:Lerp(lsc1 * cf(0,sin(sine/idledevider)/20,0) * angles(sin(sine/idledevider)/20 * rad(15),rad(0),rad(0)),animspeed)
+				if not sitting then
+					rh.C1 = rh.C1:Lerp(rhc1 * cf(-sin(sine/idledevider)/20,0,0) * angles(sin(sine/idledevider)/20 * rad(15),rad(0),rad(0)),animspeed)
+					lh.C1 = lh.C1:Lerp(lhc1 * cf(sin(sine/idledevider)/20,0,0) * angles(sin(sine/idledevider)/20 * rad(15),rad(0),rad(0)),animspeed)
+				else
+					rh.C1 = rh.C1:Lerp(rhc1 * cf(sin(sine/idledevider)/20,0,0) * angles(sin(sine/idledevider)/20 * rad(15),rad(0),rad(0)),animspeed)
+					lh.C1 = lh.C1:Lerp(lhc1 * cf(-sin(sine/idledevider)/20,0,0) * angles(sin(sine/idledevider)/20 * rad(15),rad(0),rad(0)),animspeed)
+				end
+			elseif anim == "walk" and hit then
+				coroutine.resume(coroutine.create(function()
+					if not takingAStep then
+						takingAStep = true
+						for i = 0,1,.015 + walkanimspeed do
+							if anim ~= "walk" then
+								break
+							end
+							rutj.C1 = rutj.C1:Lerp(rutjc1 * cf(0,0,sin(sine/(walkDivider/2))/10) * angles(sin(sine/(walkDivider/2))/20 * rad(15),sin(sine/walkDivider)/20 * rad(15) + rut.RotVelocity.y/75 - rotrl/7.5,rad(0)),walkanimspeed)
+							nec.C1 = nec.C1:Lerp(necc1 * cf(0,0,0) * angles(-sin(sine/walkDivider)/10 * rad(15),sin(sine/walkDivider)/10 * rad(25),sin(sine/walkDivider)/20 * rad(25) + rut.RotVelocity.y/75 + rotrl/2.5),walkanimspeed)
+							rs.C1 = rs.C1:Lerp(rsc1 * cf(-cos(sine/walkDivider)/8.5,-cos(sine/walkDivider)/5,0) * angles(rotrl/7 + (sin(sine/walkDivider)/1.5)*rotrl * rad(35),rad((-sin(sine/walkDivider))*rotfb * rad(20)),(-sin(sine/walkDivider)/1.5)*rotfb * rad(35)),walkanimspeed)
+							ls.C1 = ls.C1:Lerp(lsc1 * cf(-cos(sine/walkDivider)/8.5,cos(sine/walkDivider)/5,0) * angles(-rotrl/7 + (sin(sine/walkDivider)/1.5)*rotrl * rad(35),rad((-sin(sine/walkDivider))*rotfb * rad(20)),(-sin(sine/walkDivider)/1.5)*rotfb * rad(35)),walkanimspeed)
+							rh.C1 = rh.C1:Lerp(rhc1 * cf((-cos(sine/walkDivider)/5) * (rotfb or rotrl),sin(sine/walkDivider)/2.25,0) * angles((sin(sine/walkDivider)/1.5)*rotrl * rad(10),rotrl/7.5 + (cos(sine/walkDivider)/1.5)*rotrl * rad(25),-math.abs(sin(sine/walkDivider)/1.5) * rad(15)),walkanimspeed)
+							lh.C1 = lh.C1:Lerp(lhc1 * cf((-cos(sine/walkDivider)/5) * (rotfb or rotrl),-sin(sine/walkDivider)/2.25,0) * angles((sin(sine/walkDivider)/1.5)*rotrl * rad(10),-rotrl/7.5 + (cos(sine/walkDivider)/1.5)*rotrl * rad(25),math.abs(sin(sine/walkDivider)/1.5) * rad(15)),walkanimspeed)
+							sine = sine + change
+							num = num +.25
+							swait()
+						end
+						if num > 5 then
+							footstepsound:Play()
+							num = 1
+						end
+						takingAStep = false
+					end
+				end))
+			end
+		end
+		if not sitting and not using and not lying and not hugging and not owowhat then
+			if rutVerVel > 5 then
+				anim = "jump"
+				rutj.C0 = rutj.C0:Lerp(rutjc0 * cf(0,1.75,0) * angles(rad(-50),rad(0),rad(0)),walkanimspeed)
+				nec.C0 = nec.C0:Lerp(necc0 * cf(0,0,0) * angles(rad(-40),rad(0),rad(0)),walkanimspeed)
+				rs.C0 = rs.C0:Lerp(rsc0 * cf(-.05,.1,-.2) * angles(rad(5),rad(-5),rad(81)),walkanimspeed)
+				ls.C0 = ls.C0:Lerp(lsc0 * cf(.05,.1,-.2) * angles(rad(-5),rad(5),rad(-78)),walkanimspeed)
+				rh.C0 = rh.C0:Lerp(rhc0 * cf(.35,.45,0) * angles(rad(-3),rad(-5),rad(-25)),walkanimspeed)
+				lh.C0 = lh.C0:Lerp(lhc0 * cf(-.5,.5,0) * angles(rad(-3),rad(5),rad(31)),walkanimspeed)
+			elseif rutVerVel < -5 then
+				anim = "fall"
+				rutj.C0 = rutj.C0:Lerp(rutjc0 * cf(0,1.75,0) * angles(rad(-35),rad(0),rad(0)),animspeed/5)
+				nec.C0 = nec.C0:Lerp(necc0 * cf(0,0,0) * angles(rad(-20),rad(0),rad(0)),animspeed/5)
+				rs.C0 = rs.C0:Lerp(rsc0 * cf(-.05,.1,-.2) * angles(rad(5),rad(-5),rad(101)),animspeed/5)
+				ls.C0 = ls.C0:Lerp(lsc0 * cf(.05,.1,-.2) * angles(rad(-5),rad(5),rad(-98)),animspeed/5)
+				rh.C0 = rh.C0:Lerp(rhc0 * cf(.35,.45,0) * angles(rad(-3),rad(-5),rad(-25)),animspeed/5)
+				lh.C0 = lh.C0:Lerp(lhc0 * cf(-.5,.5,0) * angles(rad(-3),rad(5),rad(31)),animspeed/5)
+			elseif rutHorVel < 3.5 then
+				anim = "idle"
+				rutj.C0 = rutj.C0:Lerp(rutjc0 * cf(0,2,0) * angles(rad(-70),rad(0),rad(0)),walkanimspeed)
+				nec.C0 = nec.C0:Lerp(necc0 * cf(0,0,0) * angles(rad(-60),rad(0),rad(0)),walkanimspeed)
+				rs.C0 = rs.C0:Lerp(rsc0 * cf(-.05,.1,-.2) * angles(rad(2.5),rad(-5),rad(71)),walkanimspeed)
+				ls.C0 = ls.C0:Lerp(lsc0 * cf(.05,.1,-.2) * angles(rad(2.5),rad(5),rad(-68)),walkanimspeed)
+				rh.C0 = rh.C0:Lerp(rhc0 * cf(.35,.45,0) * angles(rad(-3),rad(-5),rad(-15)),walkanimspeed)
+				lh.C0 = lh.C0:Lerp(lhc0 * cf(-.5,.5,0) * angles(rad(-3),rad(5),rad(21)),walkanimspeed)
+			elseif rutHorVel > 3.5 and rutVerVel > -4.5 and rutVerVel < 4.5 then
+				anim = "walk"
+				rutj.C0 = rutj.C0:Lerp(rutjc0 * cf(0,2,0) * angles(rad(-70),rad(0),rad(0)),walkanimspeed)
+				nec.C0 = nec.C0:Lerp(necc0 * cf(0,0,0) * angles(rad(-60),rad(0),rad(0)),walkanimspeed)
+				rs.C0 = rs.C0:Lerp(rsc0 * cf(-.05,.1,-.2) * angles(rad(-2.5),rad(-5),rad(71)),walkanimspeed)
+				ls.C0 = ls.C0:Lerp(lsc0 * cf(.05,.1,-.2) * angles(rad(-2.5),rad(5),rad(-68)),walkanimspeed)
+				rh.C0 = rh.C0:Lerp(rhc0 * cf(.35,.45,0) * angles(rad(-3),rad(-3),rad(-20)),walkanimspeed)
+				lh.C0 = lh.C0:Lerp(lhc0 * cf(-.35,.5,0) * angles(rad(-3),rad(3),rad(20)),walkanimspeed)
+			end
+		end
+		swait()
+	end
+end)()
+--good thing -w-
+-- * cf(0,0,0) * angles(rad(0),rad(0),rad(0))
