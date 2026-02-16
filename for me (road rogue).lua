@@ -1,4 +1,4 @@
-﻿--//====================================================\\--
+--//====================================================\\--
 --||                       BASIS
 --\\====================================================//--
 
@@ -492,19 +492,10 @@ for _, c in pairs(CHARACTER:GetDescendants()) do
 		c.Anchored = false
 	end
 end
-local GUI = MODULE.ControlsGUI
-GUI.Parent = PLAYER.PlayerGui
-GUI.ToggleButton.MouseButton1Click:Connect(function()
-	if GUI.ToggleButton.Controls.Visible == false then
-		GUI.ToggleButton.Controls.Visible = true
-	elseif GUI.ToggleButton.Controls.Visible == true then
-		GUI.ToggleButton.Controls.Visible = false
-	end
-end)
 
 local MARKME = IT("Beam",CHARACTER)
 MARKME.Name = "Roadrogue"
-local LOCKEDSPEED = 150
+local LOCKEDSPEED = 95
 local HASBAZOOKAEQUIPPED = false
 
 --//====================================================\\--
@@ -573,14 +564,14 @@ function Fire()
 	SMGTIGHTGRIP.Parent = nil
 	ATTACKING = false
 end
-function Boost()
+function Grau()
 	if HUM.WalkSpeed > 10 then
 		BOOST = true
 		USEDEFAULTANIMATIONS = false
-		HUM.WalkSpeed = LOCKEDSPEED*2
-		MOTOR.RightPipe.Fire.Enabled = true	
-		MOTOR.LeftPipe.Fire.Enabled = true
-		NewSound({ID = 1,PARENT = MOTOR,VOLUME = 10,PITCH = 1,LOOP = false,MAXDISTANCE = 125,EMITTERSIZE = 10,PLAYING = true,PLAYONREMOVE = false,DOESDEBRIS = true})
+		HUM.WalkSpeed = 54
+		--MOTOR.RightPipe.Fire.Enabled = true	
+		--MOTOR.LeftPipe.Fire.Enabled = true
+		--NewSound({ID = 1,PARENT = MOTOR,VOLUME = 10,PITCH = 1,LOOP = false,MAXDISTANCE = 125,EMITTERSIZE = 10,PLAYING = true,PLAYONREMOVE = false,DOESDEBRIS = true})
 		for i=0, 4, 0.1 / ANIM_SPEED do
 			Swait()
 			local SPINVELOCITY = -ROOT.RotVelocity.Y/12.5
@@ -596,8 +587,8 @@ function Boost()
 				break
 			end
 		end
-		MOTOR.RightPipe.Fire.Enabled = false	
-		MOTOR.LeftPipe.Fire.Enabled = false
+		--MOTOR.RightPipe.Fire.Enabled = false	
+		--MOTOR.LeftPipe.Fire.Enabled = false
 		USEDEFAULTANIMATIONS = true
 		BOOST = false
 	end
@@ -618,77 +609,77 @@ function Molotov()
 			RIGHTHIP.C0 = Clerp(RIGHTHIP.C0,CF(0.8,-2,-0.2)*ANGLES(RAD(-20.9),RAD(-5.1),RAD(11.1))*ANGLES(RAD(0),RAD(0),RAD(0)),2.25 / ANIM_SPEED)
 			LEFTHIP.C0 = Clerp(LEFTHIP.C0,CF(-0.7,-2,-0.2)*ANGLES(RAD(-29.6),RAD(-3.7),RAD(-8.6))*ANGLES(RAD(0),RAD(0),RAD(0)),2.25 / ANIM_SPEED)
 		end
-		local MOLOTOV = MOLOTOVPROP:Clone()
-		MOLOTOV.CanCollide = false
-		MOLOTOV.Parent = Effects
-		MOLOTOV.CFrame = CF(RIGHTARM.Position,MOUSEPOS)*ANGLES(RAD(45),0,0)
-		MOLOTOV.Anchored = false
+		--local MOLOTOV = MOLOTOVPROP:Clone()
+		--MOLOTOV.CanCollide = false
+		--MOLOTOV.Parent = Effects
+		--MOLOTOV.CFrame = CF(RIGHTARM.Position,MOUSEPOS)*ANGLES(RAD(45),0,0)
+		--MOLOTOV.Anchored = false
+		--MOLOTOV.Transparency = 1
 		local IMPACT = false
-		local FORCE = 15 + (MOLOTOV.Position-MOUSEPOS).Magnitude
-		if FORCE > 300 then
-			FORCE = 300
-		end
-		local BV = IT("BodyVelocity")
-		BV.MaxForce = BV.MaxForce * 500
-		BV.Velocity = CF(MOLOTOV.Position,MOUSEPOS+VT(0,6,0)).lookVector*FORCE
-		BV.Parent = MOLOTOV
+		--local FORCE = 15 + (MOLOTOV.Position-MOUSEPOS).Magnitude
+		--if FORCE > 300 then
+		--	FORCE = 300
+		--end
+		--local BV = IT("BodyVelocity")
+		--BV.MaxForce = BV.MaxForce * 500
+		--BV.Velocity = CF(MOLOTOV.Position,MOUSEPOS+VT(0,6,0)).lookVector*FORCE
+		--BV.Parent = MOLOTOV
 		Debris:AddItem(BV,0.05)
-		MOLOTOV.RotVelocity = VT(MRANDOM(-5,5),MRANDOM(-5,5),MRANDOM(-5,5))
+		--MOLOTOV.RotVelocity = VT(MRANDOM(-5,5),MRANDOM(-5,5),MRANDOM(-5,5))
 		wait(0.1)
-		MOLOTOV.CanCollide = true
+		--MOLOTOV.CanCollide = true
 		local BOOM = function(CHECKMODEL)
 			if IMPACT == false then
 				IMPACT = true
-				local FLOOR,POS = Raycast(MOLOTOV.Position+VT(0,5,0),CF(VT(0,0,0),VT(0,-1,0)).lookVector,12,{CHARACTER,CHECKMODEL})
-				if FLOOR then
-					CameraShake(POS,35,5,6)
-					for i = 1, MRANDOM(3,5) do
-						coroutine.resume(coroutine.create(function()
-							local FIRE = CreatePart(3,Effects,"Neon",0,1,"Grey","Fire",VT(10,2,10),true)
-							FIRE.CFrame = CF(POS)*ANGLES(0,RAD(MRANDOM(0,359)),0)*CF(0,0,(i-1)*5)
-							NewSound({ID = 3303579709,PARENT = FIRE,VOLUME = 6,PITCH = MRANDOM(8,12)/10,LOOP = false,MAXDISTANCE = 125,EMITTERSIZE = 35,PLAYING = true,PLAYONREMOVE = false,DOESDEBRIS = true})
+				--local FLOOR,POS = Raycast(MOLOTOV.Position+VT(0,5,0),CF(VT(0,0,0),VT(0,-1,0)).lookVector,12,{CHARACTER,CHECKMODEL})
+				--if FLOOR then
+				--	CameraShake(POS,35,5,6)
+					--for i = 1, MRANDOM(3,5) do
+						--coroutine.resume(coroutine.create(function()
+							--local FIRE = CreatePart(3,Effects,"Neon",0,1,"Grey","Fire",VT(10,2,10),true)
+							--FIRE.CFrame = CF(POS)*ANGLES(0,RAD(MRANDOM(0,359)),0)*CF(0,0,(i-1)*5)
+							--NewSound({ID = 1,PARENT = FIRE,VOLUME = 6,PITCH = MRANDOM(8,12)/10,LOOP = false,MAXDISTANCE = 125,EMITTERSIZE = 35,PLAYING = true,PLAYONREMOVE = false,DOESDEBRIS = true})
 							--local BURN = MODULE.AoEFire:Clone()
 							--BURN.Parent = FIRE
 							--BURN.Enabled = true
-							local TOUCH = FIRE.Touched:Connect(function(HIT)
-								if HIT.Parent:FindFirstChildOfClass("Humanoid") and HIT.Parent ~= CHARACTER and HIT.Parent:FindFirstChild("Roadrogue") == nil then
-									if HIT.Parent:FindFirstChildOfClass("Humanoid").Health > 0 then
-										NewSound({ID = 3,PARENT = HIT,VOLUME = 3,PITCH = 1,LOOP = false,MAXDISTANCE = 125,EMITTERSIZE = 35,PLAYING = true,PLAYONREMOVE = false,DOESDEBRIS = true})
-										for index, CHILD in pairs(HIT.Parent:GetChildren()) do
-											if CHILD:IsA("BasePart") and CHILD:FindFirstChild("Fire") == nil then
+							--local TOUCH = FIRE.Touched:Connect(function(HIT)
+								--if HIT.Parent:FindFirstChildOfClass("Humanoid") and HIT.Parent ~= CHARACTER and HIT.Parent:FindFirstChild("Roadrogue") == nil then
+									--if HIT.Parent:FindFirstChildOfClass("Humanoid").Health > 0 then
+									--	NewSound({ID = 3,PARENT = HIT,VOLUME = 3,PITCH = 1,LOOP = false,MAXDISTANCE = 125,EMITTERSIZE = 35,PLAYING = true,PLAYONREMOVE = false,DOESDEBRIS = true})
+										--for index, CHILD in pairs(HIT.Parent:GetChildren()) do
+										--	if CHILD:IsA("BasePart") and CHILD:FindFirstChild("Fire") == nil then
 												--local FIRE = MODULE.Fire:Clone()
 												--FIRE.Parent = CHILD
 												--FIRE.Enabled = true
-											end
-										end
-									end
-									ManSlaughter(HIT.Parent)
+											--end
+										--end
+									--end
+									--ManSlaughter(HIT.Parent)
 								end
-							end)
-							wait(MRANDOM(90,175)/10)
-							BURN.Enabled = false
-							TOUCH:Disconnect()
-							Debris:AddItem(FIRE,3)
-						end))
-					end
-				end
-				MOLOTOV.Transparency = 1
-				MOLOTOV.Anchored = true
-				MOLOTOV.CanCollide = false
-				MOLOTOV.Head.Fire.Enabled = false
-				Debris:AddItem(MOLOTOV,5)
-				NewSound({ID = 1,PARENT = MOLOTOV,VOLUME = 7.5,PITCH = 1,LOOP = false,MAXDISTANCE = 125,EMITTERSIZE = 35,PLAYING = true,PLAYONREMOVE = false,DOESDEBRIS = true})
-			end
-		end
-		local HIT = MOLOTOV.Touched:Connect(function(PART)
-			if PART.Anchored == true then
-				local CHECKMODEL = nil
-				if PART.Parent ~= workspace and PART.Anchored == false then
-					CHECKMODEL = PART.Parent
-				end
-				BOOM(CHECKMODEL)
-			end
-		end)
+							end
+							--wait(MRANDOM(90,175)/10)
+							--BURN.Enabled = false
+							--TOUCH:Disconnect()
+							--Debris:AddItem(FIRE,3)
+					--end
+				--end
+				--MOLOTOV.Transparency = 1
+				--MOLOTOV.Anchored = true
+				--MOLOTOV.CanCollide = false
+				--MOLOTOV.Head.Fire.Enabled = false
+				--Debris:AddItem(MOLOTOV,5)
+				--NewSound({ID = 1,PARENT = MOLOTOV,VOLUME = 7.5,PITCH = 1,LOOP = false,MAXDISTANCE = 125,EMITTERSIZE = 35,PLAYING = true,PLAYONREMOVE = false,DOESDEBRIS = true})
+			--end
+		--end
+		--local HIT = MOLOTOV.Touched:Connect(function(PART)
+		--	if PART.Anchored == true then
+			--	local CHECKMODEL = nil
+			--	if PART.Parent ~= workspace and PART.Anchored == false then
+				--	CHECKMODEL = PART.Parent
+				--end
+				--BOOM(CHECKMODEL)
+			--end
+		--end)
 		for i=0, 0.3, 0.1 / ANIM_SPEED do
 			Swait()
 			ROOTJOINT.C0 = Clerp(ROOTJOINT.C0,CF(0,1.3,-0.5)*ANGLES(RAD(-20),RAD(10),RAD(0))*ANGLES(RAD(0),RAD(0),RAD(0)),2.25 / ANIM_SPEED)
@@ -704,14 +695,14 @@ function Molotov()
 		ATTACKING = false
 	end
 end
-function LooseBike()
+function SpinBike()
 	if ROOT.Velocity.Magnitude <= 1 then
 		USEDEFAULTANIMATIONS = false
 		ATTACKING = true
 		BOOST = true
-		HUM.WalkSpeed = 0
+		HUM.WalkSpeed = 5
 		HUM.JumpPower = 0
-		for i = 1, 60 do
+		for i = 1, 190 do
 			Swait()
 			ROOT.CFrame = ROOT.CFrame*ANGLES(0,RAD(-i/2),0)
 			ROOTJOINT.C0 = Clerp(ROOTJOINT.C0,CF(0.2,-0.6,0.5)*ANGLES(RAD(-3.5),RAD(3.5),RAD(-44.9))*ANGLES(RAD(0),RAD(0),RAD(0)),2 / ANIM_SPEED)
@@ -831,143 +822,15 @@ function LooseBike()
 				Debris:AddItem(FAKEMOTOR,15)
 			end
 		end))
+
 		MOTOR.Transparency = 1
 		FRONTWHEEL.Transparency = 1
-		BACKWHEEL.Transparency = 1		
-		for i=0, 0.4, 0.1 / ANIM_SPEED do
-			Swait()
-			ROOTJOINT.C0 = Clerp(ROOTJOINT.C0,CF(0,1.8,0.5)*ANGLES(RAD(10),RAD(0),RAD(0))*ANGLES(RAD(0),RAD(0),RAD(0)),1 / ANIM_SPEED)
-			NECK.C0 = Clerp(NECK.C0,CF(0,1.4,-0.4)*ANGLES(RAD(-25),RAD(0),RAD(0))*ANGLES(RAD(0),RAD(0),RAD(0)),1 / ANIM_SPEED)
-			RIGHTSHOULDER.C0 = Clerp(RIGHTSHOULDER.C0,CF(1.4,-0.2,0.2)*ANGLES(RAD(20),RAD(-20),RAD(0))*ANGLES(RAD(0),RAD(0),RAD(0)),1 / ANIM_SPEED)
-			SMGGRIP.C0 = Clerp(SMGGRIP.C0,CF(0,-1.1,-0.5)*ANGLES(RAD(90),RAD(0),RAD(180))*ANGLES(RAD(0),RAD(0),RAD(0)),1 / ANIM_SPEED)
-			LEFTSHOULDER.C0 = Clerp(LEFTSHOULDER.C0,CF(-1.5,0.2,0)*ANGLES(RAD(-0.3),RAD(-2.6),RAD(-14.8))*ANGLES(RAD(0),RAD(0),RAD(0)),1 / ANIM_SPEED)
-			RIGHTHIP.C0 = Clerp(RIGHTHIP.C0,CF(0.5,-1.5,-0.1)*ANGLES(RAD(-45),RAD(-5),RAD(0))*ANGLES(RAD(0),RAD(0),RAD(0)),1 / ANIM_SPEED)
-			LEFTHIP.C0 = Clerp(LEFTHIP.C0,CF(-0.5,-1.8,0.2)*ANGLES(RAD(-15),RAD(5),RAD(0))*ANGLES(RAD(0),RAD(0),RAD(0)),1 / ANIM_SPEED)
-		end
+		BACKWHEEL.Transparency = 1
 		ATTACKING = false
-		for i=0, 2, 0.1 / ANIM_SPEED do
-			Swait()
-			ROOTJOINT.C0 = Clerp(ROOTJOINT.C0,CF(0,-1,0.6)*ANGLES(RAD(-5),RAD(0),RAD(0))*ANGLES(RAD(0),RAD(0),RAD(0)),1.35 / ANIM_SPEED)
-			NECK.C0 = Clerp(NECK.C0,CF(0,1.5,0)*ANGLES(RAD(5),RAD(0),RAD(0))*ANGLES(RAD(0),RAD(0),RAD(0)),1.35 / ANIM_SPEED)
-			RIGHTSHOULDER.C0 = Clerp(RIGHTSHOULDER.C0,CF(1.5,-0.1,0)*ANGLES(RAD(24.9),RAD(1.7),RAD(4.7))*ANGLES(RAD(0),RAD(0),RAD(0)),1.35 / ANIM_SPEED)
-			SMGGRIP.C0 = Clerp(SMGGRIP.C0,CF(0,-1.1,-0.5)*ANGLES(RAD(90),RAD(0),RAD(-180))*ANGLES(RAD(0),RAD(0),RAD(0)),1.35 / ANIM_SPEED)
-			LEFTSHOULDER.C0 = Clerp(LEFTSHOULDER.C0,CF(-0.4,0.4,-1)*ANGLES(RAD(80.9),RAD(5.7),RAD(48.4))*ANGLES(RAD(0),RAD(0),RAD(0)),1.35 / ANIM_SPEED)
-			RIGHTHIP.C0 = Clerp(RIGHTHIP.C0,CF(0.5,-0.9,-1.1)*ANGLES(RAD(-10),RAD(-10),RAD(0))*ANGLES(RAD(0),RAD(0),RAD(0)),1.35 / ANIM_SPEED)
-			LEFTHIP.C0 = Clerp(LEFTHIP.C0,CF(-0.5,-1.5,0)*ANGLES(RAD(-60),RAD(10),RAD(0))*ANGLES(RAD(0),RAD(0),RAD(0)),1.35 / ANIM_SPEED)
-		end
-	
-		for i=0, 0.25, 0.1 / ANIM_SPEED do
-			Swait()
-			ROOTJOINT.C0 = Clerp(ROOTJOINT.C0,CF(0,1.8,0.5)*ANGLES(RAD(10),RAD(0),RAD(0))*ANGLES(RAD(0),RAD(0),RAD(0)),1 / ANIM_SPEED)
-			NECK.C0 = Clerp(NECK.C0,CF(0,1.4,-0.4)*ANGLES(RAD(-25),RAD(0),RAD(0))*ANGLES(RAD(0),RAD(0),RAD(0)),1 / ANIM_SPEED)
-			RIGHTSHOULDER.C0 = Clerp(RIGHTSHOULDER.C0,CF(1.4,-0.2,0.2)*ANGLES(RAD(20),RAD(-20),RAD(0))*ANGLES(RAD(0),RAD(0),RAD(0)),1 / ANIM_SPEED)
-			SMGGRIP.C0 = Clerp(SMGGRIP.C0,CF(0,-1.1,-0.5)*ANGLES(RAD(90),RAD(0),RAD(180))*ANGLES(RAD(0),RAD(0),RAD(0)),1 / ANIM_SPEED)
-			LEFTSHOULDER.C0 = Clerp(LEFTSHOULDER.C0,CF(-1.5,0.2,0)*ANGLES(RAD(-0.3),RAD(-2.6),RAD(-14.8))*ANGLES(RAD(0),RAD(0),RAD(0)),1 / ANIM_SPEED)
-			RIGHTHIP.C0 = Clerp(RIGHTHIP.C0,CF(0.5,-1.5,-0.1)*ANGLES(RAD(-45),RAD(-5),RAD(0))*ANGLES(RAD(0),RAD(0),RAD(0)),1 / ANIM_SPEED)
-			LEFTHIP.C0 = Clerp(LEFTHIP.C0,CF(-0.5,-1.8,0.2)*ANGLES(RAD(-15),RAD(5),RAD(0))*ANGLES(RAD(0),RAD(0),RAD(0)),1 / ANIM_SPEED)
-		end
 		BOOST = false
 		USEDEFAULTANIMATIONS = true
 		HUM.WalkSpeed = 5
 		HUM.JumpPower = 85
-	end
-end
-
-function GrabBazooka()
-	if HASBAZOOKAEQUIPPED == false then
-		local ONCOOLDOWN = false
-		NewSound({ID = 171140306,PARENT = ROOT,VOLUME = 1,PITCH = MRANDOM(9,11)/15,LOOP = false,MAXDISTANCE = 75,EMITTERSIZE = 15,PLAYING = true,PLAYONREMOVE = false,DOESDEBRIS = true})
-		HASBAZOOKAEQUIPPED = true
-		BAZOOKAWELD.Part0 = RIGHTARM
-		BAZOOKAWELD.C0 = CF(-0.4,-0.9,-0.7)*ANGLES(RAD(-88.7),RAD(4.8),RAD(-15.1))*ANGLES(RAD(0),RAD(0),RAD(0))
-		local Fire = function()
-			local LOCKONTOPART = nil
-			if MOUSEHIT then
-				local HUM = MOUSEHIT.Parent:FindFirstChildOfClass("Humanoid") or MOUSEHIT.Parent.Parent:FindFirstChildOfClass("Humanoid")
-				if HUM then
-					if HUM.Health > 0 and HUM.Torso then
-						LOCKONTOPART = HUM.Torso
-					end
-				end
-			end
-			local GOTO = MOUSEPOS
-			local ROCKET = MISILEPROP:Clone()
-			if rock then
-				rockweld.Part0 = ROCKET
-			end
-			ROCKET.Parent = Effects
-			ROCKET.CFrame = CF(BAZOOKA.CFrame*CF(0,0,-2).p,GOTO)
-			NewSound({ID = 440145223,PARENT = BAZOOKA,VOLUME = 5,PITCH = MRANDOM(9,11)/10,LOOP = false,MAXDISTANCE = 80,EMITTERSIZE = 15,PLAYING = true,PLAYONREMOVE = false,DOESDEBRIS = true})
-			NewSound({ID = 440145223,PARENT = ROCKET,VOLUME = 5,PITCH = MRANDOM(9,11)/10,LOOP = false,MAXDISTANCE = 80,EMITTERSIZE = 15,PLAYING = true,PLAYONREMOVE = false,DOESDEBRIS = true})
-
-			for i = 1, 200 do
-				Swait()
-				local HIT,POS = Raycast(ROCKET.Position,ROCKET.CFrame.lookVector,4,CHARACTER)
-				if HIT then
-					ROCKET.CFrame = CF(POS)
-					break
-				end
-				if LOCKONTOPART then
-					ROCKET.CFrame = Clerp(ROCKET.CFrame,CF(ROCKET.Position,LOCKONTOPART.Position),0.2)*CF(0,0,-2.25)
-				else
-					ROCKET.CFrame = ROCKET.CFrame*CF(0,0,-3)
-				end
-			end
-			if rock then
-				rockweld.Part0 = BAZOOKA
-			end
-			ROCKET.Transparency = 1
-			ROCKET.Hind:Remove()
-			ROCKET.CFrame = CF(ROCKET.Position)
-			ROCKET.Size = VT(0,0,0)
-			NewSound({ID = 142070127,PARENT = ROCKET,VOLUME = 7,PITCH = MRANDOM(8,12)/10,LOOP = false,MAXDISTANCE = 300,EMITTERSIZE = 15,PLAYING = true,PLAYONREMOVE = false,DOESDEBRIS = true})
-			local B = IT("Explosion")
-			B.BlastPressure = 0
-			B.BlastRadius = 15
-			B.Position = ROCKET.Position
-			B.Parent = workspace
-			B.Hit:Connect(function(PART)
-			if PART.Parent:FindFirstChildOfClass("Humanoid") == nil and PART.Parent.Parent:FindFirstChildOfClass("Humanoid") == nil then
-					if PART.Anchored == false then
-					end
-				end
-			end)
-			CameraShake(ROCKET.Position,55,2,7)
-			local VICTIMS = AreaOfEffect(ROCKET.Position,25,0,0,true)
-			if #VICTIMS > 0 then
-				for E = 1, #VICTIMS do
-					local VROOT = VICTIMS[E][1]:FindFirstChild("Torso") or VICTIMS[E][1]:FindFirstChild("LowerTorso")
-					if VROOT then
-					end
-					ManSlaughter(VICTIMS[E][1])
-				end
-			end
-			AreaOfEffect(ROCKET.Position,35,200,false)
-			Debris:AddItem(ROCKET,2)
-		end
-		wait(0.5)
-		BUTTON = game:GetService('UserInputService').InputBegan:Connect(function(input, chatting)
-			if chatting then return end
-			if ANIM ~= 'Sit' then
-				if input.UserInputType == Enum.UserInputType.Keyboard and input.KeyCode == Enum.KeyCode.V then
-					BUTTON:Disconnect()
-					wait(0.1)
-					NewSound({ID = 171140306,PARENT = ROOT,VOLUME = 1,PITCH = MRANDOM(9,11)/15,LOOP = false,MAXDISTANCE = 75,EMITTERSIZE = 15,PLAYING = true,PLAYONREMOVE = false,DOESDEBRIS = true})
-					HASBAZOOKAEQUIPPED = false
-					BAZOOKAWELD.Part0 = TORSO
-					BAZOOKAWELD.C0 = BC0
-				elseif input.UserInputType == Enum.UserInputType.MouseButton1 and ONCOOLDOWN == false then
-					ONCOOLDOWN = true
-					RIGHTSHOULDER.C0 = Clerp(RIGHTSHOULDER.C0,CF(1.5,0.4,0.7)*ANGLES(RAD(90),RAD(15),RAD(0))*ANGLES(RAD(0),RAD(0),RAD(0)),2.5 / ANIM_SPEED)
-					LEFTSHOULDER.C0 = Clerp(LEFTSHOULDER.C0,CF(0.5,0.3,-0.9)*ANGLES(RAD(91.4),RAD(-16.9),RAD(19.9))*ANGLES(RAD(0),RAD(0),RAD(0)),2.5 / ANIM_SPEED)
-					coroutine.resume(coroutine.create(function()
-						wait(0.25)
-						ONCOOLDOWN = false
-					end))
-					Fire()
-				end
-			end
-		end)
 	end
 end
 
@@ -1012,29 +875,27 @@ local e = game:GetService('UserInputService').InputBegan:Connect(function(key, c
 				local M = NewSound({ID = TRACKS[TRACK][1],PARENT = ROOT,VOLUME = TRACKS[TRACK][2],PITCH = 1,LOOP = true,MAXDISTANCE = 300,EMITTERSIZE = 300,PLAYING = true,PLAYONREMOVE = false,DOESDEBRIS = true})
 				M.Name = "BGM_MUSIC"
 			end
-		elseif V2 == "z" and LOCKEDSPEED > 100 and HASBAZOOKAEQUIPPED == false then
-			Boost()
+		elseif V2 == "z" and ATTACKING == false and HASBAZOOKAEQUIPPED == false then
+			Grau()
 		elseif V2 == "x" and ATTACKING == false and HASBAZOOKAEQUIPPED == false then
 			Molotov()
 		elseif V2 == "c" and ATTACKING == false and HASBAZOOKAEQUIPPED == false then
-			LooseBike()
-		elseif V2 == "v" and ATTACKING == false and USEDEFAULTANIMATIONS == true and HASBAZOOKAEQUIPPED == false then
-			GrabBazooka()
-		elseif V2 == "n" then
-			NewSound({ID = 156286438,PARENT = ROOT,VOLUME = 7,PITCH = 1,LOOP = false,MAXDISTANCE = 75,EMITTERSIZE = 10,PLAYING = true,PLAYONREMOVE = false,DOESDEBRIS = true})
+			SpinBike()
+		elseif V2 == "v" then
+			NewSound({ID = 1,PARENT = ROOT,VOLUME = 7,PITCH = 1,LOOP = false,MAXDISTANCE = 75,EMITTERSIZE = 10,PLAYING = true,PLAYONREMOVE = false,DOESDEBRIS = true})
 			if LOCKEDSPEED == 40 then
-				LOCKEDSPEED = 150
-			elseif LOCKEDSPEED == 150 then
+				LOCKEDSPEED = 95
+			elseif LOCKEDSPEED == 95 then
 				LOCKEDSPEED = 40
 			end
 		elseif V2 == "t" then
-			NewSound({ID = 159882462,PARENT = ROOT,VOLUME = 10,PITCH = 1,LOOP = false,MAXDISTANCE = 125,EMITTERSIZE = 50,PLAYING = true,PLAYONREMOVE = false,DOESDEBRIS = true})
+			NewSound({ID = 1,PARENT = ROOT,VOLUME = 10,PITCH = 1,LOOP = false,MAXDISTANCE = 125,EMITTERSIZE = 50,PLAYING = true,PLAYONREMOVE = false,DOESDEBRIS = true})
 		elseif V2 == "y" then
-			NewSound({ID = 463770058,PARENT = ROOT,VOLUME = 10,PITCH = 1,LOOP = false,MAXDISTANCE = 125,EMITTERSIZE = 50,PLAYING = true,PLAYONREMOVE = false,DOESDEBRIS = true})
+			NewSound({ID = 1,PARENT = ROOT,VOLUME = 10,PITCH = 1,LOOP = false,MAXDISTANCE = 125,EMITTERSIZE = 50,PLAYING = true,PLAYONREMOVE = false,DOESDEBRIS = true})
 		elseif V2 == "u" then
-			NewSound({ID = 159882546,PARENT = ROOT,VOLUME = 10,PITCH = 1,LOOP = false,MAXDISTANCE = 125,EMITTERSIZE = 50,PLAYING = true,PLAYONREMOVE = false,DOESDEBRIS = true})
+			NewSound({ID = 1,PARENT = ROOT,VOLUME = 10,PITCH = 1,LOOP = false,MAXDISTANCE = 125,EMITTERSIZE = 50,PLAYING = true,PLAYONREMOVE = false,DOESDEBRIS = true})
 		elseif V2 == "g" then
-			NewSound({ID = 159882441,PARENT = ROOT,VOLUME = 10,PITCH = 1,LOOP = false,MAXDISTANCE = 125,EMITTERSIZE = 50,PLAYING = true,PLAYONREMOVE = false,DOESDEBRIS = true})
+			NewSound({ID = 1,PARENT = ROOT,VOLUME = 10,PITCH = 1,LOOP = false,MAXDISTANCE = 125,EMITTERSIZE = 50,PLAYING = true,PLAYONREMOVE = false,DOESDEBRIS = true})
 		elseif V2 == "m" then
 			TRACK = TRACK + 1
 			if TRACK > #TRACKS then
@@ -1100,7 +961,7 @@ local f = game:GetService("RunService").RenderStepped:Connect(function()
 		if TORSOVELOCITY < 1 and HITFLOOR ~= nil then
 			MOTOR.Dust.Dust.Enabled = false
 			if USEDEFAULTANIMATIONS == true then
-				ROOTJOINT.C0 = Clerp(ROOTJOINT.C0,CF(-0.6,0.2,0.6)*ANGLES(RAD(0),RAD(15),RAD(10))*ANGLES(RAD(0),RAD(0),RAD(0)),1.2 / ANIM_SPEED)
+				ROOTJOINT.C0 = Clerp(ROOTJOINT.C0,CF(-0.6,0,0.6)*ANGLES(RAD(0),RAD(15),RAD(10))*ANGLES(RAD(0),RAD(0),RAD(0)),1.2 / ANIM_SPEED)
 				NECK.C0 = Clerp(NECK.C0,CF(0,1.5,0)*ANGLES(RAD(0),RAD(-15),RAD(-5))*ANGLES(RAD(0),RAD(0),RAD(0)),1.2 / ANIM_SPEED)
 				MOTORWELD.C0 = Clerp(MOTORWELD.C0,CF(0.5,-1.5,-0.5)*ANGLES(RAD(-2.7),RAD(-14.8),RAD(-5.3))*ANGLES(RAD(0),RAD(0),RAD(0)),1.2 / ANIM_SPEED)
 				if HASBAZOOKAEQUIPPED == false then
@@ -1108,17 +969,17 @@ local f = game:GetService("RunService").RenderStepped:Connect(function()
 					SMGGRIP.C0 = Clerp(SMGGRIP.C0,CF(-0.1,-1.1,-0.4)*ANGLES(RAD(98.3),RAD(-4.8),RAD(-168.1))*ANGLES(RAD(0),RAD(0),RAD(0)),1.2 / ANIM_SPEED)
 					LEFTSHOULDER.C0 = Clerp(LEFTSHOULDER.C0,CF(-1.5,0.3,-0.65)*ANGLES(RAD(89.9),RAD(-4.8),RAD(15))*ANGLES(RAD(0),RAD(0),RAD(0)),1.2 / ANIM_SPEED)
 				end
-				RIGHTHIP.C0 = Clerp(RIGHTHIP.C0,CF(1.2,-1.6,0.1)*ANGLES(RAD(-14.6),RAD(-11.9),RAD(-14.6))*ANGLES(RAD(0),RAD(0),RAD(0)),1.2 / ANIM_SPEED)
-				LEFTHIP.C0 = Clerp(LEFTHIP.C0,CF(-0.7,-2.2,0)*ANGLES(RAD(3.7),RAD(-1.1),RAD(-14.5))*ANGLES(RAD(0),RAD(0),RAD(0)),1.2 / ANIM_SPEED)
+				RIGHTHIP.C0 = Clerp(RIGHTHIP.C0,CF(1.2,-1.3,0.1)*ANGLES(RAD(-14.6),RAD(-11.9),RAD(-14.6))*ANGLES(RAD(0),RAD(0),RAD(0)),1.2 / ANIM_SPEED)
+				LEFTHIP.C0 = Clerp(LEFTHIP.C0,CF(-0.7,-2,0)*ANGLES(RAD(3.7),RAD(-1.1),RAD(-14.5))*ANGLES(RAD(0),RAD(0),RAD(0)),1.2 / ANIM_SPEED)
 			end
 		elseif TORSOVELOCITY > 1 and HITFLOOR ~= nil then
 			MOTOR.Dust.Dust.Enabled = true
 			if USEDEFAULTANIMATIONS == true then
-				ROOTJOINT.C0 = Clerp(ROOTJOINT.C0,CF(0,0.5,0.5)*ANGLES(RAD(-15),RAD(0)-SPINVELOCITY/6,RAD(0)-SPINVELOCITY/2)*ANGLES(RAD(0),RAD(0),RAD(0)),0.4 / ANIM_SPEED)
-				NECK.C0 = Clerp(NECK.C0,CF(0,1.425,0.1)*ANGLES(RAD(15),RAD(0)-SPINVELOCITY/2,RAD(0))*ANGLES(RAD(0),RAD(0),RAD(0)),0.4 / ANIM_SPEED)
+				ROOTJOINT.C0 = Clerp(ROOTJOINT.C0,CF(0,0.1,0.6)*ANGLES(RAD(-3),RAD(0)-SPINVELOCITY/6,RAD(0)-SPINVELOCITY/2)*ANGLES(RAD(0),RAD(0),RAD(0)),0.4 / ANIM_SPEED)
+				NECK.C0 = Clerp(NECK.C0,CF(0,1.5,0)*ANGLES(RAD(0),RAD(-15),RAD(-5))*ANGLES(RAD(0),RAD(0),RAD(0)),1.2 / ANIM_SPEED)
 				MOTORWELD.C0 = Clerp(MOTORWELD.C0,CF(0,-1.5,-0.9)*ANGLES(RAD(15),RAD(0),RAD(0))*ANGLES(RAD(0),RAD(0),RAD(0)),0.4 / ANIM_SPEED)
 				if HASBAZOOKAEQUIPPED == false then
-					RIGHTSHOULDER.C0 = Clerp(RIGHTSHOULDER.C0,CF(1.7,0.1,-0.1)*ANGLES(RAD(47.7),RAD(-32.8),RAD(49.9))*ANGLES(RAD(0),RAD(0),RAD(0)),1.2 / ANIM_SPEED)
+					RIGHTSHOULDER.C0 = Clerp(RIGHTSHOULDER.C0,CF(1.5,0.4,0)*ANGLES(RAD(90),RAD(15),RAD(0))*ANGLES(RAD(0),RAD(0),RAD(0)),0.5 / ANIM_SPEED)
 					SMGGRIP.C0 = Clerp(SMGGRIP.C0,CF(0,-1.1,-0.5)*ANGLES(RAD(90),RAD(0),RAD(-180))*ANGLES(RAD(0),RAD(0),RAD(0)),1.2 / ANIM_SPEED)
 					LEFTSHOULDER.C0 = Clerp(LEFTSHOULDER.C0,CF(-1.5,0.3,0)*ANGLES(RAD(89.9),RAD(-4.8),RAD(-1.3))*ANGLES(RAD(0),RAD(0),RAD(0)),0.4 / ANIM_SPEED)
 				end
