@@ -1,24 +1,9 @@
 ﻿-- Ragdoll R6
 -- Made By: Kanujinho
 -- i lazy to make more fun scripts or converts. soo i made this
--- i recommend to use a reanimator like "Oxide" to make this FE
+-- i recommend to use a reanimation like "Oxide" to make this FE
 
 -- Enjoy!
-
-print("Ragdoll Activated✔")
-
-print[[ Controls:
-
-R - Ragdoll
-
-Z/X - Flip Ragdoll
-
-C - Spasm
-
-V - Spin
-
-B - Ragdoll Movement
-]]
 
 local userInputService = game:GetService("UserInputService")
 local ragdolled = false
