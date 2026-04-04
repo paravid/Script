@@ -1,0 +1,39 @@
+Vector3Sequence={}
+Vector3SequenceKeypoint={}
+
+Vector3SequenceKeypoint.new = function(time,value,envelope)
+	--bad argument #2 to 'new' (number expected, got Vector3)
+	assert(typeof(time)=='number',"bad argument #1 to 'new' (number expected, got "..typeof(time))
+	assert(typeof(value)=='Vector3',"bad argument #2 to 'new' (Vector3 expected, got "..typeof(value))
+	return {Time=time,Value=value,Envelope=envelope}
+end
+
+Vector3Sequence.new = function(...)
+	local tuple={...}
+	if(#tuple==2)then
+		return Vector3Sequence.new{Vector3SequenceKeypoint.new(0,tuple[1]),Vector3SequenceKeypoint.new(1,tuple[2])}
+	else
+		local thing = tuple[1]
+		if(typeof(thing)=='Vector3')then
+			return Vector3Sequence.new(thing,thing)
+		elseif(typeof(thing)=='table')then
+			assert(#thing>=2,"Vector3Sequence: requires at least 2 keypoints")
+			local last;
+			for i,v in next, thing do
+				assert(v.Value and v.Time and typeof(v.Value)=='Vector3',"expected 'Vector3SequenceKeypoint' at index "..i)
+				if(not last or v.Time>last)then
+					last=v.Time
+				else
+					error("Vector3Sequence: all keypoints must be ordered by time")
+				end
+			end
+			return setmetatable({
+				Keypoints=thing;
+			},{__index=Vector3Sequence})
+		else
+			return error("table of Vector3SequenceKeypoints expected.")
+		end
+	end
+end
+
+return {Vector3Sequence,Vector3SequenceKeypoint}
