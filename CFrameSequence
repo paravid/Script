@@ -1,0 +1,39 @@
+CFrameSequence={}
+CFrameSequenceKeypoint={}
+
+CFrameSequenceKeypoint.new = function(time,value,envelope)
+	--bad argument #2 to 'new' (number expected, got CFrame)
+	assert(typeof(time)=='number',"bad argument #1 to 'new' (number expected, got "..typeof(time))
+	assert(typeof(value)=='CFrame',"bad argument #2 to 'new' (CFrame expected, got "..typeof(value))
+	return {Time=time,Value=value,Envelope=envelope}
+end
+
+CFrameSequence.new = function(...)
+	local tuple={...}
+	if(#tuple==2)then
+		return CFrameSequence.new{CFrameSequenceKeypoint.new(0,tuple[1]),CFrameSequenceKeypoint.new(1,tuple[2])}
+	else
+		local thing = tuple[1]
+		if(typeof(thing)=='CFrame')then
+			return CFrameSequence.new(thing,thing)
+		elseif(typeof(thing)=='table')then
+			assert(#thing>=2,"CFrameSequence: requires at least 2 keypoints")
+			local last;
+			for i,v in next, thing do
+				assert(v.Value and v.Time and typeof(v.Value)=='CFrame',"expected 'CFrameSequenceKeypoint' at index "..i)
+				if(not last or v.Time>last)then
+					last=v.Time
+				else
+					error("CFrameSequence: all keypoints must be ordered by time")
+				end
+			end
+			return setmetatable({
+				Keypoints=thing;
+			},{__index=CFrameSequence})
+		else
+			return error("table of CFrameSequenceKeypoints expected.")
+		end
+	end
+end
+
+return {CFrameSequence,CFrameSequenceKeypoint}
