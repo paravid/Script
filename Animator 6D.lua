@@ -1,0 +1,290 @@
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+
+local player = Players.LocalPlayer
+local character = player.Character
+local hum = character:WaitForChild("Humanoid")
+
+-- ========== LOCAL CACHE / 403 EVASION ==========
+local LocalAssetCache = {}
+local fullModel = nil
+pcall(function()
+	fullModel = game:GetObjects("rbxassetid://107495486817639")[1]
+	if fullModel then
+		fullModel.Parent = workspace
+	end
+end)
+
+local function LoadLocalAsset(id)
+	id = tostring(id):gsub("^rbxassetid://", "")
+	if LocalAssetCache[id] then
+		return LocalAssetCache[id]
+	end
+
+	local found = fullModel and fullModel:FindFirstChild(id, true)
+	if found then
+		LocalAssetCache[id] = found
+		warn("[Animator6D] ✅ Loaded from local cache:", id)
+		return found
+	end
+
+	local ok, obj = pcall(function()
+		return game:GetObjects("rbxassetid://" .. id)[1]
+	end)
+	if ok and obj then
+		LocalAssetCache[id] = obj
+		warn("[Animator6D] ✅ Loaded via GetObjects:", id)
+		return obj
+	end
+
+	warn("[Animator6D] ts is bad, failed to load animation:", id)
+	return nil
+end
+-- ===============================================
+
+local Map = {
+    ["Head"] = "Neck",
+    ["Torso"] = "RootJoint",
+    ["Right Arm"] = "Right Shoulder",
+    ["Left Arm"] = "Left Shoulder",
+    ["Right Leg"] = "Right Hip",
+    ["Left Leg"] = "Left Hip",
+}
+
+-- ========== KEYFRAME PARSER  ==========
+local function ConvertToTable(kfs)
+	if not (kfs and typeof(kfs) == "Instance" and kfs:IsA("KeyframeSequence")) then
+		if typeof(kfs) == "Instance" then
+			for _, obj in ipairs(kfs:GetDescendants()) do
+				if obj:IsA("KeyframeSequence") then
+					kfs = obj
+					break
+				end
+			end
+		end
+	end
+
+	assert(kfs and typeof(kfs) == "Instance" and kfs:IsA("KeyframeSequence"), "Expected KeyframeSequence")
+
+	local seq = {}
+	for _, frame in ipairs(kfs:GetKeyframes()) do
+		local entry = { Time = frame.Time, Data = {} }
+		for _, pose in ipairs(frame:GetDescendants()) do
+			if pose:IsA("Pose") and pose.Weight > 0 then
+				entry.Data[pose.Name] = { CFrame = pose.CFrame }
+			end
+		end
+		table.insert(seq, entry)
+	end
+	table.sort(seq, function(a, b) return a.Time < b.Time end)
+	return seq, kfs.Loop
+end
+
+-- ========== MOTOR MAP ==========
+local function BuildMotorMap(rig)
+	local map, lower = {}, {}
+	for _, m in ipairs(rig:GetDescendants()) do
+		if m:IsA("Motor6D") then
+			map[m.Name] = m
+			lower[string.lower(m.Name)] = m
+		end
+	end
+	return map, lower
+end
+
+local function FindMotor(poseName, map, lower)
+	local match = Map[poseName] or poseName
+	return map[match] or lower[string.lower(match)]
+end
+
+-- ========== ANIM PLAYER ==========
+local AnimPlayer = {}
+AnimPlayer.__index = AnimPlayer
+
+function AnimPlayer.new(rig, kfs)
+	local self = setmetatable({}, AnimPlayer)
+	self.rig = rig
+	self.seq, self.looped = ConvertToTable(kfs)
+	self.map, self.lower = BuildMotorMap(rig)
+	self.time, self.playing = 0, false
+	self.length = self.seq[#self.seq].Time
+	self.speed = 1
+	self.savedC0 = {}
+	for _, m in pairs(self.map) do
+		self.savedC0[m] = m.C0
+	end
+	return self
+end
+
+function AnimPlayer:Play(speed, loop)
+	if self.playing then return end
+	self.playing = true
+	self.speed = speed or 1
+	self.looped = (loop == nil) and true or loop
+
+	self.conn = RunService.Heartbeat:Connect(function(dt)
+		if not self.playing then
+			return
+		end
+
+		self.time += dt * self.speed
+
+		if self.time >= self.length then
+	if self.looped then
+		self.time = self.time % self.length
+	else
+		self.time = self.length
+		self:Stop(true)
+		return
+	end
+end
+
+		local prev = self.seq[1]
+		local nextFrame = self.seq[#self.seq]
+		for i = 1, #self.seq - 1 do
+			local a = self.seq[i]
+			local b = self.seq[i + 1]
+
+			if self.time >= a.Time and self.time <= b.Time then
+				prev = a
+				nextFrame = b
+				break
+			end
+		end
+
+		local span = nextFrame.Time - prev.Time
+		local alpha = 0
+		if span > 0 then
+			alpha = (self.time - prev.Time) / span
+			alpha = math.clamp(alpha, 0, 1)
+		end
+
+		local used = {}
+
+		for joint, pose in pairs(prev.Data) do
+			used[joint] = true
+
+			local motor = FindMotor(joint, self.map, self.lower)
+			if motor then
+				local cf = pose.CFrame
+				local nextPose = nextFrame.Data[joint]
+
+				if nextPose then
+					cf = cf:Lerp(nextPose.CFrame, alpha)
+				end
+
+				pcall(function()
+					motor.C0 = self.savedC0[motor] * cf
+				end)
+			end
+		end
+
+		for joint, pose in pairs(nextFrame.Data) do
+			if not used[joint] then
+				local motor = FindMotor(joint, self.map, self.lower)
+				if motor then
+					pcall(function()
+						motor.C0 = self.savedC0[motor] * pose.CFrame
+					end)
+				end
+			end
+		end
+	end)
+end
+
+function AnimPlayer:Stop(restore)
+	self.playing = false
+	if self.conn then self.conn:Disconnect() self.conn = nil end
+	if restore then
+		for motor, origC0 in pairs(self.savedC0) do
+			pcall(function() motor.C0 = origC0 end)
+		end
+	else
+		for _, m in pairs(self.map) do
+			pcall(function() m.Transform = CFrame.new() end)
+		end
+	end
+end
+
+-- ========== DISABLE DEFAULT ANIMS ==========
+local function disableDefaultAnimations(char)
+	if not hum then return end
+	for _, track in ipairs(hum:GetPlayingAnimationTracks()) do
+		track:Stop(0)
+	end
+	local animScript = char:FindFirstChild("Animate")
+	if animScript then animScript.Disabled = true end
+	local animator = hum:FindFirstChildOfClass("Animator")
+    if animator then
+	for _, track in ipairs(animator:GetPlayingAnimationTracks()) do
+		track:Stop(0)
+	end
+end
+end
+
+-- ========== GLOBAL INTERFACE ==========
+getgenv().Animator6D = function(idOrInstance, speed, looped)
+	local kfs
+	if typeof(idOrInstance) == "Instance" then
+		kfs = idOrInstance:IsA("KeyframeSequence") and idOrInstance or idOrInstance:FindFirstChildOfClass("KeyframeSequence")
+	else
+		local asset = LoadLocalAsset(idOrInstance)
+		if asset then
+			kfs = asset:FindFirstChildOfClass("KeyframeSequence") or asset
+		end
+	end
+
+	if not kfs then
+		warn("[Animator6D] yo sorry could not load animation:", idOrInstance)
+		return
+	end
+
+	disableDefaultAnimations(character)
+
+	if getgenv().currentAnimator6D then
+		pcall(function()
+			getgenv().currentAnimator6D:Stop(true)
+		end)
+	end
+
+	local anim = AnimPlayer.new(character, kfs)
+        getgenv().currentAnimator6D = anim
+        anim:Play(speed or 1, looped)
+
+        return anim.length
+end
+
+getgenv().Animator6DStop = function()
+	if getgenv().currentAnimator6D then
+		pcall(function()
+			getgenv().currentAnimator6D:Stop(true)
+		end)
+		getgenv().currentAnimator6D = nil
+	end
+
+	local char = game.Players.LocalPlayer.Character
+	local hum = char and char:FindFirstChildOfClass("Humanoid")
+
+	if hum and not hum:FindFirstChildOfClass("Animator") then
+		Instance.new("Animator", hum)
+	end
+
+	local animate = char and char:FindFirstChild("Animate")
+	if animate then
+		animate.Disabled = false
+	end
+
+	if hum then
+		hum:ChangeState(Enum.HumanoidStateType.Running)
+	end
+end
+
+-- ========== NOTIFY ==========
+warn("[Animator6D Pro V4] ya.. Allah hotbar")
+pcall(function()
+	game:GetService("StarterGui"):SetCore("SendNotification", {
+		Title = "Animator6D Pro V4",
+		Text = "Loaded with Local Cache Support!",
+		Duration = 5
+	})
+end)
