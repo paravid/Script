@@ -1,0 +1,674 @@
+--[[
+
+Name: Animator 6D V5
+By: gObl00x (Using Chat GPT)
+Edited By: Kanujinho
+
+]]
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+
+local player = Players.LocalPlayer
+local char = player.Character
+local hum = char:WaitForChild("Humanoid")
+
+local LocalAssetCache = {}
+local fullModel = nil
+
+pcall(function()
+    fullModel = game:GetObjects("rbxassetid://107495486817639")[1]
+
+    if fullModel then
+        fullModel.Parent = workspace
+    end
+end)
+
+local function LoadLocalAsset(id)
+    id = tostring(id):gsub("^rbxassetid://", "")
+
+    if LocalAssetCache[id] then
+        return LocalAssetCache[id]
+    end
+
+    local found = fullModel and fullModel:FindFirstChild(id, true)
+    if found then
+        LocalAssetCache[id] = found
+        return found
+    end
+
+    local ok, obj = pcall(function()
+        return game:GetObjects("rbxassetid://" .. id)[1]
+    end)
+
+    if ok and obj then
+        LocalAssetCache[id] = obj
+        return obj
+    end
+
+    warn("[Animator6D] Failed to load animation:", id)
+    return nil
+end
+
+local Map = {
+    ["Head"] = "Neck",
+    ["Torso"] = "Root",
+
+    ["Right Arm"] = "RightShoulder",
+    ["Left Arm"] = "LeftShoulder",
+    ["Right Leg"] = "RightHip",
+    ["Left Leg"] = "LeftHip",
+
+    ["UpperTorso"] = "Waist",
+    ["LowerTorso"] = "Root",
+
+    ["RightUpperArm"] = "RightShoulder",
+    ["RightLowerArm"] = "RightElbow",
+    ["RightHand"] = "RightWrist",
+
+    ["LeftUpperArm"] = "LeftShoulder",
+    ["LeftLowerArm"] = "LeftElbow",
+    ["LeftHand"] = "LeftWrist",
+
+    ["RightUpperLeg"] = "RightHip",
+    ["RightLowerLeg"] = "RightKnee",
+    ["RightFoot"] = "RightAnkle",
+
+    ["LeftUpperLeg"] = "LeftHip",
+    ["LeftLowerLeg"] = "LeftKnee",
+    ["LeftFoot"] = "LeftAnkle"
+}
+
+local function ConvertToTable(kfs)
+    if not (kfs and typeof(kfs) == "Instance" and kfs:IsA("KeyframeSequence")) then
+        if typeof(kfs) == "Instance" then
+            for _, obj in ipairs(kfs:GetDescendants()) do
+                if obj:IsA("KeyframeSequence") then
+                    kfs = obj
+                    break
+                end
+            end
+        end
+    end
+
+    assert(kfs and typeof(kfs) == "Instance" and kfs:IsA("KeyframeSequence"), "Expected KeyframeSequence")
+
+    local seq = {}
+    for _, frame in ipairs(kfs:GetKeyframes()) do
+        local entry = {Time = frame.Time,Data = {}}
+        for _, pose in ipairs(frame:GetDescendants()) do
+            if pose:IsA("Pose") and pose.Weight > 0 then
+                entry.Data[pose.Name] = {CFrame = pose.CFrame,Weight = pose.Weight}
+            end
+        end
+        table.insert(seq, entry)
+    end
+
+    table.sort(seq, function(a, b)
+        return a.Time < b.Time
+    end)
+
+    return seq, kfs.Loop
+end
+
+local function BuildMotorMap(rig)
+    local map = {}
+    local lower = {}
+    for _, joint in ipairs(rig:GetDescendants()) do
+        if joint:IsA("Motor6D") or joint:IsA("AnimationConstraint") then
+            map[joint.Name] = joint
+            lower[string.lower(joint.Name)] = joint
+            lower[NormalizeName(joint.Name)] = joint
+        end
+    end
+    return map, lower
+end
+
+local function NormalizeName(name)
+    return string.lower(name):gsub("[%s_%-]", "")
+end
+
+local function FindMotor(poseName, map, lower)
+    local match = Map[poseName] or poseName
+    return map[match] or lower[string.lower(match)] or lower[NormalizeName(match)]
+end
+
+local defaultAnimateScript = nil
+local defaultAnimateDisabled = nil
+local restoreDefaultAnimations
+local AnimPlayer = {}
+AnimPlayer.__index = AnimPlayer
+
+local LimbMotorGroups = {
+    Head = {neck = true},
+    Torso = {rootjoint = true, root = true, waist = true},
+    RightArm = {rightshoulder = true, rightelbow = true, rightwrist = true},
+    LeftArm = {leftshoulder = true, leftelbow = true, leftwrist = true},
+    RightLeg = {righthip = true, rightknee = true, rightankle = true},
+    LeftLeg = {lefthip = true, leftknee = true, leftankle = true}
+}
+
+local DefaultLimbToggles = {
+    Head = true,
+    Torso = true,
+    RightArm = true,
+    LeftArm = true,
+    RightLeg = true,
+    LeftLeg = true
+}
+
+local function GetLimbGroup(motor)
+    local name = string.lower(motor.Name):gsub("[%s_%-]", "")
+
+    for group, names in pairs(LimbMotorGroups) do
+        if names[name] then
+            return group
+        end
+    end
+
+    return nil
+end
+
+function AnimPlayer.new(rig, kfs, baseC0, startOffsets)
+    local self = setmetatable({}, AnimPlayer)
+    self.rig = rig
+    self.seq, self.sequenceLoop = ConvertToTable(kfs)
+    self.map, self.lower = BuildMotorMap(rig)
+    self.savedTransform = baseC0 or {}
+    self.limbToggles = {}
+
+    local configuredToggles = getgenv().Animator6DLimbToggles or DefaultLimbToggles
+    for group, enabled in pairs(DefaultLimbToggles) do
+        local configured = configuredToggles[group]
+        self.limbToggles[group] = configured == nil and enabled or configured == true
+    end
+
+    for _, joint in pairs(self.map) do
+        if not self.savedTransform[joint] then
+           self.savedTransform[joint] = joint.Transform
+        end
+    end
+
+    self.tracks = {}
+
+    for _, frame in ipairs(self.seq) do
+        for poseName, data in pairs(frame.Data) do
+            local motor = FindMotor(poseName,self.map,self.lower)
+            if motor and self.savedTransform[motor] then
+                local track = self.tracks[motor]
+                if not track then
+                    track = {}
+                    self.tracks[motor] = track
+                end
+
+                local poseCF = data.CFrame
+                if data.Weight < 1 then
+                    poseCF = CFrame.new():Lerp(poseCF,data.Weight)
+                end
+                table.insert(track, {Time = frame.Time,CFrame = poseCF})
+            end
+        end
+    end
+
+    for motor, track in pairs(self.tracks) do
+        table.sort(track, function(a, b)
+            return a.Time < b.Time
+        end)
+
+        if #track > 0 and track[1].Time > 0 then
+            table.insert(track, 1, {Time = 0,CFrame = CFrame.new()})
+        end
+    end
+
+	local trackCount = 0
+
+for joint, track in pairs(self.tracks) do
+    trackCount += 1
+    print("[Animator6D] Track:", joint.Name, GetLimbGroup(joint), #track)
+end
+
+print("[Animator6D] Total Tracks:", trackCount)
+
+    self.length = 0
+
+    if #self.seq > 0 then
+        self.length = self.seq[#self.seq].Time
+    end
+
+    if self.length <= 0 then
+        self.length = 1
+    end
+
+    self.time = 0
+    self.speed = 1
+    self.looped = true
+    self.playing = false
+    self.suspended = false
+    self.conn = nil
+    self.frameIndex = 1
+    self.startOffsets = startOffsets or {}
+    self.fadeDuration = 0
+    self.fadeElapsed = 0
+    self.fadingOut = false
+    return self
+end
+
+function AnimPlayer:IsMotorEnabled(motor)
+    local group = GetLimbGroup(motor)
+    return group == nil or self.limbToggles[group] ~= false
+end
+
+function AnimPlayer:SetLimbs(toggles)
+    if type(toggles) ~= "table" then
+        return
+    end
+
+    local aliases = {
+        Arms = {"RightArm", "LeftArm"},
+        Legs = {"RightLeg", "LeftLeg"},
+        All = {"Head", "Torso", "RightArm", "LeftArm", "RightLeg", "LeftLeg"}
+    }
+
+    for group, enabled in pairs(toggles) do
+        if type(enabled) == "boolean" then
+            for _, target in ipairs(aliases[group] or {group}) do
+                if self.limbToggles[target] ~= nil then
+                    local wasEnabled = self.limbToggles[target]
+                    self.limbToggles[target] = enabled
+
+                   if wasEnabled and not enabled then
+    for joint in pairs(self.tracks) do
+        if GetLimbGroup(joint) == target then
+            self.startOffsets[joint] = nil
+        end
+    end
+                    elseif not wasEnabled and enabled then
+    for joint in pairs(self.tracks) do
+        if GetLimbGroup(joint) == target then
+            local ok, offset = pcall(function()
+                return joint.Transform
+            end)
+
+            self.startOffsets[joint] = ok and offset or CFrame.new()
+        end
+    end
+end
+                end
+            end
+        end
+    end
+
+    getgenv().Animator6DLimbToggles = self.limbToggles
+
+    local anyEnabled = false
+
+    for _, enabled in pairs(self.limbToggles) do
+        if enabled then
+            anyEnabled = true
+            break
+        end
+    end
+
+    if not anyEnabled then
+        self.suspended = true
+
+        if self.conn then
+            self.conn:Disconnect()
+            self.conn = nil
+        end
+
+    elseif self.suspended and self.playing then
+        self.suspended = false
+        self:ConnectHeartbeat()
+    end
+end
+
+function AnimPlayer:GetCurrentOffsets()
+    local offsets = {}
+    for joint in pairs(self.tracks) do
+        local ok, result = pcall(function()
+            return joint.Transform
+        end)
+        offsets[joint] = ok and result or CFrame.new()
+    end
+    return offsets
+end
+
+function AnimPlayer:GetTrackPose(track, time)
+    local count = #track
+    if count == 0 then
+        return CFrame.new()
+    end
+
+    if count == 1 then
+        return track[1].CFrame
+    end
+
+    local low = 1
+    local high = count
+    while low <= high do
+        local mid = math.floor((low + high) / 2)
+        if track[mid].Time <= time then
+            low = mid + 1
+        else
+            high = mid - 1
+        end
+    end
+
+    local previous = track[math.max(1, high)]
+    local nextSample = track[math.min(count, high + 1)]
+    if previous == nextSample then
+        return previous.CFrame
+    end
+
+    local duration = nextSample.Time - previous.Time
+    if duration <= 0 then
+        return nextSample.CFrame
+    end
+
+    local alpha = math.clamp((time - previous.Time) / duration,0,1)
+    return previous.CFrame:Lerp(nextSample.CFrame,alpha)
+end
+
+function AnimPlayer:ApplyPose(alpha)
+    alpha = math.clamp(alpha or 1, 0, 1)
+
+    for joint, track in pairs(self.tracks) do
+        if self:IsMotorEnabled(joint) then
+            local target = self:GetTrackPose(track, self.time)
+            local initial = self.startOffsets[joint] or CFrame.new()
+            local finalPose = initial:Lerp(target, alpha)
+
+            pcall(function()
+                joint.Transform = finalPose
+            end)
+        end
+    end
+end
+
+function AnimPlayer:StartFade(duration)
+    duration = math.max(0, tonumber(duration) or 0)
+    self.fadeDuration = duration
+    self.fadeElapsed = 0
+
+    if duration <= 0 then
+        self.startOffsets = {}
+        return
+    end
+end
+
+function AnimPlayer:FadeOut(duration)
+    if not self.playing then
+        return
+    end
+
+    duration = math.max(0, tonumber(duration) or 0)
+
+    if duration <= 0 then
+        self:Stop(true)
+        return
+    end
+
+    self.startOffsets = self:GetCurrentOffsets()
+    self.fadeDuration = duration
+    self.fadeElapsed = 0
+    self.fadingOut = true
+end
+
+function AnimPlayer:Step(dt)
+    if not self.playing or self.suspended then
+        return
+    end
+
+    if self.fadingOut then
+        self.fadeElapsed += dt
+        local alpha = math.clamp(self.fadeElapsed / self.fadeDuration, 0, 1)
+        self:ApplyPose(1 - alpha)
+
+        if alpha >= 1 then
+            self:Stop(true)
+            if getgenv().currentAnimator6D == self then
+                getgenv().currentAnimator6D = nil
+                if restoreDefaultAnimations then
+                    restoreDefaultAnimations()
+                end
+            end
+            return
+        end
+    end
+
+    self.time += dt * self.speed
+
+    if self.time >= self.length then
+        if self.looped then
+            self.time = self.time % self.length
+            self.frameIndex = 1
+        else
+            self.time = self.length
+            self:ApplyPose(1)
+            self:FadeOut(0.12)
+            return
+        end
+    end
+
+    local alpha = 1
+    if self.fadeDuration > 0 and not self.fadingOut then
+        self.fadeElapsed += dt
+        alpha = math.clamp(self.fadeElapsed / self.fadeDuration, 0, 1)
+    end
+
+    self:ApplyPose(alpha)
+
+    if alpha >= 1 then
+        self.startOffsets = {}
+        self.fadeDuration = 0
+    end
+end
+
+function AnimPlayer:ConnectHeartbeat()
+    if self.conn or not self.playing or self.suspended then
+        return
+    end
+
+    self.conn = RunService.PreSimulation:Connect(function(dt)
+        self:Step(dt)
+    end)
+end
+
+function AnimPlayer:Play(speed, loop, fadeTime)
+    if self.playing or #self.seq == 0 then
+        return
+    end
+
+    self.playing = true
+    self.suspended = false
+    self.speed = tonumber(speed) or 1
+    self.looped = loop == nil and self.sequenceLoop or loop
+
+    if self.looped == nil then
+        self.looped = true
+    end
+
+    self.time = 0
+    self.frameIndex = 1
+    self.fadingOut = false
+    self:StartFade(fadeTime == nil and 0.25 or fadeTime)
+
+    local anyEnabled = false
+    for _, enabled in pairs(self.limbToggles) do
+        if enabled then
+            anyEnabled = true
+            break
+        end
+    end
+
+    if not anyEnabled then
+        self.suspended = true
+        return
+    end
+
+    self:ConnectHeartbeat()
+end
+
+function AnimPlayer:Stop(restore)
+    self.playing = false
+    self.suspended = false
+
+    if self.conn then
+        self.conn:Disconnect()
+        self.conn = nil
+    end
+end
+
+local function disableDefaultAnimations(char)
+    local animator = hum:FindFirstChildOfClass("Animator")
+
+    if not animator then
+        animator = Instance.new("Animator")
+        animator.Parent = hum
+    end
+end
+
+restoreDefaultAnimations = function()
+end
+
+getgenv().Animator6DSetLimbs = function(toggles)
+    if type(toggles) ~= "table" then
+        return
+    end
+
+    local current = getgenv().currentAnimator6D
+    if current then
+        current:SetLimbs(toggles)
+        return
+    end
+
+    local settings = getgenv().Animator6DLimbToggles or {
+        Head = true,
+        Torso = true,
+        RightArm = true,
+        LeftArm = true,
+        RightLeg = true,
+        LeftLeg = true
+    }
+
+    local aliases = {
+        Arms = {"RightArm", "LeftArm"},
+        Legs = {"RightLeg", "LeftLeg"},
+        All = {"Head", "Torso", "RightArm", "LeftArm", "RightLeg", "LeftLeg"}
+    }
+
+    for group, enabled in pairs(toggles) do
+        if type(enabled) == "boolean" then
+            for _, target in ipairs(aliases[group] or {group}) do
+                if settings[target] ~= nil then
+                    settings[target] = enabled
+                end
+            end
+        end
+    end
+    getgenv().Animator6DLimbToggles = settings
+end
+
+getgenv().Animator6D = function(idOrInstance, speed, looped, fadeTime)
+    local kfs
+    if typeof(idOrInstance) == "Instance" then
+        kfs = idOrInstance:IsA("KeyframeSequence") and idOrInstance or idOrInstance:FindFirstChildWhichIsA("KeyframeSequence",true)
+    else
+        local asset = LoadLocalAsset(idOrInstance)
+        if asset then
+            kfs = asset:IsA("KeyframeSequence") and asset or asset:FindFirstChildWhichIsA("KeyframeSequence",true)
+        end
+    end
+
+    if not kfs then
+        warn("[Animator6D] Could not load animation:",idOrInstance)
+        return
+    end
+
+    local previous = getgenv().currentAnimator6D
+    local baseTransform
+    local startOffsets
+
+    if previous then
+        baseTransform = previous.savedTransform
+        startOffsets = previous:GetCurrentOffsets()
+        previous:Stop(false)
+    else
+        baseTransform = nil
+        startOffsets = nil
+    end
+
+    disableDefaultAnimations(char)
+
+    local anim = AnimPlayer.new(char,kfs,baseTransform,startOffsets)
+    getgenv().currentAnimator6D = anim
+    anim:Play(speed or 1,looped,fadeTime)
+    return anim.length
+end
+
+getgenv().Animator6DStop = function(fadeTime)
+    local current = getgenv().currentAnimator6D
+    if not current then
+        restoreDefaultAnimations()
+        return
+    end
+
+    fadeTime = tonumber(fadeTime) or 0
+
+    if fadeTime > 0 then
+        current:FadeOut(fadeTime)
+    else
+        current:Stop(true)
+        getgenv().currentAnimator6D = nil
+        restoreDefaultAnimations()
+    end
+end
+
+warn("[Animator6D Pro V4] ya.. Allah hotbar")
+
+pcall(function()
+	game:GetService("StarterGui"):SetCore("SendNotification", {
+		Title = "Animator6D Pro V5",
+		Text = "Loaded, Have Fun!",
+		Duration = 5
+	})
+end)
+
+--[[
+
+Instructions:
+
+If you want to play the anim outside ts loadstring, then:
+getgenv().Animator6D(1234567890, 1, true) (idOrInstance, Speed, Looped)
+
+If you will be using an instance and not an ID, then:
+local animInstance = game:GetObjects("rbxassetid://ID")[1] (Here the KeyframeSequence Path, replace ID with the ID)
+getgenv().Animator6D(animInstance, 1, true) - or false if u want the anim to have with no loop
+
+If you want to stop the anim, then:
+getgenv().Animator6DStop()
+
+if you want to control 1 limb in your rig then:
+
+getgenv().Animator6DSetLimbs({ - Toggle Manual
+    RightArm = false,
+    LeftArm = false,
+    Head = true,
+    Torso = true,
+    Legs = true
+})
+
+getgenv().Animator6DSetLimbs({ - to ARMS
+    Arms = false
+})
+
+getgenv().Animator6DSetLimbs({ - to LEGS
+    Legs = false
+})
+
+getgenv().Animator6DSetLimbs({ - All PARTS
+    All = true
+})
+
+--]]
